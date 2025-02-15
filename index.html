@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>some gpt thing</title>
+</head>
+<body>
+    <h1>some gpt thing</h1>
+    <input type="text" id="input" placeholder="Ask question...">
+    <button onclick="ask()">Ask</button>
+    <p id="output"></p>
+    <script>
+        async function ask() {
+            const input = document.getElementById('input').value;
+            const response = await fetch('http://localhost:8000/api/v1/answer', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ answer: input })
+            });
+            const data = await response.json();
+            document.getElementById('output').innerText = data.response;
+            document.getElementById('input').value = '';
+        }
+    </script>
+</body>
+</html>
