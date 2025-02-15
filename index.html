@@ -7,18 +7,30 @@
 </head>
 <body>
     <h1>some gpt thing</h1>
-    <input type="text" id="input" placeholder="Ask question...">
-    <button onclick="ask()">Ask</button>
+    <h2 id="interview_qn">Tell me about a time where there were conflicting viewpoints within a team and how you handled them</h2>
+    <select name="Interview type" id="interview_type">
+        <option value="general">General</option>
+        <option value="computer-science">Computer Science</option>
+        <option value="finance">Finance</option>
+    </select>
+    <input type="text" id="input" placeholder="Answer question...">
+    <button onclick="answer()">Answer</button>
     <p id="output"></p>
     <script>
-        async function ask() {
+        async function answer() {
             const input = document.getElementById('input').value;
             const response = await fetch('http://localhost:8000/api/v1/answer', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
                 },
-                body: JSON.stringify({ answer: input })
+                body: JSON.stringify(
+                    {
+                        answer: input ,
+                        interview_qn: document.getElementById('interview_qn').innerText,
+                        interview_type: document.getElementById('interview_type').value
+                    }
+                )
             });
             const data = await response.json();
             document.getElementById('output').innerText = data.response;
