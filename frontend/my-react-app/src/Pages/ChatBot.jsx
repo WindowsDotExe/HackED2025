@@ -1,3 +1,4 @@
+import "../Styles/ChatBot.css";
 
 export default function ChatBot() {
     return (

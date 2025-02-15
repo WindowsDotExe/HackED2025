@@ -1,12 +1,12 @@
 import { Link } from "react-router-dom";
+import "../Styles/LandingPage.css";
 
 export default function LandingPage() {
     return (
-        <div>
-            <h1>Welcome to my React App!</h1>
-            <p>click here to start chatting</p>
-            {/* make the link button a nice blue box */}
-            <Link to="/ChatBot" style={{backgroundColor: 'blue', color: 'white', padding: '10px', borderRadius: '5px'}}>Chat Now</Link>
+        <div className="landing-page">
+            <h1>Mock Interview AI</h1>
+            <p> Welcome to Mock Interview AI </p>
+            <Link to="/ChatBot" className="chat-link">Let's Interview Now</Link>
         </div>
     )
 }

@@ -1,0 +1,99 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap");
+
+.landing-page {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  background-color: #f8f9fa;
+  font-family: "Inter", sans-serif;
+  padding: 2rem;
+  text-align: center;
+}
+
+h1 {
+  font-size: 3rem;
+  font-weight: 700;
+  color: #2c3e50;
+  margin-bottom: 1.5rem;
+  opacity: 0;
+  transform: translateY(-20px);
+  animation: fadeInDown 0.8s ease-out forwards;
+}
+
+p {
+  font-style: italic;
+  font-size: 1.2rem;
+  color: #34495e;
+  margin-bottom: 1rem;
+  opacity: 0;
+  transform: translateY(20px);
+  animation: fadeInUp 0.8s ease-out forwards;
+}
+
+p:nth-child(2) {
+  animation-delay: 0.2s;
+}
+
+p:nth-child(3) {
+  animation-delay: 0.4s;
+}
+
+.chat-link {
+  display: inline-block;
+  background-color: #3498db;
+  color: white;
+  text-decoration: none;
+  padding: 0.8rem 1.5rem;
+  border-radius: 5px;
+  font-size: 1.1rem;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  opacity: 0;
+  transform: scale(0.9);
+  animation: fadeInScale 0.8s ease-out 0.6s forwards;
+}
+
+.chat-link:hover {
+  background-color: #2980b9;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+@keyframes fadeInDown {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeInUp {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeInScale {
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@media (max-width: 768px) {
+  h1 {
+    font-size: 2.5rem;
+  }
+
+  p {
+    font-size: 1rem;
+  }
+
+  .chat-link {
+    font-size: 1rem;
+    padding: 0.7rem 1.3rem;
+  }
+}
+
