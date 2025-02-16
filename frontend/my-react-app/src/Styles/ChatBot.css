@@ -1,46 +1,266 @@
 @import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap");
 
-/* === PAGE-LEVEL STYLES === */
+/* -------------------------------- */
+/* 1) PROPERTIES + KEYFRAMES for BG */
+/* (copied from LandingPage.css)    */
+/* -------------------------------- */
+
+@property --s-start-0 {
+  syntax: '<percentage>';
+  inherits: false;
+  initial-value: 9%;
+}
+
+@property --s-end-0 {
+  syntax: '<percentage>';
+  inherits: false;
+  initial-value: 55%;
+}
+
+@property --c-0 {
+  syntax: '<color>';
+  inherits: false;
+  initial-value: hsla(267, 52%, 83%, 1);
+}
+
+@property --y-0 {
+  syntax: '<percentage>';
+  inherits: false;
+  initial-value: 80%;
+}
+
+@property --x-0 {
+  syntax: '<percentage>';
+  inherits: false;
+  initial-value: 85%;
+}
+
+@property --s-start-1 {
+  syntax: '<percentage>';
+  inherits: false;
+  initial-value: 5%;
+}
+
+@property --s-end-1 {
+  syntax: '<percentage>';
+  inherits: false;
+  initial-value: 72%;
+}
+
+@property --c-1 {
+  syntax: '<color>';
+  inherits: false;
+  initial-value: hsla(336, 100%, 82%, 1);
+}
+
+@property --y-1 {
+  syntax: '<percentage>';
+  inherits: false;
+  initial-value: 24%;
+}
+
+@property --x-1 {
+  syntax: '<percentage>';
+  inherits: false;
+  initial-value: 60%;
+}
+
+@property --s-start-2 {
+  syntax: '<percentage>';
+  inherits: false;
+  initial-value: 5%;
+}
+
+@property --s-end-2 {
+  syntax: '<percentage>';
+  inherits: false;
+  initial-value: 52%;
+}
+
+@property --y-2 {
+  syntax: '<percentage>';
+  inherits: false;
+  initial-value: 82%;
+}
+
+@property --c-2 {
+  syntax: '<color>';
+  inherits: false;
+  initial-value: hsla(54, 100%, 65%, 0.49);
+}
+
+@property --x-2 {
+  syntax: '<percentage>';
+  inherits: false;
+  initial-value: 13%;
+}
+
+@property --s-start-3 {
+  syntax: '<percentage>';
+  inherits: false;
+  initial-value: 13%;
+}
+
+@property --s-end-3 {
+  syntax: '<percentage>';
+  inherits: false;
+  initial-value: 68%;
+}
+
+@property --c-3 {
+  syntax: '<color>';
+  inherits: false;
+  initial-value: hsla(299, 72%, 68%, 1);
+}
+
+@property --y-3 {
+  syntax: '<percentage>';
+  inherits: false;
+  initial-value: 7%;
+}
+
+@property --x-3 {
+  syntax: '<percentage>';
+  inherits: false;
+  initial-value: 24%;
+}
+
+@keyframes hero-gradient-animation {
+  0% {
+    --s-start-0: 9%;
+    --s-end-0: 55%;
+    --c-0: hsla(267, 52%, 83%, 1);
+    --y-0: 80%;
+    --x-0: 85%;
+    --s-start-1: 5%;
+    --s-end-1: 72%;
+    --c-1: hsla(336, 100%, 82%, 1);
+    --y-1: 24%;
+    --x-1: 60%;
+    --s-start-2: 5%;
+    --s-end-2: 52%;
+    --y-2: 82%;
+    --c-2: hsla(54, 100%, 65%, 0.49);
+    --x-2: 13%;
+    --s-start-3: 13%;
+    --s-end-3: 68%;
+    --c-3: hsla(299, 72%, 68%, 1);
+    --y-3: 7%;
+    --x-3: 24%;
+  }
+  100% {
+    --s-start-0: 9%;
+    --s-end-0: 55%;
+    --c-0: hsla(267, 52%, 83%, 1);
+    --y-0: 94%;
+    --x-0: 31%;
+    --s-start-1: 5%;
+    --s-end-1: 72%;
+    --c-1: hsla(337, 82%, 95%, 1);
+    --y-1: 25%;
+    --x-1: 2%;
+    --s-start-2: 5%;
+    --s-end-2: 52%;
+    --y-2: 20%;
+    --c-2: hsla(54, 100%, 65%, 0.49);
+    --x-2: 98%;
+    --s-start-3: 13%;
+    --s-end-3: 68%;
+    --c-3: hsla(299, 72%, 68%, 1);
+    --y-3: 92%;
+    --x-3: 95%;
+  }
+}
+
+/* -------------------------------- */
+/* 2) MAIN CHAT LAYOUT & BACKGROUND */
+/* -------------------------------- */
+
 body {
   margin: 0;
   padding: 0;
   font-family: "Inter", sans-serif;
-  background: linear-gradient(135deg, #d9e2ec, #bcccdc);
-  color: #2C2F33;
-
-  /* Remove scrolling so the page is static */
-  overflow: hidden;
 }
 
-/* === MAIN CONTAINER === */
+/* The container for our ChatBot page, 
+   with the animated radial background 
+   and grain overlay. */
 .chat-container {
+  min-height: 100vh;
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center; /* Center vertically/horizontally */
-  height: 100vh;           /* Full viewport height */
-  padding: 2rem;
+  justify-content: center;
+
   position: relative;
+  overflow: hidden; /* static page, no scrolling */
+
+  /* radial background from LandingPage */
+  --c-0: hsla(267, 52%, 83%, 1);
+  --y-0: 80%;
+  --x-0: 85%;
+  --c-1: hsla(336, 100%, 82%, 1);
+  --y-1: 24%;
+  --x-1: 60%;
+  --y-2: 82%;
+  --c-2: hsla(54, 100%, 65%, 0.49);
+  --x-2: 13%;
+  --c-3: hsla(299, 72%, 68%, 1);
+  --y-3: 7%;
+  --x-3: 24%;
+
+  background-color: hsla(115, 0%, 100%, 1);
+  background-image:
+    radial-gradient(circle at var(--x-0) var(--y-0),
+      var(--c-0) var(--s-start-0), transparent var(--s-end-0)),
+    radial-gradient(circle at var(--x-1) var(--y-1),
+      var(--c-1) var(--s-start-1), transparent var(--s-end-1)),
+    radial-gradient(circle at var(--x-2) var(--y-2),
+      var(--c-2) var(--s-start-2), transparent var(--s-end-2)),
+    radial-gradient(circle at var(--x-3) var(--y-3),
+      var(--c-3) var(--s-start-3), transparent var(--s-end-3));
+  background-blend-mode: normal, normal, normal, normal;
+  animation: hero-gradient-animation 10s linear infinite alternate;
 }
 
-/* === SHARED BOX STYLES (BORDER, RADIUS, ETC.) === */
+/* Grain overlay */
+.chat-container::after {
+  content: "";
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='grain' x='0' y='0'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='1.5' numOctaves='5' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23grain)' opacity='0.3'/%3E%3C/svg%3E");
+  mix-blend-mode: multiply;
+  opacity: 0.3;
+  pointer-events: none;
+}
+
+/* -------------------------------- */
+/* 3) BOXES & ELEMENTS STYLES       */
+/* -------------------------------- */
+
+/* General chat-box styling */
 .chat-box {
-  background: #f7fafc;
   border-radius: 24px;
   box-shadow: 0 6px 18px rgba(0, 0, 0, 0.1);
   margin-bottom: 1.5rem;
   position: relative;
 }
 
-/* === AI BOX (TOP BOX) ===
-   Smaller size, left-aligned */
+/* Smaller top box (AI box):
+   translucent like the Landing Page "info-cards" */
 .ai-box {
-  width: 80%;        
-  max-width: 1200px;  
-  min-height: 120px; /* not too tall */
+  width: 80%;
+  max-width: 1200px;
+  min-height: 120px;
   padding: 1.5rem;
   text-align: left;
-  background: linear-gradient(135deg, #f7fafc, #e2e8f0);
+
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+
+  color: #1a1a1a; /* matches Landing page text color */
   transition: transform 0.2s ease-in-out;
 }
 
@@ -51,23 +271,29 @@ body {
 .ai-box .text-content {
   font-size: 1rem;
   line-height: 1.5;
-  color: #2C2F33;
+  color: #1a1a1a;
 }
 
-/* === USER BOX (BOTTOM BOX) ===
-   Larger width, bigger min-height */
+/* Larger user box:
+   translucent but less than the AI box (lower opacity) */
 .user-box {
-  width: 80%;         /* wider */
-  max-width: 1200px;  /* bigger max */
-  min-height: 250px;  /* taller */
+  width: 80%;
+  max-width: 1200px;
+  min-height: 250px;
   padding: 1.5rem;
+
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+
+  color: #1a1a1a;
 }
 
-/* === ANSWER BUBBLE / TEXTAREA === */
+/* Textarea / answer-bubble */
 .answer-bubble {
   width: 100%;
   min-height: 80px;
-  max-height: 200px; /* auto-resize up to 200px, then scroll */
+  max-height: 200px;
   border: 2px solid #2c5282;
   border-radius: 16px;
   padding: 16px;
@@ -81,16 +307,13 @@ body {
   box-shadow: inset 0 2px 6px rgba(0, 0, 0, 0.08);
   resize: none;
 }
-
-/* Locked styling: can't type, but still can scroll */
 .answer-bubble.locked {
   background-color: #cbd5e0;
   opacity: 0.7;
-  /* IMPORTANT: pointer-events: auto -> so user can scroll */
-  pointer-events: auto;
+  pointer-events: auto; /* allow scrolling even if "locked" */
 }
 
-/* === SUBMIT & RECORD BUTTONS === */
+/* Buttons container */
 .button-container {
   display: flex;
   justify-content: space-between;
@@ -98,6 +321,7 @@ body {
   margin-top: 1rem;
 }
 
+/* Submit & Record button: now partly translucent */
 .submit-button,
 .record-button {
   padding: 0.75rem 1.5rem;
@@ -109,15 +333,24 @@ body {
   cursor: pointer;
   transition: all 0.3s ease;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  margin-right: 1rem;
 }
 
-/* Submit button styling */
+/* Blue gradient with partial alpha for the Submit button */
 .submit-button {
-  background: linear-gradient(135deg, #2c5282, #4299e1);
+  background: linear-gradient(
+    135deg,
+    rgba(44, 82, 130, 0.8),
+    rgba(66, 153, 225, 0.8)
+  );
   color: #ffffff;
 }
 .submit-button:hover {
-  background: linear-gradient(135deg, #1e3a5f, #3182ce);
+  background: linear-gradient(
+    135deg,
+    rgba(44, 82, 130, 0.9),
+    rgba(66, 153, 225, 0.9)
+  );
   transform: scale(1.05);
 }
 .submit-button:disabled {
@@ -125,13 +358,21 @@ body {
   cursor: not-allowed;
 }
 
-/* Record button styling */
+/* Red gradient with partial alpha for Record button */
 .record-button {
-  background: linear-gradient(135deg, #e53e3e, #f56565);
+  background: linear-gradient(
+    135deg,
+    rgba(229, 62, 62, 0.8),
+    rgba(245, 101, 101, 0.8)
+  );
   color: #ffffff;
 }
 .record-button:hover {
-  background: linear-gradient(135deg, #c53030, #e53e3e);
+  background: linear-gradient(
+    135deg,
+    rgba(229, 62, 62, 0.9),
+    rgba(245, 101, 101, 0.9)
+  );
   transform: scale(1.05);
 }
 .record-button:disabled {
@@ -139,18 +380,36 @@ body {
   cursor: not-allowed;
 }
 
-/* === FEEDBACK SECTION === */
+/* Quit button: opposite color of #ffeeb2 (pastel yellow) -> #b2ecff (pastel blue) */
+.quit-button {
+  padding: 0.75rem 1.5rem;
+  font-size: 1rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  background-color: #b2ecff;
+  color: #1a1a1a;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.quit-button:hover {
+  background-color: #a3def1;
+  transform: scale(1.05);
+}
+
+/* Feedback container */
 .feedback-container {
   margin-top: 1.5rem;
 }
-
 .feedback-heading {
   font-size: 1.2rem;
   font-weight: 700;
   color: #2c5282;
   margin-bottom: 8px;
 }
-
 .feedback-box {
   padding: 1rem;
   background: #edf2f7;
@@ -163,17 +422,20 @@ body {
   box-shadow: inset 0 2px 6px rgba(0, 0, 0, 0.08);
 }
 
-/* === NEXT QUESTION CONTAINER & BUTTON === */
+/* Next Question button */
 .next-question-container {
   margin-top: 1rem;
-  text-align: right; /* position button to bottom-right */
+  text-align: right;
 }
-
 .next-question-button {
   padding: 0.75rem 1.5rem;
   font-size: 1rem;
   font-weight: 600;
-  background: linear-gradient(135deg, #2c5282, #4299e1);
+  background: linear-gradient(
+    135deg,
+    rgba(44, 82, 130, 0.8),
+    rgba(66, 153, 225, 0.8)
+  );
   color: #ffffff;
   border: none;
   border-radius: 8px;
@@ -181,25 +443,23 @@ body {
   transition: all 0.3s ease;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
-
 .next-question-button:hover {
-  background: linear-gradient(135deg, #1e3a5f, #3182ce);
+  background: linear-gradient(
+    135deg,
+    rgba(44, 82, 130, 0.9),
+    rgba(66, 153, 225, 0.9)
+  );
+  transform: scale(1.05);
 }
 
-/* Mobile adjustments */
+/* Responsive */
 @media (max-width: 768px) {
-  .chat-container {
-    padding: 1rem;
-  }
-
   .ai-box {
     width: 90%;
   }
-
   .user-box {
     width: 90%;
   }
-
   .next-question-container {
     text-align: center;
     margin-top: 1rem;
