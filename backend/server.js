@@ -3,6 +3,8 @@ const OpenAI = require("openai");
 const express = require("express");
 const cors = require("cors");
 const path = require('path');
+const multer = require("multer");
+const fs = require("fs");
 const { createClient } = require("@supabase/supabase-js");
 
 dotenv.config();
@@ -35,6 +37,12 @@ app.options("*", (req, res) => {
 
 // Serve static files from the "public" directory
 app.use(express.static(path.join(__dirname, 'public')));
+
+const storage = multer.diskStorage({
+    destination: "uploads/",
+    filename: (req, file, cb) => cb(null, "audio.wav"),
+});
+const upload = multer({ storage });
 
 const supabase = createClient(
     process.env.SUPABASE_URL,
@@ -89,7 +97,7 @@ async function getAIResponse(answer, interview_qn, interview_type, context) {
             model: "gpt-4o-mini",
             messages: [
                 { role: "system", content: system_prompt },
-                ...context, // Include previous messages
+                // ...context, // Include previous messages
                 { role: "user", content: answer }
             ],
             temperature: 1.0,
@@ -112,18 +120,35 @@ async function testDBConnection() {
     }
 }
 
+// API to handle audio upload & transcription
+app.post("/api/v1/transcribe", upload.single("audio"), async (req, res) => {
+    try {
+        const transcription = await openai.audio.transcriptions.create({
+            file: fs.createReadStream(req.file.path),
+            model: "whisper-1",
+        });
+
+        fs.unlinkSync(req.file.path); // Clean up uploaded file
+        res.json({ text: transcription.text });
+    } catch (error) {
+        console.error("Transcription error:", error);
+        res.status(500).json({ error: "Transcription failed" });
+    }
+});
+
 app.post("/api/v1/answer", async (req, res) => {
     console.log(req.body);
     let answer = req.body.answer;
     let interview_qn = req.body.interview_qn;
     let interview_type = req.body.interview_type || "general";
-    let context = req.body.context || [];
+    // let context = req.body.context || [];
 
     if (!answer) {
         return res.status(400).json({ error: "Missing 'answer' in request body." });
     }
 
-    const response = await getAIResponse(answer, interview_qn, interview_type, context);
+    // const response = await getAIResponse(answer, interview_qn, interview_type, context);
+    const response = await getAIResponse(answer, interview_qn, interview_type);
 
     res.json({ feedback: response });
 });
