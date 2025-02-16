@@ -1,34 +1,46 @@
 @import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap");
 
+/* === PAGE-LEVEL STYLES === */
 body {
   margin: 0;
   padding: 0;
   font-family: "Inter", sans-serif;
-  background: linear-gradient(135deg, #d9e2ec, #bcccdc); /* Smooth modern gradient */
+  background: linear-gradient(135deg, #d9e2ec, #bcccdc);
   color: #2C2F33;
+
+  /* Remove scrolling so the page is static */
   overflow: hidden;
 }
 
-/* === MAIN LAYOUT === */
+/* === MAIN CONTAINER === */
 .chat-container {
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
-  height: 100vh;
+  justify-content: center; /* Center vertically/horizontally */
+  height: 100vh;           /* Full viewport height */
   padding: 2rem;
   position: relative;
 }
 
-/* === AI QUESTION BOX === */
-.ai-box {
-  width: 100%;
-  max-width: 800px;
-  background: linear-gradient(135deg, #f7fafc, #e2e8f0); /* Soft gradient */
+/* === SHARED BOX STYLES (BORDER, RADIUS, ETC.) === */
+.chat-box {
+  background: #f7fafc;
   border-radius: 24px;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.1);
+  margin-bottom: 1.5rem;
+  position: relative;
+}
+
+/* === AI BOX (TOP BOX) ===
+   Smaller size, left-aligned */
+.ai-box {
+  width: 80%;        
+  max-width: 1200px;  
+  min-height: 120px; /* not too tall */
   padding: 1.5rem;
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12); /* Subtle depth */
-  text-align: center;
+  text-align: left;
+  background: linear-gradient(135deg, #f7fafc, #e2e8f0);
   transition: transform 0.2s ease-in-out;
 }
 
@@ -36,75 +48,62 @@ body {
   transform: scale(1.02);
 }
 
-.ai-box h2 {
-  font-size: 1.5rem;
-  font-weight: 700;
-  color: #2c5282;
-  margin-bottom: 1rem;
+.ai-box .text-content {
+  font-size: 1rem;
+  line-height: 1.5;
+  color: #2C2F33;
 }
 
-/* === ANSWER SECTION (USER RESPONSE) === */
+/* === USER BOX (BOTTOM BOX) ===
+   Larger width, bigger min-height */
 .user-box {
-  width: 100%;
-  max-width: 800px;
-  background: #f7fafc;
-  border-radius: 24px;
+  width: 80%;         /* wider */
+  max-width: 1200px;  /* bigger max */
+  min-height: 250px;  /* taller */
   padding: 1.5rem;
-  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.1);
-  margin-top: 1rem;
-  position: relative;
 }
 
-.user-box h2 {
-  font-size: 1.5rem;
-  font-weight: 700;
-  color: #2c5282;
-  margin-bottom: 1rem;
-}
-
-/* === ANSWER BUBBLE (Locks after submission) === */
-
-
-/* Add this to ChatBot.css */
-.answer-bubble.placeholder::before {
-    content: attr(data-placeholder);
-    color: #aaa;
-    pointer-events: none;
-    display: block;
-  }
-
+/* === ANSWER BUBBLE / TEXTAREA === */
 .answer-bubble {
-width: 100%;
-min-height: 80px;
-max-height: 200px;
-border: 2px solid #2c5282;
-border-radius: 16px;
-padding: 16px;
-font-size: 1rem;
-line-height: 1.6;
-background-color: #ebf4ff;
-color: #2C2F33;
-overflow-y: auto;
-box-sizing: border-box;
-transition: all 0.3s ease-in-out;
-box-shadow: inset 0 2px 6px rgba(0, 0, 0, 0.08);
-resize: none; /* Prevent resizing */
+  width: 100%;
+  min-height: 80px;
+  max-height: 200px; /* auto-resize up to 200px, then scroll */
+  border: 2px solid #2c5282;
+  border-radius: 16px;
+  padding: 16px;
+  font-size: 1rem;
+  line-height: 1.6;
+  background-color: #ebf4ff;
+  color: #2C2F33;
+  overflow-y: auto;
+  box-sizing: border-box;
+  transition: all 0.3s ease-in-out;
+  box-shadow: inset 0 2px 6px rgba(0, 0, 0, 0.08);
+  resize: none;
 }
-  
+
+/* Locked styling: can't type, but still can scroll */
 .answer-bubble.locked {
-background-color: #cbd5e0;
-pointer-events: none;
-opacity: 0.7;
+  background-color: #cbd5e0;
+  opacity: 0.7;
+  /* IMPORTANT: pointer-events: auto -> so user can scroll */
+  pointer-events: auto;
 }
-/* === SUBMIT BUTTON === */
-.submit-button {
+
+/* === SUBMIT & RECORD BUTTONS === */
+.button-container {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
   margin-top: 1rem;
+}
+
+.submit-button,
+.record-button {
   padding: 0.75rem 1.5rem;
   font-size: 1rem;
   font-weight: 600;
   text-transform: uppercase;
-  background: linear-gradient(135deg, #2c5282, #4299e1);
-  color: #ffffff;
   border: none;
   border-radius: 8px;
   cursor: pointer;
@@ -112,17 +111,35 @@ opacity: 0.7;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 
+/* Submit button styling */
+.submit-button {
+  background: linear-gradient(135deg, #2c5282, #4299e1);
+  color: #ffffff;
+}
 .submit-button:hover {
   background: linear-gradient(135deg, #1e3a5f, #3182ce);
   transform: scale(1.05);
 }
-
 .submit-button:disabled {
   background: #718096;
   cursor: not-allowed;
 }
 
-/* === FEEDBACK SECTION (SCROLLABLE) === */
+/* Record button styling */
+.record-button {
+  background: linear-gradient(135deg, #e53e3e, #f56565);
+  color: #ffffff;
+}
+.record-button:hover {
+  background: linear-gradient(135deg, #c53030, #e53e3e);
+  transform: scale(1.05);
+}
+.record-button:disabled {
+  background: #718096;
+  cursor: not-allowed;
+}
+
+/* === FEEDBACK SECTION === */
 .feedback-container {
   margin-top: 1.5rem;
 }
@@ -146,12 +163,13 @@ opacity: 0.7;
   box-shadow: inset 0 2px 6px rgba(0, 0, 0, 0.08);
 }
 
-/* === NEXT QUESTION BUTTON (FLOATS ON RIGHT) === */
+/* === NEXT QUESTION CONTAINER & BUTTON === */
+.next-question-container {
+  margin-top: 1rem;
+  text-align: right; /* position button to bottom-right */
+}
+
 .next-question-button {
-  position: absolute;
-  right: 2rem;
-  top: 50%;
-  transform: translateY(-50%);
   padding: 0.75rem 1.5rem;
   font-size: 1rem;
   font-weight: 600;
@@ -162,66 +180,28 @@ opacity: 0.7;
   cursor: pointer;
   transition: all 0.3s ease;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-  display: none;
-}
-
-.next-question-button.show {
-  display: block;
 }
 
 .next-question-button:hover {
   background: linear-gradient(135deg, #1e3a5f, #3182ce);
 }
 
+/* Mobile adjustments */
 @media (max-width: 768px) {
   .chat-container {
     padding: 1rem;
-    height: auto;
   }
 
-  .ai-box, .user-box {
-    width: 100%;
-    max-width: none;
+  .ai-box {
+    width: 90%;
   }
 
-  .next-question-button {
-    position: static;
-    margin-top: 1rem;
-    transform: none;
+  .user-box {
+    width: 90%;
+  }
+
+  .next-question-container {
     text-align: center;
-    display: block;
-  }
-}
-
-.button-container {
-    display: flex;
-    justify-content: space-between;
-    width: 100%;
-    max-width: 800px;
     margin-top: 1rem;
   }
-  
-  /* Record button styles */
-.record-button {
-    padding: 0.75rem 1.5rem;
-    font-size: 1rem;
-    font-weight: 600;
-    text-transform: uppercase;
-    background: linear-gradient(135deg, #e53e3e, #f56565);
-    color: #ffffff;
-    border: none;
-    border-radius: 8px;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-}
-  
-.record-button:hover {
-background: linear-gradient(135deg, #c53030, #e53e3e);
-transform: scale(1.05);
-}
-
-.record-button:disabled {
-background: #718096;
-cursor: not-allowed;
 }
