@@ -1,41 +1,93 @@
-import "../Styles/ChatBot.css";
-import React, { useState } from 'react';
+"use client"
 
-export default function ChatBot() {
-    // Define the messages state as an array of objects
-    const [messages, setMessages] = useState([
-        {
-            text: "What are your future goals?",
-            isBot: true
-        },
-        {
-            text: "I want to be a software engineer",
-            isBot: false
-        }
-    ]);
+import { useState, useEffect, useRef } from "react"
+import "../Styles/ChatBot.css"
 
-    return (
-        <div className="container">
-            <div className="chat-box">
-                <div className="col-1">
-                    <div className="bot-message-box">
-                        <div className="bot-message">
-                            <p> What are your future goals</p>
-                        </div>
-                    </div>
-                </div>
-                <div className="col-2">
-                    <div className="user-message-box">
-                        <div className="user-message">
-                            <p> I want to be a software engineer</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div className="input-box">
-                <input className="answer" type="text" placeholder="Type your message here" />
-                <button className="submit">Send</button>
-            </div>
-        </div>
-    )
+const ChatBot = () => {
+  const [userInput, setUserInput] = useState("")
+  const [aiQuestion, setAiQuestion] = useState("")
+  const [feedback, setFeedback] = useState("")
+  const [showNextButton, setShowNextButton] = useState(false)
+  const textareaRef = useRef(null)
+
+  useEffect(() => {
+    fetchNextQuestion()
+  }, [])
+
+  const adjustTextareaHeight = () => {
+    const textarea = textareaRef.current
+    if (textarea) {
+      textarea.style.height = "auto"
+      const newHeight = Math.min(textarea.scrollHeight, 400)
+      textarea.style.height = `${newHeight}px`
+    }
+  }
+
+  const handleUserInput = (e) => {
+    setUserInput(e.target.value)
+    adjustTextareaHeight()
+  }
+
+  const handleKeyPress = (e) => {
+    if (e.key === "Enter" && !e.shiftKey) {
+      e.preventDefault()
+      submitAnswer()
+    }
+  }
+
+  const fetchNextQuestion = async () => {
+    // Simulating API response
+    const mockResponse = { question: "Tell me about a time when you solved a difficult problem." };
+  
+    setAiQuestion(mockResponse.question);
+    setUserInput("");
+    setFeedback("");
+    setShowNextButton(false);
+    adjustTextareaHeight();
+  };
+  
+  const submitAnswer = async () => {
+    if (userInput.trim()) {
+      // Simulated response from backend
+      const mockResponse = { feedback: "Great response! Try to be more specific about your role." };
+  
+      setFeedback(mockResponse.feedback);
+      setShowNextButton(true);
+    }
+  };
+  
+
+  return (
+    <div className="chat-container">
+      <div className="moving-background"></div>
+      <div className="chat-box ai-box">
+        <h2>AI Interviewer</h2>
+        <div className="text-content">{aiQuestion}</div>
+      </div>
+      <div className="chat-box user-box">
+        <h2>Your Response</h2>
+        <textarea
+          ref={textareaRef}
+          value={userInput}
+          onChange={handleUserInput}
+          onKeyPress={handleKeyPress}
+          placeholder="Type your answer here and press Enter to submit..."
+          rows={1}
+        />
+        {feedback && (
+          <div className="feedback-box">
+            <h3>Feedback</h3>
+            <p>{feedback}</p>
+          </div>
+        )}
+        {showNextButton && (
+          <button className="next-question-button" onClick={fetchNextQuestion}>
+            Next Question
+          </button>
+        )}
+      </div>
+    </div>
+  )
 }
+
+export default ChatBot
