@@ -36,20 +36,25 @@ const ChatBot = () => {
   }
 
   const fetchNextQuestion = async () => {
-    // Simulating API response
+    // Simulated API response
     const mockResponse = { question: "Tell me about a time when you solved a difficult problem." };
   
     setAiQuestion(mockResponse.question);
     setUserInput("");
     setFeedback("");
     setShowNextButton(false);
-    adjustTextareaHeight();
+  
+    // Reset textarea height
+    if (textareaRef.current) {
+      textareaRef.current.style.height = "80px"; // Reset textarea to default size
+    }
   };
+  
   
   const submitAnswer = async () => {
     if (userInput.trim()) {
       // Simulated response from backend
-      const mockResponse = { feedback: "Great response! Try to be more specific about your role." };
+      const mockResponse = { feedback: "Lorem Ipsum comes from sections 1.10.32 and 1.10.33 ofLorem Ipsum comes from sections 1.10.32 and 1.10.33 ofLorem Ipsum comes from sections 1.10.32 and 1.10.33 ofLorem Ipsum comes from sections 1.10.32 and 1.10.33 ofLorem Ipsum comes from sections 1.10.32 and 1.10.33 ofLorem Ipsum comes from sections 1.10.32 and 1.10.33 of \"de Finibus Bonorum et Malorum\" (The Extremes of Good and Evil) by Cicero, written in 45 BC. This book is a treatise on the theory of ethics, very popular during the Renaissance. The first line of Lorem Ipsum, \"Lorem ipsum dolor sit amet..\", comes from a line in section 1.10.32. The standard chunk of Lorem Ipsum used since the 1500s is reproduced below for those interested. Sections 1.10.32 and 1.10.33 from \"de Finibus Bonorum et Malorum\" by Cicero are also reproduced in their exact original form, accompanied by English versions from the 1914 translation by H. Rackham." };
   
       setFeedback(mockResponse.feedback);
       setShowNextButton(true);
@@ -75,11 +80,14 @@ const ChatBot = () => {
           rows={1}
         />
         {feedback && (
-          <div className="feedback-box">
-            <h3>Feedback</h3>
+        <div className="feedback-container">
+            <h3 className="feedback-heading">Feedback</h3>
+            <div className="feedback-box">
             <p>{feedback}</p>
-          </div>
+            </div>
+        </div>
         )}
+
         {showNextButton && (
           <button className="next-question-button" onClick={fetchNextQuestion}>
             Next Question
