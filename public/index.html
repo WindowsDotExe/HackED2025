@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Interview Simulator</title>
+</head>
+<body>
+    <h1>AI Job Interview Simulator</h1>
+    <h2 id="interview_qn">Loading question...</h2>
+    
+    <select name="Interview type" id="interview_type">
+        <option value="general">General</option>
+        <option value="computer-science">Computer Science</option>
+        <option value="finance">Finance</option>
+    </select>
+    
+    <input type="text" id="input" placeholder="Answer question...">
+    <button onclick="answer()">Answer</button>
+    <p id="output"></p>
+
+    <script>
+        async function fetchInterviewQuestion() {
+            try {
+                const interviewType = document.getElementById('interview_type').value;
+                const response = await fetch(`/api/v1/question?type=${interviewType}`); // Use relative path
+                const data = await response.json();
+                document.getElementById('interview_qn').innerText = data.question || "No question found.";
+            } catch (error) {
+                console.error("Error fetching question:", error);
+                document.getElementById('interview_qn').innerText = "Error loading question.";
+            }
+        }
+
+        // Fetch first question when the page loads
+        window.onload = fetchInterviewQuestion;
+
+        async function answer() {
+            const input = document.getElementById('input').value;
+            const interviewType = document.getElementById('interview_type').value;
+            const interviewQuestion = document.getElementById('interview_qn').innerText;
+
+            const response = await fetch('/api/v1/answer', { // Use relative path
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    answer: input,
+                    interview_qn: interviewQuestion,
+                    interview_type: interviewType
+                })
+            });
+
+            const data = await response.json();
+            document.getElementById('output').innerText = data.feedback;
+            document.getElementById('input').value = '';
+
+            // Fetch a new question after answering
+            fetchInterviewQuestion();
+        }
+    </script>
+</body>
+</html>
