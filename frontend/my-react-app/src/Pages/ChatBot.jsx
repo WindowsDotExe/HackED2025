@@ -1,111 +1,87 @@
-import "../Styles/ChatBot.css";
-import React, { useState, useEffect, useRef } from 'react';
+"use client"
+import "../Styles/ChatBot.css"
 
-export default function ChatBot() {
-    const [messages, setMessages] = useState([]); // Stores chat history
-    const [input, setInput] = useState(""); // Stores user input
-    const [interviewQuestion, setInterviewQuestion] = useState("Loading question...");
-    const [interviewType, setInterviewType] = useState("general");
-    const [hasAnswered, setHasAnswered] = useState(false); // Track if user has answered
-    const messagesEndRef = useRef(null); // Ref for auto-scrolling
+import React, { useState, useEffect, useRef } from "react"
 
-    // Fetch a new interview question from backend
-    async function fetchInterviewQuestion() {
-        try {
-            const response = await fetch(`http://localhost:8000/api/v1/question?type=${interviewType}`);
-            const data = await response.json();
-            setInterviewQuestion(data.question || "No question found.");
-            setMessages([{ text: data.question, isBot: true }]); // Reset messages with new question
-            setHasAnswered(false); // Reset answer state
-        } catch (error) {
-            console.error("Error fetching question:", error);
-            setInterviewQuestion("Error loading question.");
-        }
+const ChatBot = () => {
+  const [userInput, setUserInput] = useState("")
+  const [aiQuestion, setAiQuestion] = useState("")
+  const [feedback, setFeedback] = useState("")
+  const [showNextButton, setShowNextButton] = useState(false)
+  const [isSubmitted, setIsSubmitted] = useState(false)
+  const [isRecording, setIsRecording] = useState(false)
+  const textareaRef = useRef(null)
+
+  useEffect(() => {
+    fetchNextQuestion()
+  }, [])
+
+  const fetchNextQuestion = async () => {
+    setAiQuestion("Tell me about a time when you solved a difficult problem.")
+    setUserInput("")
+    setFeedback("")
+    setShowNextButton(false)
+    setIsSubmitted(false)
+
+    if (textareaRef.current) {
+      textareaRef.current.style.height = "80px"
     }
+  }
 
-    // Send answer & get AI feedback (including context)
-    async function answer() {
-        if (!input.trim()) return; // Prevent empty submissions
-
-        const userMessage = { text: input, isBot: false };
-        const updatedMessages = [...messages, userMessage]; // Keep previous messages in context
-        setMessages(updatedMessages);
-        setInput(""); // Clear input
-
-        try {
-            const response = await fetch("http://localhost:8000/api/v1/answer", {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({
-                    answer: input,
-                    interview_qn: interviewQuestion,
-                    interview_type: interviewType,
-                    context: updatedMessages.map(msg => ({ role: msg.isBot ? "assistant" : "user", content: msg.text }))
-                })
-            });
-
-            const data = await response.json();
-            const botMessage = { text: data.feedback, isBot: true };
-
-            setMessages(prevMessages => [...prevMessages, botMessage]); // Add AI response
-            setHasAnswered(true); // Enable "Next Question" button
-        } catch (error) {
-            console.error("Error submitting answer:", error);
-        }
+  const submitAnswer = () => {
+    if (userInput.trim()) {
+      setFeedback(
+        "Your response demonstrates problem-solving skills and initiative. Consider providing more specific details about the steps you took to solve the problem and the outcome of your actions."
+      )
+      setShowNextButton(true)
+      setIsSubmitted(true)
     }
+  }
 
-    // Scroll to the latest message when messages update
-    useEffect(() => {
-        messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
-    }, [messages]);
+  const toggleRecording = () => {
+    setIsRecording(!isRecording)
+    // Add your speech-to-text logic here
+  }
 
-    // Handle Enter key submission
-    function handleKeyPress(event) {
-        if (event.key === "Enter") {
-            event.preventDefault(); // Prevents new line in input field
-            answer(); // Calls the send function
-        }
-    }
-
-    // Fetch initial question when component mounts
-    useEffect(() => {
-        fetchInterviewQuestion();
-    }, []);
-
-    return (
-        <div className="container">
-            <div className="chat-box">
-                <div className="message-container">
-                    {messages.map((msg, index) => (
-                        <div key={index} className={msg.isBot ? "col-1" : "col-2"}>
-                            <div className={msg.isBot ? "bot-message-box" : "user-message-box"}>
-                                <div className={msg.isBot ? "bot-message" : "user-message"}>
-                                    <p>{msg.text}</p>
-                                </div>
-                            </div>
-                        </div>
-                    ))}
-                    <div ref={messagesEndRef} /> {/* Auto-scroll to this div */}
-                </div>
-            </div>
-            <div className="input-box">
-                <input 
-                    className="answer" 
-                    type="text" 
-                    placeholder="Type your message here" 
-                    value={input}
-                    onChange={(e) => setInput(e.target.value)}
-                    onKeyDown={handleKeyPress} // Listens for Enter key
-                />
-                <button className="submit" onClick={answer}>Send</button>
-            </div>
-            <div className="button-box">
-                {hasAnswered && (
-                    <button className="next-question" onClick={fetchInterviewQuestion}>
-                        Next Question
-                    </button>
-                )}
-            </div>
+  return (
+    <div className="chat-container">
+      <div className="moving-background"></div>
+      <div className="chat-box ai-box">
+        <h2>AI Interviewer</h2>
+        <div className="text-content">{aiQuestion}</div>
+      </div>
+      <div className="chat-box user-box">
+        <h2>Your Response</h2>
+        <textarea
+          className={`answer-bubble ${isSubmitted ? "locked" : ""}`}
+          ref={textareaRef}
+          value={userInput}
+          onChange={(e) => !isSubmitted && setUserInput(e.target.value)}
+          placeholder="Your answer will appear here..."
+          disabled={isSubmitted}
+        />
+        <div className="button-container">
+          <button className="submit-button" onClick={submitAnswer} disabled={isSubmitted}>
+            Submit
+          </button>
+          <button className="record-button" onClick={toggleRecording}>
+            {isRecording ? "Stop Recording" : "Start Recording"}
+          </button>
         </div>
-    );
+        {feedback && (
+          <div className="feedback-container">
+            <h3 className="feedback-heading">Feedback</h3>
+            <div className="feedback-box">
+              <p>{feedback}</p>
+            </div>
+          </div>
+        )}
+      </div>
+      <button className={`next-question-button ${showNextButton ? "show" : ""}`} onClick={fetchNextQuestion}>
+        Next Question
+      </button>
+    </div>
+  )
 }
+
+export default ChatBot
