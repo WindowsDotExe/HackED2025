@@ -1,0 +1,91 @@
+.container {
+    width: 100%;
+    height: 100vh;
+    background-image: linear-gradient(to right, #bcb5e9, #7169e3);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.chat-box {
+    width: 70%;
+    height: 80%;
+    min-width: 250px;
+    display: flex;
+    flex-direction: column; /* Stack the messages vertically */
+}
+
+.col-1,
+.col-2 {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%; /* Ensure full width for each column */
+}
+
+.bot-message-box,
+.user-message-box {
+    padding: 20px 40px;
+    border-radius: 8px;
+    font-weight: 300;
+    width: 80%; /* Adjust width of the message box */
+    margin-bottom: 10px; /* Space between messages */
+}
+
+.bot-message {
+    background-color: #c9c5c5;
+    padding: 10px;
+    border-radius: 10px;
+}
+
+.user-message {
+    background-color: #93dc39;
+    color: rgb(255, 255, 255);
+    padding: 10px;
+    border-radius: 10px;
+}
+
+.input-box {
+    width: 70%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 20px;
+    padding: 10px;
+    background-color: rgba(255, 255, 255, 0.8); /* Slight transparent background */
+    border-radius: 8px; /* Rounded corners */
+}
+
+.answer {
+    width: 85%;
+    padding: 12px 20px;
+    border-radius: 8px;
+    border: 2px solid #7169e3;
+    font-size: 16px;
+    background-color: #fff;
+    color: #7169e3;
+    outline: none;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease-in-out;
+}
+
+.answer:focus {
+    border-color: #5a4dcd;
+    box-shadow: 0 4px 12px rgba(90, 77, 205, 0.3);
+}
+
+.submit {
+    padding: 12px 20px;
+    background-color: #93dc39;
+    border: none;
+    border-radius: 8px;
+    color: #fff;
+    font-size: 16px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.submit:hover {
+    background-color: #7bbf2f;
+}
