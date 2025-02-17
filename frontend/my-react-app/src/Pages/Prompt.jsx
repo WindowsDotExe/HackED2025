@@ -1,6 +1,7 @@
 "use client"
 import "../Styles/Prompt.css"
 import { useState } from "react"
+import { FiCheck } from "react-icons/fi"
 
 const Prompt = () => {
   const [prompt, setPrompt] = useState("")
@@ -36,11 +37,11 @@ const Prompt = () => {
       {/* Submit Button or Loading Animation */}
       {!loading ? (
         <button
-          className={`button-30 prompt-submit ${!prompt.trim() ? "disabled" : ""}`}
+          className={`prompt-submit ${!prompt.trim() ? "disabled" : ""}`}
           onClick={handleSubmit}
           disabled={!prompt.trim()}
         >
-          Submit
+          <FiCheck /> Submit 
         </button>
       ) : (
         <div className="loading-section">
