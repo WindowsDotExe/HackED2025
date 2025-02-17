@@ -231,6 +231,35 @@
   margin-top: 2rem; /* Adjusted to ensure it's not too high */
 }
 
+
+.flux-text {
+  display: inline-block;
+  color: #1a1a1a; /* or #000, whichever you prefer for normal text */
+  transition: color 0.5s ease, text-shadow 0.5s ease;
+}
+
+/* When fluxGlowing is true (i.e. .glowing is applied), 
+   we change the text color to neon pink & add a glow animation. */
+.flux-text.glowing {
+  color: #ff0080; /* Neon pink text color */
+  animation: neonFlux 3s infinite alternate ease-in-out; /* Slowed down the animation */
+}
+
+/* Keyframes for the neon glow pulse */
+@keyframes neonFlux {
+  0% {
+    text-shadow: 0 0 4px rgba(255, 0, 128, 0.2);
+  }
+  50% {
+    text-shadow: 0 0 12px rgba(255, 0, 128, 0.8);
+  }
+  100% {
+    text-shadow: 0 0 4px rgba(255, 0, 128, 0.2);
+  }
+}
+
+
+
 .cards-grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
