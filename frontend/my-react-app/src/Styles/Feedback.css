@@ -1,82 +1,96 @@
 @import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap");
+@import url('https://fonts.googleapis.com/css2?family=Fraunces:wght@400;500;600&display=swap');
 
 .carousel-background {
   min-height: 100vh;
   display: flex;
+  flex-direction: column;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start; /* Move content up */
   background: linear-gradient(135deg, #fdd5fc 0%, #d1e8ff 100%);
   font-family: "Inter", sans-serif;
+  padding: 40px 40px 100px; /* Reduced side padding & added bottom space */
+}
+
+/* Heading */
+.carousel-heading {
+  font-size: 3rem; /* Increased size */
+  font-weight: 700; /* Increased weight */
+  margin-bottom: 30px; /* Increased margin */
+  color: #333;
+  font-family: "Fraunces", sans-serif;
 }
 
 /* CAROUSEL WRAPPER */
 .carousel-wrapper {
   position: relative;
-  width: 90%;
-  max-width: 1200px; /* Increased max-width for larger cards */
-  height: 500px; /* Increased height for larger cards */
+  width: 95%; /* Reduced width to decrease spacing on edges */
+  max-width: 1400px; /* Increased max-width */
+  height: 550px; /* Increased height */
   display: flex;
   align-items: center;
   justify-content: center;
   perspective: 1200px;
+  margin-top: 20px; /* Increased margin */
 }
 
 /* CAROUSEL CARD BASE STYLE */
 .carousel-card {
   position: absolute;
-  width: 400px; /* Increased width for larger cards */
+  width: 650px; /* Increased size */
   max-width: 90%;
-  min-height: 400px; /* Increased min-height for larger cards */
+  min-height: 450px; /* Increased height */
   background: white;
-  border-radius: 16px;
-  padding: 2rem; /* Increased padding for larger cards */
+  border-radius: 20px;
+  padding: 2rem;
   text-align: center;
   transition: transform 0.6s ease-in-out, opacity 0.4s ease-in-out, box-shadow 0.4s ease-in-out;
-  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
   cursor: pointer;
   user-select: none;
 }
 
-/* CENTER CARD (FOCUSED) */
+/* CENTER CARD (Still bigger, but slightly reduced) */
 .center-card {
-  transform: translateX(0) scale(1);
+  transform: translateX(0) scale(1.05);
   z-index: 3;
   opacity: 1;
   font-weight: bold;
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 25px 50px rgba(0, 0, 0, 0.2);
+  transition: transform 0.5s ease-in-out, opacity 0.1s linear;
 }
 
-/* LEFT AND RIGHT CARDS */
+/* LEFT & RIGHT CARDS (Moved Inward Even More) */
 .left-card {
-  transform: translateX(-350px) scale(0.9); /* Increased spacing */
+  transform: translateX(-400px) scale(0.75); /* Adjusted for wider cards */
   z-index: 2;
-  opacity: 0.6;
+  opacity: 0.7;
 }
 
 .right-card {
-  transform: translateX(350px) scale(0.9); /* Increased spacing */
+  transform: translateX(400px) scale(0.75); /* Adjusted for wider cards */
   z-index: 2;
-  opacity: 0.6;
+  opacity: 0.7;
 }
 
-/* HIDDEN CARDS (BEYOND LEFT/RIGHT) */
+/* HIDDEN CARDS (Prevent Transparency Overlap) */
 .hidden-card {
-  transform: scale(0.8);
+  transform: scale(0.5);
   opacity: 0;
   pointer-events: none;
 }
 
-/* Remove hover effect */
+/* Remove Hover Effects That Moved the Cards */
 .left-card:hover,
 .right-card:hover {
-  transform: translateX(-350px) scale(0.9);
+  transform: translateX(-400px) scale(0.75);
 }
 
 .right-card:hover {
-  transform: translateX(350px) scale(0.9);
+  transform: translateX(400px) scale(0.75);
 }
 
-/* Ensure only clicking moves a card */
+/* Click Feedback */
 .carousel-card:active {
-  transform: scale(0.95);
+  transform: scale(0.98);
 }
