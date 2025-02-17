@@ -41,7 +41,7 @@ const FeedbackCarousel = () => {
               }`}
               onClick={() => handleCardClick(index)}
             >
-              <h2>{item.question}</h2>
+              <h2 className="center-align">{item.question}</h2>
 
               <strong className="left-align">Your Response:</strong>
               <div className="response-container">

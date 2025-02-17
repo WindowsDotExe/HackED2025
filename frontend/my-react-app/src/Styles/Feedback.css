@@ -34,37 +34,42 @@
   margin-top: 20px;
 }
 
-/* ✅ BASE CARD STYLING (Glassmorphism) */
+/* BASE CARD STYLING (Glass-like but more transparent) */
 .carousel-card {
   position: absolute;
   width: 650px;
   max-width: 90%;
-  min-height: 450px;
-  background: rgba(255, 255, 255, 0.2);
+  min-height: 480px;
+  /* Use a very subtle background for transparency */
+  background: rgba(255, 255, 255, 0.05); 
   border-radius: 20px;
   padding: 2rem;
-  text-align: left; /* ✅ Align text to the left */
-  backdrop-filter: blur(15px) saturate(150%);
-  border: 1px solid rgba(255, 255, 255, 0.3);
+  text-align: left; 
+  /* Keep some blur/saturate for a glassy effect, or adjust as needed */
+  backdrop-filter: blur(15px) saturate(120%);
+  border: 1px solid rgba(255, 255, 255, 0.1); 
   box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
   cursor: pointer;
   user-select: none;
-  transition: transform 0.6s ease-in-out, opacity 0.4s ease-in-out, box-shadow 0.4s ease-in-out;
+  transition: transform 0.6s ease-in-out, 
+              opacity 0.4s ease-in-out, 
+              box-shadow 0.4s ease-in-out;
 }
 
-/* ✅ CENTER CARD */
+/* CENTER CARD (slightly more pronounced, but still transparent) */
 .center-card {
   transform: translateX(0) scale(1.05);
   z-index: 5;
   opacity: 1;
-  font-weight: bold;
   box-shadow: 0 25px 50px rgba(0, 0, 0, 0.2);
   transition: transform 0.5s ease-in-out, opacity 0.1s linear;
-  background: rgba(255, 255, 255, 0.5);
-  backdrop-filter: blur(30px) saturate(200%);
-  border: 1px solid rgba(255, 255, 255, 0.5);
+  /* Subtly more visible background than .carousel-card */
+  background: rgba(255, 255, 255, 0.1); 
+  backdrop-filter: blur(30px) saturate(150%);
+  border: 1px solid rgba(255, 255, 255, 0.2); 
   pointer-events: none;
 }
+
 
 /* ✅ LEFT & RIGHT CARDS */
 .left-card {
@@ -104,16 +109,22 @@
   transform: scale(0.98);
 }
 
-/* ✅ RESPONSE & FEEDBACK CONTAINERS */
-.response-container, .feedback-container {
-  background: rgba(255, 255, 255, 0.3);
-  padding: 10px;
+.response-container,
+.feedback-container {
+  /* A white tint with translucency */
+  background: rgba(255, 255, 255, 0.2); 
+  padding: 15px;
+  padding-top: 5px;
   border-radius: 10px;
-  margin-top: 5px;
-  max-height: 4.5em; /* Limits height to approximately 4 lines */
-  overflow-y: auto; /* Enables scrolling if text exceeds 4 lines */
-  line-height: 1.2em; /* Adjusts line spacing */
+  margin-top: 10px;
+  min-height: 11em;
+  max-height: 11em; 
+  overflow-y: auto; 
+  line-height: 1.4em; 
+  box-shadow: inset 0 4px 8px 2px rgba(0, 0, 0, 0.2);
+  font-size: 0.9rem;
 }
+
 
 /* ✅ Hide scrollbar in Webkit browsers */
 .response-container::-webkit-scrollbar,
@@ -138,4 +149,11 @@
   text-align: left;
   display: block;
   margin-top: 15px;
+}
+
+.center-align {
+  font-weight: bold;
+  text-align: center;
+  display: block;
+  margin-top: 2px;
 }
