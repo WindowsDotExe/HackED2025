@@ -28,7 +28,6 @@ const FeedbackCarousel = () => {
 
   return (
     <div className="carousel-background">
-      {/* ✅ Added Heading */}
       <h1 className="carousel-heading">So, how did you do?</h1>
 
       <div className="carousel-wrapper">
@@ -49,9 +48,17 @@ const FeedbackCarousel = () => {
               }`}
               onClick={() => handleCardClick(index)}
             >
-              <h2>{item.question}</h2>
-              <p className="carousel-response">{item.response}</p>
-              <p className="carousel-feedback">{item.feedback}</p>
+              <h2 className="center-align">{item.question}</h2>
+
+              <strong className="left-align">Your Response:</strong>
+              <div className="response-container">
+                <p>{item.response}</p>
+              </div>
+
+              <strong className="left-align">Flux Feedback:</strong>
+              <div className="feedback-container">
+                <p>{item.feedback}</p>
+              </div>
             </div>
           );
         })}
