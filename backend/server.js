@@ -5,6 +5,8 @@ const cors = require("cors");
 const path = require('path');
 const multer = require("multer");
 const fs = require("fs");
+const FormData = require("form-data");
+const axios = require("axios");
 const { createClient } = require("@supabase/supabase-js");
 
 dotenv.config();
@@ -110,6 +112,45 @@ async function getAIResponse(answer, interview_qn, interview_type, context) {
     }
 }
 
+async function getAIQuestions(role) {
+    try {
+        const response = await openai.chat.completions.create({
+            model: "gpt-4o-mini",
+            response_format: { type: "json_object" },
+            messages: [
+                {
+                    role: "system",
+                    content: `You are a professional interviewer generating behavioral interview
+                    questions for a candidate applying for the following role: 
+                    Role: "${role}"
+                    - Your job is to provide exactly **five** interview questions.
+                    - These should be **behavioral** or **situational** questions, relevant to the role.
+                    - Your output should strictly follow the JSON structure below:
+                    
+                    {
+                      "questions": [
+                        "q1",
+                        "q2",
+                        "q3",
+                        "q4",
+                        "q5"
+                      ]
+                    }
+                    
+                    - DO NOT provide explanations, instructions, or any additional text. Only return a valid JSON object.`
+                }
+            ],
+            temperature: 1.0,
+        });
+
+        const jsonResponse = JSON.parse(response.choices[0].message.content.trim());
+        return jsonResponse.questions;
+    } catch (error) {
+        console.error("OpenAI Error:", error);
+        return ["Error processing response"];
+    }
+}
+
 async function testDBConnection() {
     try {
         const { data, error } = await supabase.from("interview_questions").select("id").limit(1);
@@ -123,17 +164,60 @@ async function testDBConnection() {
 // API to handle audio upload & transcription
 app.post("/api/v1/transcribe", upload.single("audio"), async (req, res) => {
     try {
-        const transcription = await openai.audio.transcriptions.create({
-            file: fs.createReadStream(req.file.path),
-            model: "whisper-1",
-        });
+        const filePath = req.body.filePath;
+        if (!filePath) {
+            return res.status(400).json({ error: "File path is required" });
+        }
 
-        fs.unlinkSync(req.file.path); // Clean up uploaded file
-        res.json({ text: transcription.text });
+        // Get the public URL of the file (ensure the bucket is publicly accessible)
+        const { data } = await supabase.storage.from("user_audio_recordings").getPublicUrl(filePath);
+        const fileUrl = data.publicUrl;
+
+        if (!fileUrl) {
+            return res.status(404).json({ error: "File not found in Supabase" });
+        }
+
+        // Fetch the file as a stream
+        const response = await axios.get(fileUrl, { responseType: "stream" });
+
+        // Use FormData to send the file as a stream
+        const formData = new FormData();
+        formData.append("file", response.data, {
+            filename: "audio.wav",
+            contentType: "audio/wav",
+        });
+        formData.append("model", "whisper-1");
+
+        // Send the file to OpenAI Whisper
+        const transcriptionResponse = await axios.post("https://api.openai.com/v1/audio/transcriptions", formData, {
+            headers: {
+                ...formData.getHeaders(),
+                Authorization: `Bearer ${process.env.OPENAI_SERVICE_ACCOUNT_SECRET_KEY}`,
+            },
+        });
+        // delete the file after transcription
+
+        res.json({ text: transcriptionResponse.data.text });
+        const { status, error } = await supabase
+            .storage
+            .from('user_audio_recordings')
+            .remove([filePath])
     } catch (error) {
         console.error("Transcription error:", error);
         res.status(500).json({ error: "Transcription failed" });
     }
+});
+
+app.post("/api/v1/generate-questions", async (req, res) => {
+    let role = req.body.role;
+
+    if (!role) {
+        return res.status(400).json({ error: "Missing 'role' in request body." });
+    }
+
+    const response = await getAIQuestions(role);
+    console.log(response);
+    res.json({ feedback: response });
 });
 
 app.post("/api/v1/answer", async (req, res) => {
@@ -156,6 +240,10 @@ app.post("/api/v1/answer", async (req, res) => {
 // Serve the index.html file
 app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, 'public', 'index.html'));
+});
+
+app.get('/testing', (req, res) => {
+    res.sendFile(path.join(__dirname, '../frontend/my-react-app/public', 'testing.html'));
 });
 
 app.listen(port, () => {

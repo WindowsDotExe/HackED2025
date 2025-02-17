@@ -2,6 +2,8 @@
 import "../Styles/ChatBot.css"
 
 import React, { useState, useEffect, useRef } from "react"
+import { supabase } from "../supabaseClient";
+import { v4 as uuidv4 } from 'uuid';
 
 const BACKEND_URL = "http://localhost:8000"
 let mediaRecorder;
@@ -14,11 +16,39 @@ const ChatBot = () => {
   const [showNextButton, setShowNextButton] = useState(false)
   const [isSubmitted, setIsSubmitted] = useState(false)
   const [isRecording, setIsRecording] = useState(false)
+  const [questions, setQuestions] = useState([]);
+  const [currentIndex, setCurrentIndex] = useState(0);
   const textareaRef = useRef(null)
 
   useEffect(() => {
     fetchNextQuestion()
   }, [])
+
+  async function fetchQuestions(role) {
+    // Check if questions already exist in localStorage
+    const storedQuestions = localStorage.getItem("interviewQuestions");
+    if (storedQuestions) {
+        setQuestions(JSON.parse(storedQuestions));
+        setCurrentIndex(0); // Start from the first question
+        return;
+    }
+
+    try {
+        const response = await fetch(`${BACKEND_URL}/v1/generate-questions`, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ role })
+        });
+
+        const data = await response.json();
+        setQuestions(data.questions);
+        localStorage.setItem("interviewQuestions", JSON.stringify(data.questions)); // ✅ Store in localStorage
+        setCurrentIndex(0);
+    } catch (error) {
+        console.error("Error fetching questions:", error);
+        setQuestions(["Error loading questions. Try again."]);
+    }
+}
 
   const fetchNextQuestion = async () => {
     // change the type of question in the url once retreived
@@ -79,16 +109,32 @@ const ChatBot = () => {
       // console.log('AFTER RECORDING')
       mediaRecorder.onstop = async () => {
         const audioBlob = new Blob(audioChunks, { type: "audio/wav" });
-        const formData = new FormData();
-        formData.append("audio", audioBlob, "audio.wav");
+        // const formData = new FormData();
+        // generate a random filename
+        let filename = uuidv4() + ".wav";
+        console.log(filename)
+        var FilePath = "uploads/" + filename
+        // formData.append("audio", audioBlob, filename);
 
+        const {data, error} = await supabase
+        .storage
+        .from('user_audio_recordings')
+        .upload(FilePath, audioBlob)
+
+        if (error != null){
+          console.log("BRUHH")
+        }
         // console.log('BEFORE API CALL')
         const response = await fetch(`${BACKEND_URL}/api/v1/transcribe`, {
           method: "POST",
-          body: formData,
-        });
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify({
+            filePath: FilePath
+          }),
+        });        
         // console.log('AFTER API CALL')
-        
         const result = await response.json()
         setUserInput(result.text);
     }

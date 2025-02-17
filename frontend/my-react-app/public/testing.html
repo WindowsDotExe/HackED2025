@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>What are you interviewing for?</h1>
+    <input type="text" id="topic" placeholder="Describe the role..."/>
+    <button id="submit-button">Submit</button>
+    <p id="response"></p>
+
+    <script>
+        const submitButton = document.getElementById('submit-button');
+        const topicInput = document.getElementById('topic');
+    
+        submitButton.addEventListener('click', () => {
+            const topic = topicInput.value;
+    
+            fetch('http://localhost:8000/api/v1/generate-questions', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ role: topic }),
+            })
+            .then(response => response.json())
+            .then(data => {
+                console.log(data);
+    
+                if (data.feedback) {
+                    // Store questions in local storage
+                    localStorage.setItem('interviewQuestions', JSON.stringify(data.feedback));
+                    localStorage.setItem('currentIdx', 0);
+                } else {
+                    document.getElementById('response').innerText = "No questions generated.";
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                document.getElementById('response').innerText = "Failed to fetch questions.";
+            });
+        });
+    
+        // // Load previous questions from storage if available
+        // window.onload = function() {
+        //     const storedQuestions = localStorage.getItem('interviewQuestions');
+        //     if (storedQuestions) {
+        //         const responseElement = document.getElementById('response');
+        //         responseElement.innerHTML = "<h2>Last Generated Questions:</h2><ul>" + 
+        //             JSON.parse(storedQuestions).map(q => `<li>${q}</li>`).join('') + 
+        //             "</ul>";
+        //     }
+        // };
+    </script>
+</body>
+</html>
