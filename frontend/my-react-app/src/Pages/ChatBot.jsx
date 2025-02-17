@@ -29,31 +29,6 @@ const ChatBot = () => {
     fetchNextQuestion();
   }, [])
 
-//   async function fetchQuestions(role) {
-//     // Check if questions already exist in localStorage
-//     const storedQuestions = localStorage.getItem("interviewQuestions");
-//     if (storedQuestions) {
-//         setQuestions(JSON.parse(storedQuestions));
-//         setCurrentIndex(0); // Start from the first question
-//         return;
-//     }
-
-//     try {
-//         const response = await fetch(`${BACKEND_URL}/v1/generate-questions`, {
-//             method: "POST",
-//             headers: { "Content-Type": "application/json" },
-//             body: JSON.stringify({ role })
-//         });
-
-//         const data = await response.json();
-//         setQuestions(data.questions);
-//         localStorage.setItem("interviewQuestions", JSON.stringify(data.questions)); // ✅ Store in localStorage
-//         setCurrentIndex(0);
-//     } catch (error) {
-//         console.error("Error fetching questions:", error);
-//         setQuestions(["Error loading questions. Try again."]);
-//     }
-// }
 
   const fetchNextQuestion = async () => {
     const interviewQuestions = JSON.parse(localStorage.getItem("interviewQuestions"));
@@ -96,11 +71,10 @@ const ChatBot = () => {
     }
     const interviewQuestions = JSON.parse(localStorage.getItem("interviewQuestions"));
     setIsLoading(true) // Start loading animation
-    console.log(localStorage.getItem("interviewResponses"));
+    // console.log(localStorage.getItem("interviewResponses"));
     const interviewResponses = JSON.parse(localStorage.getItem("interviewResponses"));
     localStorage.setItem("interviewResponses", JSON.stringify([...interviewResponses, userInput.trim()]));
     const role = localStorage.getItem("role");
-    console.log(localStorage.getItem("interviewResponses"));
     const responseFeedback = await fetch(`${BACKEND_URL}/api/v1/answer`, {
       method: "POST",
       headers: {
@@ -144,7 +118,6 @@ const ChatBot = () => {
         // const formData = new FormData();
         // generate a random filename
         let filename = uuidv4() + ".wav";
-        console.log(filename)
         var FilePath = "uploads/" + filename
         // formData.append("audio", audioBlob, filename);
 
@@ -154,7 +127,7 @@ const ChatBot = () => {
         .upload(FilePath, audioBlob)
 
         if (error != null){
-          console.log("BRUHH")
+          console.log("Error uploading file: ", error)
         }
         // console.log('BEFORE API CALL')
         const response = await fetch(`${BACKEND_URL}/api/v1/transcribe`, {

@@ -34,17 +34,10 @@ const Prompt = () => {
         });
         const data = await response.json();
         // console.log(data.feedback);
-        console.log(data.response);
-
-        // // map the questions to an array
-        // JSON.parse(data.feedback).map((question) => {
-        //     console.log(question);
-        // });
-
+        // console.log(data.response);
         setQuestions(data.response);
         localStorage.setItem("interviewQuestions", JSON.stringify(data.response)); // ✅ Store in localStorage
         localStorage.setItem("role", JSON.stringify(role));
-        // localStorage.setItem("interviewResponses", JSON.stringify([]));
         setCurrentIndex(0);
     } catch (error) {
         console.error("Error fetching questions:", error);

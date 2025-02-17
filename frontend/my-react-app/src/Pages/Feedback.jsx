@@ -59,7 +59,6 @@ const FeedbackCarousel = () => {
         setShowEmailPopup(false);
         setEmailSent(false);
         setEmail("");
-        // navigate("/Prompt");
       }, 2000);
     }, 1500);
   };

@@ -168,10 +168,10 @@ app.post("/api/v1/email-feedback", async (req, res) => {
         const questions = req.body.interviewQuestions;
         const responses = req.body.interviewResponses;
         const feedbacks = req.body.interviewFeedback;
-        console.log('Email:', email_address);
-        console.log('Questions:', questions);
-        console.log('Responses:', responses);
-        console.log('Feedbacks:', feedbacks);
+        // console.log('Email:', email_address);
+        // console.log('Questions:', questions);
+        // console.log('Responses:', responses);
+        // console.log('Feedbacks:', feedbacks);
 
         if (!email_address || !feedbacks || !questions || !responses) {
             return res.status(400).json({ error: "Missing fields." });
@@ -194,21 +194,21 @@ app.post("/api/v1/email-feedback", async (req, res) => {
         for (let i = 0; i < questions.length; i++) {
             emailBody += `<h3>Question: ${questions[i]}</h3>`;
             emailBody += `<p>Response: ${responses[i]}</p>`;
-            emailBody += `<h3>Feedback: ${feedbacks[i]}</h3>`;  // ✅ FIXED TYPO
+            emailBody += `<h3>Feedback: ${feedbacks[i]}</h3>`; 
         }
         emailBody += "<p>Thank you for using Flux AI!</p>";
         emailBody += "<p>Best Regards, <br> Flux AI Team</p>";
 
         console.log('Sending email...');
         const info = await transporter.sendMail({
-            from: '"Flux AI" <' + process.env.GMAIL_ADDRESS + '>',  // ✅ Use env variable
+            from: '"Flux AI" <' + process.env.GMAIL_ADDRESS + '>', 
             to: email_address,  
             subject: "Interview Prep Feedback", 
             html: emailBody,
         });
 
         console.log("✅ Email sent: %s", info.messageId);
-        res.json({ success: true, message: "Email sent successfully!" });  // ✅ Send response
+        res.json({ success: true, message: "Email sent successfully!" }); 
     } catch (error) {
         console.error("❌ Email sending error:", error);
         res.status(500).json({ error: "Failed to send email.", details: error.message });
@@ -285,7 +285,6 @@ app.post("/api/v1/answer", async (req, res) => {
         return res.status(400).json({ error: "Missing 'answer' in request body." });
     }
 
-    // const response = await getAIResponse(answer, interview_qn, interview_type, context);
     const response = await getAIResponse(answer, interview_qn, interview_type);
 
     res.json({ feedback: response });

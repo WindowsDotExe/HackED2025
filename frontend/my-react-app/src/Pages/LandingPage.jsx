@@ -5,8 +5,6 @@ import { Link } from "react-router-dom";
 import { FaLightbulb, FaCogs, FaRocket, FaTrophy } from "react-icons/fa";
 import "../Styles/LandingPage.css";
 
-// import { use } from "react";
-
 const BACKEND_URL = "https://hacked2025-backend.onrender.com";
 
 const highlightFlux = (typedText, fluxGlowing) => {
