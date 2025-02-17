@@ -1,0 +1,31 @@
+/* ProgressBar.css */
+
+/* Container for the progress balls */
+.progress-bar {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 15px;
+    margin-top: 10px;  /* Reduced top margin to push the bar higher up */
+    margin-bottom: 20px;
+  }
+  
+  /* Default style for the progress ball */
+  .progress-ball {
+    width: 20px;
+    height: 20px;
+    background-color: #ccc; /* Inactive ball color */
+    border-radius: 50%;
+    transition: all 0.3s ease;
+  }
+  
+  /* Active progress ball with a sunken effect */
+  .progress-ball.active {
+    width: 36px;
+    height: 36px;
+    background: linear-gradient(90deg, #D8B4FE, #EF4444);  /* light purple to red */
+    border-radius: 50%;
+    box-shadow: inset 2px 2px 5px rgba(0, 0, 0, 0.4),
+                inset -2px -2px 5px rgba(255, 255, 255, 0.6);
+    transition: all 0.3s ease;
+  }

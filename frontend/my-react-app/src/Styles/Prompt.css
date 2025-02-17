@@ -1,0 +1,151 @@
+
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap");
+@import url('https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght,SOFT,WONK@9..144,100..900,19.3,1&family=Kantumruy+Pro:ital,wght@0,100..700;1,100..700&display=swap');
+
+* {
+  font-family: 'Inter', sans-serif;
+}
+
+
+/* Main Layout & Background */
+.prompt-container {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+  background-color: hsla(132, 0%, 100%, 1);
+  background-image: radial-gradient(circle at 91% 11%, hsla(13, 100%, 88%, 0.66) 4.038772213247173%, transparent 37.2265767974114%), 
+                    radial-gradient(circle at 66% 37%, hsla(323, 100%, 88%, 1) 0%, transparent 63.33640956108327%), 
+                    radial-gradient(circle at 36% 87%, hsla(268, 100%, 88%, 1) 12.107536057085522%, transparent 63.33640956108327%);
+  background-blend-mode: normal, normal, normal;
+}
+
+/* Heading with fade-in animation */
+.prompt-heading {
+  font-size: 2rem;
+  font-weight: bold;
+  font-family: 'Fraunces', sans-serif;
+  color: #1a1a1a;
+  text-align: center;
+  margin-bottom: 20px;
+  opacity: 0;
+  transform: translateY(-20px);
+  animation: fadeIn 0.8s ease-in-out forwards;
+}
+
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Large Search Bar Input */
+.prompt-input {
+  width: 100%;
+  max-width: 800px;
+  height: 60px;
+  padding: 12px 16px;
+  font-size: 1.2rem;
+  border: none;
+  border-radius: 30px;
+  background: #f8f9fa;
+  color: #2C2F33;
+  box-shadow: inset -4px -4px 8px rgba(0, 0, 0, 0.3),
+              inset 4px 4px 8px rgba(255, 255, 255, 0.7);
+  outline: none;
+  transition: all 0.3s ease-in-out;
+  text-align: center;
+}
+
+/* Focus effect */
+.prompt-input:focus {
+  transform: scale(1.03);
+  box-shadow: inset -2px -2px 4px rgba(0, 0, 0, 0.3),
+              inset 2px 2px 4px rgba(255, 255, 255, 0.7);
+}
+
+/* Submit Button */
+.prompt-submit {
+  margin-top: 20px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(255, 255, 255, 0.3);
+  color: #333;
+  font-weight: 600;
+  padding: 12px 20px;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
+}
+
+.prompt-submit:hover {
+  background: rgba(255, 255, 255, 0.5);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .prompt-input {
+    width: 90%;
+  }
+
+  .prompt-submit {
+    width: 100%;
+  }
+}
+
+/* Loading Section */
+.loading-section {
+    margin-top: 20px;
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: #1a1a1a;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  /* Dots Animation */
+  .loading-dots {
+    display: flex;
+    font-size: 2rem;
+    font-weight: bold;
+    color: #1a1a1a;
+    animation: fadeDots 1.5s infinite;
+  }
+  
+  .loading-dots span {
+    margin: 0 2px;
+    animation: bounce 1.5s infinite;
+  }
+  
+  .loading-dots span:nth-child(1) {
+    animation-delay: 0s;
+  }
+  .loading-dots span:nth-child(2) {
+    animation-delay: 0.3s;
+  }
+  .loading-dots span:nth-child(3) {
+    animation-delay: 0.6s;
+  }
+  
+  /* Keyframes for dot animation */
+  @keyframes bounce {
+    0%, 80%, 100% {
+      transform: translateY(0);
+    }
+    40% {
+      transform: translateY(-10px);
+    }
+  }
+  

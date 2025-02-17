@@ -1,0 +1,268 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap");
+@import url('https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght,SOFT,WONK@9..144,100..900,19.3,1&family=Kantumruy+Pro:ital,wght@0,100..700;1,100..700&display=swap');
+
+/* -------------------------------- */
+/* 1) MAIN LAYOUT & BACKGROUND */
+/* -------------------------------- */
+
+* {
+  font-family: 'Inter', sans-serif;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: "Inter", sans-serif;
+}
+
+.chat-container {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+  background-color: hsla(132, 0%, 100%, 1);
+  background-image: radial-gradient(circle at 91% 11%, hsla(13, 100%, 88%, 0.66) 4.038772213247173%, transparent 37.2265767974114%), 
+                    radial-gradient(circle at 66% 37%, hsla(323, 100%, 88%, 1) 0%, transparent 63.33640956108327%), 
+                    radial-gradient(circle at 36% 87%, hsla(268, 100%, 88%, 1) 12.107536057085522%, transparent 63.33640956108327%);
+  background-blend-mode: normal, normal, normal;
+}
+
+.chat-container::after {
+  content: "";
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='grain' x='0' y='0'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='1.5' numOctaves='5' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23grain)' opacity='0.3'/%3E%3C/svg%3E");
+  mix-blend-mode: multiply;
+  opacity: 0.3;
+  pointer-events: none;
+}
+
+/* -------------------------------- */
+/* 2) TEXT INPUT & BUTTONS (NO BOX) */
+/* -------------------------------- */
+
+/* AI question text */
+.ai-box {
+  width: auto;
+  max-width: 65%;
+  min-height: auto;
+  background: none;
+  border: none;
+  box-shadow: none;
+  padding: 0;
+  margin: 0 auto 1rem;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.ai-box .text-content {
+  font-family: "Fraunces", sans-serif;
+  font-size: 1.5rem;
+  font-weight: bold;
+  text-align: center;
+  line-height: 1.5;
+  color: #1a1a1a;
+}
+
+/* Sunk-in effect for the text area */
+.answer-bubble {
+    width: 100%;
+    max-width: 800px;
+    min-height: 200px; /* Further increased minimum height */
+    max-height: 200px; /* Further increased maximum height */
+    border: none;
+    border-radius: 16px;
+    padding: 12px;
+    font-size: 1rem;
+    line-height: 1.6;
+    background: #f8f9fa;
+    color: #2C2F33;
+    overflow-y: auto;
+    box-sizing: border-box;
+    transition: all 0.3s ease-in-out;
+    resize: none;
+
+    /* Inner shadow effect to create a "sunk-in" look */
+    box-shadow: inset -4px -4px 8px rgba(0, 0, 0, 0.3),
+                            inset 4px 4px 8px rgba(255, 255, 255, 0.7);
+
+    /* Remove default focus outline */
+    outline: none;
+    font-size: 1.2rem;
+}
+
+/* Increase size when text is entered */
+.answer-bubble:focus {
+    transform: scale(1.03); /* Slightly increase size */
+    box-shadow: inset -2px -2px 4px rgba(0, 0, 0, 0.3),
+                inset 2px 2px 4px rgba(255, 255, 255, 0.7);
+}
+
+/* Return to normal size when focus is lost */
+.answer-bubble:not(:focus) {
+    transform: scale(1); /* Return to original size */
+    box-shadow: inset -4px -4px 8px rgba(0, 0, 0, 0.3),
+                            inset 4px 4px 8px rgba(255, 255, 255, 0.7);
+}
+
+/* Locked/disabled state */
+.answer-bubble.locked {
+    background-color: #e0e0e0;
+    color: #888;
+    opacity: 0.7;
+    pointer-events: none;
+}
+
+/* Base button styles */
+
+/* Button Container Transition */
+.button-container {
+    display: flex;
+    justify-content: center;
+    gap: 20px; /* Space between buttons */
+    margin-top: 20px; /* Moves buttons further down from text box */
+    transition: transform 0.5s ease-out, opacity 0.5s ease-out;
+}
+
+.button-container.loading {
+    transform: scale(0.8) translateY(20px);
+    opacity: 0;
+    pointer-events: none;
+}
+
+/* Loading Animation */
+.loading-animation {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    margin-top: 30px;
+}
+
+.dot {
+    width: 12px;
+    height: 12px;
+    background-color: #1a1a1a;
+    border-radius: 50%;
+    animation: bounce 1.5s infinite ease-in-out;
+}
+
+.dot:nth-child(1) {
+    animation-delay: 0s;
+}
+.dot:nth-child(2) {
+    animation-delay: 0.2s;
+}
+.dot:nth-child(3) {
+    animation-delay: 0.4s;
+}
+
+@keyframes bounce {
+    0%, 80%, 100% {
+        transform: scale(0);
+        opacity: 0.3;
+    }
+    40% {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+/* Submit Button */
+
+
+.submit-button {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(255, 255, 255, 0.3);
+  color: #333;
+  font-weight: 600;
+  padding: 12px 20px;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
+}
+
+.submit-button:hover {
+  background: rgba(255, 255, 255, 0.5);
+}
+
+.record-button {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(255, 255, 255, 0.3);
+  color: #333;
+  font-weight: 600;
+  padding: 12px 20px;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
+}
+
+.record-button:hover {
+  background: rgba(255, 255, 255, 0.5);
+}
+
+.record-button.recording {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: #ffadad;
+  color: #333;
+  font-weight: 600;
+  padding: 12px 20px;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
+}
+
+.record-button.recording:hover {
+  background: rgba(255, 173, 173, 0.8);
+}
+
+
+/*  */
+/* -------------------------------- */
+/* 3) RESPONSIVE DESIGN */
+/* -------------------------------- */
+
+@media (max-width: 768px) {
+  .answer-bubble {
+    width: 90%;
+  }
+  .button-container {
+    flex-direction: column;
+    align-items: center;
+  }
+  .submit-button,
+  .record-button {
+    width: 100%;
+    margin: 0.5rem 0;
+  }
+}
+
+/* Blinking effect for manually inserted cursor */
+.cursor {
+    display: inline-block;
+    margin-left: 5px;
+    opacity: 1;
+    animation: blink 1s infinite;
+  }
+  
+  @keyframes blink {
+    0% { opacity: 1; }
+    50% { opacity: 0; }
+    100% { opacity: 1; }
+  }
+  

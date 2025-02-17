@@ -1,0 +1,275 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Fraunces:wght@400;500;600&display=swap");
+
+* {
+  font-family: 'Inter', sans-serif;
+}
+
+
+.carousel-background {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  background: linear-gradient(135deg, #fdd5fc 0%, #d1e8ff 100%);
+  font-family: "Inter", sans-serif;
+  padding: 40px 40px 100px;
+}
+
+/*  Heading */
+.carousel-heading {
+  font-size: 3rem;
+  font-weight: 700;
+  margin-bottom: 45px;
+  color: #333;
+  font-family: "Fraunces", sans-serif;
+  margin-top: 1px;
+}
+
+/*  CAROUSEL WRAPPER */
+.carousel-wrapper {
+  position: relative;
+  width: 95%;
+  max-width: 1400px;
+  height: 550px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  perspective: 1200px;
+  margin-top: 20px;
+}
+
+/* BASE CARD STYLING (Glass-like but more transparent) */
+.carousel-card {
+  position: absolute;
+  width: 650px;
+  max-width: 90%;
+  min-height: 480px;
+  /* Use a very subtle background for transparency */
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 20px;
+  padding: 2rem;
+  text-align: left;
+  /* Keep some blur/saturate for a glassy effect, or adjust as needed */
+  backdrop-filter: blur(15px) saturate(120%);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+  user-select: none;
+  transition: transform 0.6s ease-in-out,
+              opacity 0.4s ease-in-out,
+              box-shadow 0.4s ease-in-out;
+}
+
+/* CENTER CARD (slightly more pronounced, but still transparent) */
+.center-card {
+  transform: translateX(0) scale(1.05);
+  z-index: 5;
+  opacity: 1;
+  box-shadow: 0 25px 50px rgba(0, 0, 0, 0.2);
+  transition: transform 0.5s ease-in-out, opacity 0.1s linear;
+  /* Subtly more visible background than .carousel-card */
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(30px) saturate(150%);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  pointer-events: none;
+}
+
+/*  LEFT & RIGHT CARDS */
+.left-card {
+  transform: translateX(-350px) scale(0.65);
+  z-index: 4;
+  opacity: 0.8;
+  pointer-events: auto;
+}
+
+.right-card {
+  transform: translateX(350px) scale(0.65);
+  z-index: 4;
+  opacity: 0.8;
+  pointer-events: auto;
+}
+
+/*  HIDDEN CARDS */
+.hidden-card {
+  transform: scale(0.4);
+  opacity: 0;
+  pointer-events: none;
+  z-index: 1;
+}
+
+/*  Remove Hover Effects */
+.left-card:hover,
+.right-card:hover {
+  transform: translateX(-350px) scale(0.65);
+}
+
+.right-card:hover {
+  transform: translateX(350px) scale(0.65);
+}
+
+/*  Click Feedback */
+.carousel-card:active {
+  transform: scale(0.98);
+}
+
+.response-container,
+.feedback-container {
+  background: rgba(255, 255, 255, 0.2);
+  padding: 15px;
+  padding-top: 5px;
+  border-radius: 10px;
+  margin-top: 10px;
+  min-height: 11em;
+  max-height: 11em;
+  overflow-y: auto;
+  line-height: 1.4em;
+  box-shadow: inset 0 4px 8px 2px rgba(0, 0, 0, 0.2);
+  pointer-events: auto;
+  font-size: 0.9rem;
+  scrollbar-width: thin; /* Ensures scrollbar is visible */
+  scrollbar-color: rgba(0, 0, 0, 0.4) transparent; /* Makes scrollbar more visible */
+}
+
+/*  Hide scrollbar in Webkit browsers */
+.response-container::-webkit-scrollbar,
+.feedback-container::-webkit-scrollbar {
+  width: 6px;
+}
+
+.response-container::-webkit-scrollbar-thumb,
+.feedback-container::-webkit-scrollbar-thumb {
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: 10px;
+}
+
+.response-container::-webkit-scrollbar-track,
+.feedback-container::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+/*  Left-align "Your Response" and "Flux Feedback" */
+.left-align {
+  font-weight: bold;
+  text-align: left;
+  display: block;
+  margin-top: 15px;
+}
+
+.center-align {
+  font-weight: bold;
+  text-align: center;
+  display: block;
+  margin-top: 2px;
+}
+
+/*  Blur only the background when email popup is open */
+.background-blur {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  backdrop-filter: blur(10px); /* Blurs only the background */
+  background: rgba(0, 0, 0, 0.2);
+  z-index: 10;
+}
+
+/*  Email Popup */
+.email-popup {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: rgba(255, 255, 255, 0.9);
+  padding: 40px; /* Increased padding */
+  border-radius: 20px; /* Increased border-radius for rounder corners */
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+  text-align: center;
+  width: 400px; /* Increased width */
+  z-index: 20; /* Higher than blurred background */
+}
+
+/* Container to hold the email input and button on the same line */
+.email-form {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+/* Updated input styling for the email popup */
+.email-popup input {
+  flex: 1;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-size: 1rem;
+  margin-bottom: 0; /* Remove bottom margin to align with button */
+}
+
+/* Email popup button styling */
+.email-popup button {
+  background: #007bff;
+  color: white;
+  padding: 10px 15px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: background 0.3s ease;
+}
+
+.email-popup button:hover {
+  background: #0056b3;
+}
+
+/* Email Sent Text */
+.email-sent-text {
+  font-size: 1.1rem;
+  font-weight: bold;
+  color: green;
+}
+
+/* Button Container */
+.button-container {
+  display: flex;
+  gap: 20px;
+  margin-top: 60px;
+}
+
+.email-button,
+.home-button,
+.onemore-button {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(255, 255, 255, 0.3);
+  color: #333;
+  font-weight: 600;
+  padding: 12px 20px;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
+}
+
+.email-button:hover,
+.home-button:hover,
+.onemore-button:hover {
+  background: rgba(255, 255, 255, 0.5);
+}
+
+.email-popup .close-icon {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  cursor: pointer;
+  font-size: 1.5rem;
+  color: #333;
+  transition: color 0.3s ease;
+}
+
+.email-popup .close-icon:hover {
+  color: #ff0000;
+}
