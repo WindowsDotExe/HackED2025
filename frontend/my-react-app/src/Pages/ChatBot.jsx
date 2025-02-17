@@ -11,6 +11,7 @@ const ChatBot = () => {
   const [isSubmitted, setIsSubmitted] = useState(false)
   const [isRecording, setIsRecording] = useState(false)
   const [hasRecordedOnce, setHasRecordedOnce] = useState(false)
+  const [isLoading, setIsLoading] = useState(false) // New loading state
   const textareaRef = useRef(null)
 
   useEffect(() => {
@@ -18,6 +19,7 @@ const ChatBot = () => {
   }, [])
 
   const fetchNextQuestion = async () => {
+    setIsLoading(false) // Stop loading animation
     const newQuestion = "Tell me about a time when you solved a difficult problem."
     setAiQuestion(newQuestion)
     setDisplayedQuestion("")
@@ -51,10 +53,11 @@ const ChatBot = () => {
     }
 
     setIsSubmitted(true)
+    setIsLoading(true) // Start loading animation
 
     setTimeout(() => {
       fetchNextQuestion()
-    }, 500)
+    }, 1500) // Simulate loading time before next question
   }
 
   const toggleRecording = () => {
@@ -98,8 +101,8 @@ const ChatBot = () => {
         disabled={isSubmitted}
       />
 
-      {/* Buttons */}
-      {!isSubmitted && (
+      {/* Buttons or Loading Animation */}
+      {!isSubmitted && !isLoading && (
         <div className="button-container">
           <button className="button-30 submit-button" onClick={submitAnswer}>
             Submit
@@ -114,6 +117,15 @@ const ChatBot = () => {
                 ? "Record Again" 
                 : "Start Recording"}
           </button>
+        </div>
+      )}
+
+      {/* Loading Animation when transitioning to the next question */}
+      {isLoading && (
+        <div className="loading-animation">
+          <span className="dot"></span>
+          <span className="dot"></span>
+          <span className="dot"></span>
         </div>
       )}
     </div>

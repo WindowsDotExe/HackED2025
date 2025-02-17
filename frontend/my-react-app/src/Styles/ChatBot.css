@@ -115,12 +115,58 @@ body {
 
 /* Base button styles */
 
+/* Button Container Transition */
 .button-container {
     display: flex;
     justify-content: center;
     gap: 20px; /* Space between buttons */
     margin-top: 20px; /* Moves buttons further down from text box */
-  }
+    transition: transform 0.5s ease-out, opacity 0.5s ease-out;
+}
+
+.button-container.loading {
+    transform: scale(0.8) translateY(20px);
+    opacity: 0;
+    pointer-events: none;
+}
+
+/* Loading Animation */
+.loading-animation {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 12px;
+    margin-top: 10px;
+}
+
+.dot {
+    width: 14px;
+    height: 14px;
+    background-color: #1a1a1a;
+    border-radius: 50%;
+    animation: bounce 1.5s infinite ease-in-out;
+}
+
+.dot:nth-child(1) {
+    animation-delay: 0s;
+}
+.dot:nth-child(2) {
+    animation-delay: 0.2s;
+}
+.dot:nth-child(3) {
+    animation-delay: 0.4s;
+}
+
+@keyframes bounce {
+    0%, 80%, 100% {
+        transform: scale(0);
+        opacity: 0.3;
+    }
+    40% {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
 
 .button-30 {
   align-items: center;
@@ -242,3 +288,4 @@ body {
     50% { opacity: 0; }
     100% { opacity: 1; }
   }
+
