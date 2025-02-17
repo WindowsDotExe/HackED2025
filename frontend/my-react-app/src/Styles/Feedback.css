@@ -233,7 +233,8 @@
 }
 
 .email-button,
-.home-button {
+.home-button,
+.onemore-button {
   display: flex;
   align-items: center;
   gap: 8px;
@@ -248,6 +249,7 @@
 }
 
 .email-button:hover,
-.home-button:hover {
+.home-button:hover,
+.onemore-button:hover {
   background: rgba(255, 255, 255, 0.5);
 }
