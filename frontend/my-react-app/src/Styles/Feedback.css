@@ -48,13 +48,13 @@
 
 /* LEFT AND RIGHT CARDS */
 .left-card {
-  transform: translateX(-350px) scale(0.9); /* Increased spacing */
+  transform: translateX(-600px) scale(0.9); /* Increased spacing */
   z-index: 2;
   opacity: 0.6;
 }
 
 .right-card {
-  transform: translateX(350px) scale(0.9); /* Increased spacing */
+  transform: translateX(600px) scale(0.9); /* Increased spacing */
   z-index: 2;
   opacity: 0.6;
 }
