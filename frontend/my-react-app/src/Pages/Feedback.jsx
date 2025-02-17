@@ -21,6 +21,9 @@ const FeedbackCarousel = () => {
 
   return (
     <div className="carousel-background">
+      {/* ✅ Added Heading */}
+      <h1 className="carousel-heading">So, how did you do?</h1>
+
       <div className="carousel-wrapper">
         {feedbackData.map((item, index) => {
           let position = (index - currentIndex + length) % length;
