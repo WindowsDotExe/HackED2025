@@ -2,7 +2,7 @@
 
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { FiMail, FiHome, FiSend } from "react-icons/fi"; 
+import { FiMail, FiHome, FiSend, FiRotateCcw } from "react-icons/fi"; 
 import "../Styles/Feedback.css";
 
 const BACKEND_URL = "http://localhost:8000";
@@ -109,8 +109,11 @@ const FeedbackCarousel = () => {
         <button className="email-button" onClick={openEmailPopup}>
           <FiMail /> Email Feedback
         </button>
-        <button className="home-button" onClick={() => navigate("/Prompt")}>
+        <button className="home-button" onClick={() => navigate("/")}>
           <FiHome /> Home
+        </button>
+        <button className="onemore-button" onClick={() => navigate("/Prompt")}>
+          <FiRotateCcw /> Another One?
         </button>
       </div>
 
