@@ -17,7 +17,7 @@
   padding: 40px 40px 100px;
 }
 
-/* ✅ Heading */
+/*  Heading */
 .carousel-heading {
   font-size: 3rem;
   font-weight: 700;
@@ -27,7 +27,7 @@
   margin-top: 1px;
 }
 
-/* ✅ CAROUSEL WRAPPER */
+/*  CAROUSEL WRAPPER */
 .carousel-wrapper {
   position: relative;
   width: 95%;
@@ -76,7 +76,7 @@
   pointer-events: none;
 }
 
-/* ✅ LEFT & RIGHT CARDS */
+/*  LEFT & RIGHT CARDS */
 .left-card {
   transform: translateX(-350px) scale(0.65);
   z-index: 4;
@@ -91,7 +91,7 @@
   pointer-events: auto;
 }
 
-/* ✅ HIDDEN CARDS */
+/*  HIDDEN CARDS */
 .hidden-card {
   transform: scale(0.4);
   opacity: 0;
@@ -99,7 +99,7 @@
   z-index: 1;
 }
 
-/* ✅ Remove Hover Effects */
+/*  Remove Hover Effects */
 .left-card:hover,
 .right-card:hover {
   transform: translateX(-350px) scale(0.65);
@@ -109,7 +109,7 @@
   transform: translateX(350px) scale(0.65);
 }
 
-/* ✅ Click Feedback */
+/*  Click Feedback */
 .carousel-card:active {
   transform: scale(0.98);
 }
@@ -132,7 +132,7 @@
   scrollbar-color: rgba(0, 0, 0, 0.4) transparent; /* Makes scrollbar more visible */
 }
 
-/* ✅ Hide scrollbar in Webkit browsers */
+/*  Hide scrollbar in Webkit browsers */
 .response-container::-webkit-scrollbar,
 .feedback-container::-webkit-scrollbar {
   width: 6px;
@@ -149,7 +149,7 @@
   background: transparent;
 }
 
-/* ✅ Left-align "Your Response" and "Flux Feedback" */
+/*  Left-align "Your Response" and "Flux Feedback" */
 .left-align {
   font-weight: bold;
   text-align: left;
@@ -164,7 +164,7 @@
   margin-top: 2px;
 }
 
-/* ✅ Blur only the background when email popup is open */
+/*  Blur only the background when email popup is open */
 .background-blur {
   position: fixed;
   top: 0;
@@ -176,7 +176,7 @@
   z-index: 10;
 }
 
-/* ✅ Email Popup */
+/*  Email Popup */
 .email-popup {
   position: fixed;
   top: 50%;
@@ -224,14 +224,14 @@
   background: #0056b3;
 }
 
-/* ✅ Email Sent Text */
+/* Email Sent Text */
 .email-sent-text {
   font-size: 1.1rem;
   font-weight: bold;
   color: green;
 }
 
-/* ✅ Button Container */
+/* Button Container */
 .button-container {
   display: flex;
   gap: 20px;

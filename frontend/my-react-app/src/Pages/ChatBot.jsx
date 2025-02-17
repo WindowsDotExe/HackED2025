@@ -4,7 +4,7 @@ import React, { useState, useEffect, useRef } from "react";
 import { supabase } from "../supabaseClient";
 import { v4 as uuidv4 } from "uuid";
 import { FiCircle, FiSquare, FiRotateCcw, FiCheck } from "react-icons/fi";
-import ProgressBar from "./ProgressBar"; // Adjust the path if needed
+import ProgressBar from "./ProgressBar"; 
 import "../Styles/ChatBot.css";
 
 const BACKEND_URL = "https://hacked2025-backend.onrender.com";
@@ -12,7 +12,6 @@ let mediaRecorder;
 let audioChunks;
 
 const ChatBot = () => {
-  // Total number of questions is 5 (adjust if needed)
   const totalQuestions = 5;
   // currentIndex represents the index (starting at 0) of the current question
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -141,7 +140,6 @@ const ChatBot = () => {
         // Generate a random filename
         let filename = uuidv4() + ".wav";
         var FilePath = "uploads/" + filename
-        // formData.append("audio", audioBlob, filename);
 
         const { data, error } = await supabase.storage
           .from("user_audio_recordings")

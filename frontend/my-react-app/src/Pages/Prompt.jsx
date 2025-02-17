@@ -33,10 +33,8 @@ const Prompt = () => {
             body: JSON.stringify({ role })
         });
         const data = await response.json();
-        // console.log(data.feedback);
-        // console.log(data.response);
         setQuestions(data.response);
-        localStorage.setItem("interviewQuestions", JSON.stringify(data.response)); // ✅ Store in localStorage
+        localStorage.setItem("interviewQuestions", JSON.stringify(data.response)); 
         localStorage.setItem("role", JSON.stringify(role));
         setCurrentIndex(0);
     } catch (error) {
