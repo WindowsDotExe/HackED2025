@@ -248,5 +248,3 @@ app.listen(port, () => {
     console.log(`✅ Backend server LIVE on port ${port}`);
     testDBConnection();
 });
-
-module.exports = app;
