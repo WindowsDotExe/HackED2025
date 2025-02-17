@@ -6,9 +6,11 @@ import React, { useState, useEffect, useRef } from "react"
 const ChatBot = () => {
   const [userInput, setUserInput] = useState("")
   const [aiQuestion, setAiQuestion] = useState("")
+  const [displayedQuestion, setDisplayedQuestion] = useState("") // For typewriter effect
+  const [isTyping, setIsTyping] = useState(true) // Track if typing is still in progress
   const [isSubmitted, setIsSubmitted] = useState(false)
   const [isRecording, setIsRecording] = useState(false)
-  const [hasRecordedOnce, setHasRecordedOnce] = useState(false) // Track if recording has been done once
+  const [hasRecordedOnce, setHasRecordedOnce] = useState(false)
   const textareaRef = useRef(null)
 
   useEffect(() => {
@@ -16,15 +18,32 @@ const ChatBot = () => {
   }, [])
 
   const fetchNextQuestion = async () => {
-    setAiQuestion("Tell me about a time when you solved a difficult problem.")
+    const newQuestion = "Tell me about a time when you solved a difficult problem."
+    setAiQuestion(newQuestion)
+    setDisplayedQuestion("")
+    setIsTyping(true) // Start typing animation
     setUserInput("")
     setIsSubmitted(false)
-    setHasRecordedOnce(false) // Reset recording state for the new question
+    setHasRecordedOnce(false)
 
-    // Reset the textarea height to minimal
+    // Reset textarea height
     if (textareaRef.current) {
       textareaRef.current.style.height = "80px"
     }
+
+    // Run the typewriter effect
+    let index = 0
+    const typeWriter = setInterval(() => {
+      setDisplayedQuestion((prev) => {
+        if (index >= newQuestion.length) {
+          clearInterval(typeWriter)
+          setIsTyping(false) // Stop cursor blinking after typing is done
+          return newQuestion
+        }
+        return newQuestion.substring(0, index + 1)
+      })
+      index++
+    }, 25)
   }
 
   const submitAnswer = () => {
@@ -38,17 +57,16 @@ const ChatBot = () => {
     // Move to the next question automatically
     setTimeout(() => {
       fetchNextQuestion()
-    }, 500) // Small delay for better user experience
+    }, 500)
   }
 
   const toggleRecording = () => {
     if (!isRecording) {
       setIsRecording(true)
-      setHasRecordedOnce(true) // Set flag that recording has happened
+      setHasRecordedOnce(true)
     } else {
       setIsRecording(false)
     }
-    // Add your speech-to-text logic here if needed
   }
 
   const handleTextareaChange = (e) => {
@@ -65,9 +83,12 @@ const ChatBot = () => {
     <div className="chat-container">
       <div className="moving-background"></div>
 
-      {/* AI Question Text */}
+      {/* AI Question Text with Typewriter Effect & Blinking Cursor */}
       <div className="ai-box">
-        <div className="text-content">{aiQuestion}</div>
+        <div className="text-content">
+          {displayedQuestion}
+          {isTyping && <span className="cursor">|</span>} {/* Cursor appears while typing */}
+        </div>
       </div>
 
       {/* Text Input */}
