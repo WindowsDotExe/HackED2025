@@ -53,9 +53,10 @@ const LandingPage = () => {
           )}
         </div>
 
-        <Link to="/chatbot" className="interview-button rounded-box ">
-          Let's Interview!
-        </Link>
+        <Link to="/prompt" className="interview-button rounded-box ">
+  Let's Interview!
+</Link>
+
       </div>
     </div>
   )

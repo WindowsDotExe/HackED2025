@@ -5,7 +5,6 @@ import React, { useState, useEffect, useRef } from "react"
 
 const ChatBot = () => {
   const [userInput, setUserInput] = useState("")
-  const [aiQuestion, setAiQuestion] = useState("")
   const [displayedQuestion, setDisplayedQuestion] = useState("")
   const [isTyping, setIsTyping] = useState(true)
   const [isSubmitted, setIsSubmitted] = useState(false)
@@ -21,7 +20,6 @@ const ChatBot = () => {
   const fetchNextQuestion = async () => {
     setIsLoading(false) // Stop loading animation
     const newQuestion = "Tell me about a time when you solved a difficult problem."
-    setAiQuestion(newQuestion)
     setDisplayedQuestion("")
     setIsTyping(true)
     setUserInput("")
