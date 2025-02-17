@@ -3,6 +3,8 @@
 import React, { useState, useEffect, useRef } from "react"
 import { supabase } from "../supabaseClient";
 import { v4 as uuidv4 } from 'uuid';
+import { FiCircle, FiSquare, FiRotateCcw, FiCheck } from "react-icons/fi";
+import "../Styles/ChatBot.css"
 
 const BACKEND_URL = "http://localhost:8000";
 let mediaRecorder;

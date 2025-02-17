@@ -16,9 +16,10 @@
 .carousel-heading {
   font-size: 3rem;
   font-weight: 700;
-  margin-bottom: 30px;
+  margin-bottom: 45px;
   color: #333;
   font-family: "Fraunces", sans-serif;
+  margin-top: 1px;
 }
 
 /* ✅ CAROUSEL WRAPPER */
@@ -229,7 +230,7 @@
 .button-container {
   display: flex;
   gap: 20px;
-  margin-top: 40px;
+  margin-top: 60px;
 }
 
 .email-button,

@@ -54,7 +54,7 @@ const Prompt = () => {
       <div className="moving-background"></div>
 
       {/* Heading with transition effect */}
-      <h1 className="prompt-heading">Enter Prompt</h1>
+      <h1 className="prompt-heading">What are you interviewing for?</h1>
 
       {/* Large Search Bar Styled Input */}
       <input
@@ -62,7 +62,7 @@ const Prompt = () => {
         className="prompt-input"
         value={prompt}
         onChange={(e) => setPrompt(e.target.value)}
-        placeholder="Type your prompt here..."
+        placeholder="I would like to interview for..."
         disabled={loading} // Disable input when loading
       />
 
