@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { FaLightbulb, FaCogs, FaRocket, FaTrophy } from "react-icons/fa";
 import "../Styles/LandingPage.css";
+// import { use } from "react";
 
 const highlightFlux = (typedText, fluxGlowing) => {
   // Find the first occurrence of "Flux"
@@ -36,6 +37,10 @@ const LandingPage = () => {
   const [fluxGlowing, setFluxGlowing] = useState(false);
 
   useEffect(() => {
+    localStorage.setItem("interviewResponses", JSON.stringify([]));
+    localStorage.setItem("interviewFeedback", JSON.stringify([]))
+    localStorage.setItem("interviewQuestions", JSON.stringify([]))
+    localStorage.setItem("role", JSON.stringify([]))
     let currentIndex = 0;
     const typewriterEffect = setInterval(() => {
       if (currentIndex <= fullText.length) {

@@ -3,16 +3,23 @@
 import React, { useState } from "react";
 import "../Styles/Feedback.css";
 
-const feedbackData = [
-  { id: 1, question: "What is React?", response: "A JS library for building UIs.", feedback: "Detailed feedback for question 1." },
-  { id: 2, question: "What is State in React?", response: "State allows React components to change over time.", feedback: "Detailed feedback for question 2." },
-  { id: 3, question: "What are Props?", response: "Props are inputs passed from parent to child.", feedback: "Detailed feedback for question 3." },
-  { id: 4, question: "What is JSX?", response: "A syntax extension that looks like HTML in JS.", feedback: "Detailed feedback for question 4." },
-  { id: 5, question: "What is a Component?", response: "Reusable pieces of UI in a React app.", feedback: "Detailed feedback for question 5." },
-];
+const feedbackData = [];
 
 const FeedbackCarousel = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
+  const feedback = JSON.parse(localStorage.getItem("interviewFeedback"));
+  const questions = JSON.parse(localStorage.getItem("interviewQuestions"))
+  const responses = JSON.parse(localStorage.getItem("interviewResponses"))
+
+  // run a for loop to create the feedbackData array from the questions, responses, and feedback
+  for (let i = 0; i < questions.length; i++) {
+    feedbackData.push({
+      id: i,
+      question: questions[i],
+      response: responses[i],
+      feedback: feedback[i],
+    });
+  }
   const length = feedbackData.length;
 
   const handleCardClick = (newIndex) => {

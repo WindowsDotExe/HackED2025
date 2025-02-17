@@ -89,6 +89,7 @@ const ChatBot = () => {
   }
 
   const submitAnswer = async () => {
+    setIsLoading(true) // Start loading animation
     const interviewQuestions = JSON.parse(localStorage.getItem("interviewQuestions"));
     if (!userInput.trim()) {
       alert("Please type your answer first!")
@@ -112,7 +113,7 @@ const ChatBot = () => {
     const interviewFeedback = JSON.parse(localStorage.getItem("interviewFeedback"));
     localStorage.setItem("interviewFeedback", JSON.stringify([...interviewFeedback, data.feedback]));
     setIsSubmitted(true)
-    setIsLoading(true) // Start loading animation
+    
 
     setTimeout(() => {
       fetchNextQuestion()
@@ -168,13 +169,6 @@ const ChatBot = () => {
         const result = await response.json()
         setUserInput(result.text);
     }
-
-    setIsSubmitted(true)
-    setIsLoading(true) // Start loading animation
-
-    setTimeout(() => {
-      fetchNextQuestion()
-    }, 1500) // Simulate loading time before next question
   }
   }
 
