@@ -90,12 +90,12 @@ const ChatBot = () => {
   };
 
   const submitAnswer = async () => {
-    setIsLoading(true) // Start loading animation
-    const interviewQuestions = JSON.parse(localStorage.getItem("interviewQuestions"));
     if (!userInput.trim()) {
       alert("Please type your answer first!");
       return;
     }
+    const interviewQuestions = JSON.parse(localStorage.getItem("interviewQuestions"));
+    setIsLoading(true) // Start loading animation
     console.log(localStorage.getItem("interviewResponses"));
     const interviewResponses = JSON.parse(localStorage.getItem("interviewResponses"));
     localStorage.setItem("interviewResponses", JSON.stringify([...interviewResponses, userInput.trim()]));
