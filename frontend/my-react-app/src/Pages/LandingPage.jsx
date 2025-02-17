@@ -9,6 +9,7 @@ const LandingPage = () => {
   const [text, setText] = useState("")
   const fullText = "Hey, I'm Flux!"
   const [showContent, setShowContent] = useState(false)
+  const [showFooter, setShowFooter] = useState(false)
 
   useEffect(() => {
     let currentIndex = 0
@@ -25,10 +26,20 @@ const LandingPage = () => {
     return () => clearInterval(typewriterEffect)
   }, [])
 
+  useEffect(() => {
+    if (showContent) {
+      setTimeout(() => {
+        setShowFooter(true)
+      }, 1500) // Match the delay of the button animation
+    }
+  }, [showContent])
+
   return (
     <div className="landing-container">
       <div className="content-wrapper">
-        <h1 className="typewriter-text heading-spacing">{text}</h1>
+        <div className="heading-container">
+          <h1 className="typewriter-text heading-spacing">{text}</h1>
+        </div>
 
         <div className="cards-grid row-grid">
           {showContent && (
@@ -53,11 +64,15 @@ const LandingPage = () => {
           )}
         </div>
 
-        <Link to="/prompt" className="interview-button rounded-box ">
-  Let's Interview!
-</Link>
-
+        <Link to="/prompt" className="interview-button rounded-box">
+          Let's Interview!
+        </Link>
       </div>
+
+      <footer className={`custom-footer ${showFooter ? "show" : ""}`}>
+        <span className="star-icon">⭐ </span>
+        <span className="footer-text">Designed & Developed by Sarvesh, Joshua, Matthew & Nuuradin</span>
+      </footer>
     </div>
   )
 }
