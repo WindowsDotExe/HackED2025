@@ -135,7 +135,7 @@ const FeedbackCarousel = () => {
               </button>
             </div>
           ) : (
-            <p className="email-sent-text">✅ Email sent successfully!</p>
+            <p className="email-sent-text">Email sent successfully!</p>
           )}
         </div>
       )}

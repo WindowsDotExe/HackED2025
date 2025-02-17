@@ -1,8 +1,13 @@
 @import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap");
+@import url('https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght,SOFT,WONK@9..144,100..900,19.3,1&family=Kantumruy+Pro:ital,wght@0,100..700;1,100..700&display=swap');
 
 /* -------------------------------- */
 /* 1) MAIN LAYOUT & BACKGROUND */
 /* -------------------------------- */
+
+* {
+  font-family: 'Inter', sans-serif;
+}
 
 body {
   margin: 0;
@@ -43,7 +48,7 @@ body {
 /* AI question text */
 .ai-box {
   width: auto;
-  max-width: 90%;
+  max-width: 65%;
   min-height: auto;
   background: none;
   border: none;
@@ -57,7 +62,7 @@ body {
 }
 
 .ai-box .text-content {
-  font-family: "Inter", sans-serif;
+  font-family: "Fraunces", sans-serif;
   font-size: 1.5rem;
   font-weight: bold;
   text-align: center;
@@ -89,6 +94,7 @@ body {
 
     /* Remove default focus outline */
     outline: none;
+    font-size: 1.2rem;
 }
 
 /* Increase size when text is entered */

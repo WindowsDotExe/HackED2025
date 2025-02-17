@@ -1,5 +1,10 @@
 @import url('https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght,SOFT,WONK@9..144,100..900,19.3,1&display=swap');
 
+* {
+  font-family: 'Inter', sans-serif;
+}
+
+
 @keyframes hero-gradient-animation {
   0% {
     --s-start-0: 9%;
@@ -236,6 +241,7 @@
   display: inline-block;
   color: #1a1a1a; /* or #000, whichever you prefer for normal text */
   transition: color 0.5s ease, text-shadow 0.5s ease;
+  font-family: "Fraunces", sans-serif;
 }
 
 /* When fluxGlowing is true (i.e. .glowing is applied), 
@@ -243,6 +249,7 @@
 .flux-text.glowing {
   color: #ff0080; /* Neon pink text color */
   animation: neonFlux 3s infinite alternate ease-in-out; /* Slowed down the animation */
+  font-family: "Fraunces", sans-serif;
 }
 
 /* Keyframes for the neon glow pulse */
@@ -333,7 +340,6 @@
     text-decoration: none;
     color: #36395A; /* Match button-30 */
     cursor: pointer;
-    font-family: "JetBrains Mono", monospace;
     height: 50px; /* Slightly larger for balance */
     text-align: center;
     transition: all 0.3s ease, box-shadow 0.15s, transform 0.15s;
@@ -427,7 +433,6 @@
   width: 100%;
   text-align: center;
   padding: 1rem 0;
-  font-family: "Fraunces", sans-serif;
   font-size: 1.1rem;
   color: rgba(0, 0, 0, 0.7); /* Subtle text color */
   position: absolute;
