@@ -1,14 +1,23 @@
 "use client"
 import "../Styles/Prompt.css"
 import { useState } from "react"
+import { FiCheck } from "react-icons/fi"
+import { useEffect } from "react";
 
-const BACKEND_URL = "http://localhost:8000";
+const BACKEND_URL = "https://hacked2025-backend.onrender.com/";
 
 const Prompt = () => {
   const [prompt, setPrompt] = useState("")
   const [loading, setLoading] = useState(false)
   const [questions, setQuestions] = useState([]);
   const [currentIndex, setCurrentIndex] = useState(0);
+
+    useEffect(() => {
+      localStorage.setItem("interviewResponses", JSON.stringify([]));
+      localStorage.setItem("interviewFeedback", JSON.stringify([]))
+      localStorage.setItem("interviewQuestions", JSON.stringify([]))
+      localStorage.setItem("role", JSON.stringify([]))
+    }, [])
 
   const handleSubmit = async () => {
     const role = prompt.trim();
@@ -53,7 +62,7 @@ const Prompt = () => {
       <div className="moving-background"></div>
 
       {/* Heading with transition effect */}
-      <h1 className="prompt-heading">Enter Prompt</h1>
+      <h1 className="prompt-heading">What are you interviewing for?</h1>
 
       {/* Large Search Bar Styled Input */}
       <input
@@ -61,18 +70,18 @@ const Prompt = () => {
         className="prompt-input"
         value={prompt}
         onChange={(e) => setPrompt(e.target.value)}
-        placeholder="Type your prompt here..."
+        placeholder="I would like to interview for..."
         disabled={loading} // Disable input when loading
       />
 
       {/* Submit Button or Loading Animation */}
       {!loading ? (
         <button
-          className={`button-30 prompt-submit ${!prompt.trim() ? "disabled" : ""}`}
+          className={`prompt-submit ${!prompt.trim() ? "disabled" : ""}`}
           onClick={handleSubmit}
           disabled={!prompt.trim()}
         >
-          Submit
+          <FiCheck /> Submit 
         </button>
       ) : (
         <div className="loading-section">

@@ -2,14 +2,15 @@
 
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { FiMail, FiHome, FiSend } from "react-icons/fi"; 
+import { FiMail, FiHome, FiSend, FiRotateCcw } from "react-icons/fi"; 
 import "../Styles/Feedback.css";
 
-const BACKEND_URL = "http://localhost:8000";
+const BACKEND_URL = "https://hacked2025-backend.onrender.com/";
 
-const feedbackData = [];
+
 
 const FeedbackCarousel = () => {
+  const feedbackData = [];
   const [currentIndex, setCurrentIndex] = useState(0);
   const feedback = JSON.parse(localStorage.getItem("interviewFeedback"));
   const questions = JSON.parse(localStorage.getItem("interviewQuestions"))
@@ -108,20 +109,23 @@ const FeedbackCarousel = () => {
         <button className="email-button" onClick={openEmailPopup}>
           <FiMail /> Email Feedback
         </button>
-        <button className="home-button" onClick={() => navigate("/Prompt")}>
+        <button className="home-button" onClick={() => navigate("/")}>
           <FiHome /> Home
+        </button>
+        <button className="onemore-button" onClick={() => navigate("/Prompt")}>
+          <FiRotateCcw /> Another One?
         </button>
       </div>
 
-      {/* ✅ Blurred Background (Only When Popup is Open) */}
+      {/* Blurred Background (Only When Popup is Open) */}
       {showEmailPopup && <div className="background-blur"></div>}
 
-      {/* ✅ Email Popup */}
+      {/* Email Popup */}
       {showEmailPopup && (
         <div className="email-popup">
           <h2>Send Feedback via Email</h2>
           {!emailSent ? (
-            <>
+            <div className="email-form">
               <input
                 type="email"
                 placeholder="Enter your email"
@@ -131,7 +135,7 @@ const FeedbackCarousel = () => {
               <button onClick={handleSendEmail} disabled={sending}>
                 {sending ? "Sending..." : <FiSend />}
               </button>
-            </>
+            </div>
           ) : (
             <p className="email-sent-text">✅ Email sent successfully!</p>
           )}

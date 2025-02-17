@@ -1,11 +1,12 @@
-"use client"
-import "../Styles/ChatBot.css"
+"use client";
 
 import React, { useState, useEffect, useRef } from "react"
 import { supabase } from "../supabaseClient";
 import { v4 as uuidv4 } from 'uuid';
+import { FiCircle, FiSquare, FiRotateCcw, FiCheck } from "react-icons/fi";
+import "../Styles/ChatBot.css"
 
-const BACKEND_URL = "http://localhost:8000";
+const BACKEND_URL = "https://hacked2025-backend.onrender.com/";
 let mediaRecorder;
 let audioChunks;
 
@@ -71,29 +72,29 @@ const ChatBot = () => {
     setHasRecordedOnce(false)
 
     if (textareaRef.current) {
-      textareaRef.current.style.height = "80px"
+      textareaRef.current.style.height = "80px";
     }
 
-    let index = 0
+    let index = 0;
     const typeWriter = setInterval(() => {
       setDisplayedQuestion((prev) => {
         if (index >= newQuestion.length) {
-          clearInterval(typeWriter)
-          setIsTyping(false)
-          return newQuestion
+          clearInterval(typeWriter);
+          setIsTyping(false);
+          return newQuestion;
         }
-        return newQuestion.substring(0, index + 1)
-      })
-      index++
-    }, 20)
-  }
+        return newQuestion.substring(0, index + 1);
+      });
+      index++;
+    }, 20);
+  };
 
   const submitAnswer = async () => {
     setIsLoading(true) // Start loading animation
     const interviewQuestions = JSON.parse(localStorage.getItem("interviewQuestions"));
     if (!userInput.trim()) {
-      alert("Please type your answer first!")
-      return
+      alert("Please type your answer first!");
+      return;
     }
     console.log(localStorage.getItem("interviewResponses"));
     const interviewResponses = JSON.parse(localStorage.getItem("interviewResponses"));
@@ -116,9 +117,9 @@ const ChatBot = () => {
     
 
     setTimeout(() => {
-      fetchNextQuestion()
-    }, 1500) // Simulate loading time before next question
-  }
+      fetchNextQuestion();
+    }, 1500);
+  };
 
   const toggleRecording = async () => {
     setIsRecording(!isRecording)
@@ -174,27 +175,25 @@ const ChatBot = () => {
 
   const handleTextareaChange = (e) => {
     if (!isSubmitted) {
-      setUserInput(e.target.value)
-      const target = e.target
-      target.style.height = "auto"
-      const newHeight = Math.min(target.scrollHeight, 200)
-      target.style.height = `${newHeight}px`
+      setUserInput(e.target.value);
+      const target = e.target;
+      target.style.height = "auto";
+      const newHeight = Math.min(target.scrollHeight, 200);
+      target.style.height = `${newHeight}px`;
     }
-  }
+  };
 
   return (
     <div className="chat-container">
       <div className="moving-background"></div>
-
-      {/* AI Question Text with Typewriter Effect & Blinking Cursor */}
+      
       <div className="ai-box">
         <div className="text-content">
           {displayedQuestion}
           {isTyping && <span className="cursor">|</span>}
         </div>
       </div>
-
-      {/* Text Input */}
+      
       <textarea
         className={`answer-bubble ${isSubmitted ? "locked" : ""}`}
         ref={textareaRef}
@@ -203,27 +202,25 @@ const ChatBot = () => {
         placeholder="Type or speak to answer."
         disabled={isSubmitted}
       />
-
-      {/* Buttons or Loading Animation */}
+      
       {!isSubmitted && !isLoading && (
         <div className="button-container">
-          <button className="button-30 submit-button" onClick={submitAnswer}>
-            Submit
+          <button className="submit-button" onClick={submitAnswer}>
+            <FiCheck /> Submit
           </button>
           <button
-            className={`button-30 record-button ${isRecording ? "recording" : ""}`}
+            className={`record-button ${isRecording ? "recording" : ""}`}
             onClick={toggleRecording}
           >
             {isRecording 
-              ? "Stop Recording" 
+              ? <><FiSquare /> Stop Recording</>
               : hasRecordedOnce 
-                ? "Record Again" 
-                : "Start Recording"}
+                ? <><FiRotateCcw /> Record Again</>
+                : <><FiCircle /> Start Recording</>}
           </button>
         </div>
       )}
-
-      {/* Loading Animation when transitioning to the next question */}
+      
       {isLoading && (
         <div className="loading-animation">
           <span className="dot"></span>
@@ -232,7 +229,7 @@ const ChatBot = () => {
         </div>
       )}
     </div>
-  )
-}
+  );
+};
 
 export default ChatBot
