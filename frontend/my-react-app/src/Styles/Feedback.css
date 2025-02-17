@@ -259,3 +259,17 @@
 .onemore-button:hover {
   background: rgba(255, 255, 255, 0.5);
 }
+
+.email-popup .close-icon {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  cursor: pointer;
+  font-size: 1.5rem;
+  color: #333;
+  transition: color 0.3s ease;
+}
+
+.email-popup .close-icon:hover {
+  color: #ff0000;
+}

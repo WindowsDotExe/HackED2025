@@ -2,7 +2,7 @@
 
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { FiMail, FiHome, FiSend, FiRotateCcw } from "react-icons/fi"; 
+import { FiMail, FiHome, FiSend, FiRotateCcw, FiX } from "react-icons/fi"; 
 import "../Styles/Feedback.css";
 
 const BACKEND_URL = "https://hacked2025-backend.onrender.com";
@@ -35,6 +35,12 @@ const FeedbackCarousel = () => {
   };
 
   const openEmailPopup = () => setShowEmailPopup(true);
+  const closeEmailPopup = () => {
+    setShowEmailPopup(false);
+    setEmailSent(false);
+    setEmail("");
+  };
+
 
   const handleSendEmail = async () => {
     setSending(true);
@@ -120,6 +126,7 @@ const FeedbackCarousel = () => {
       {/* Email Popup */}
       {showEmailPopup && (
         <div className="email-popup">
+          <FiX className="close-icon" onClick={closeEmailPopup} />
           <h2>Send Feedback via Email</h2>
           {!emailSent ? (
             <div className="email-form">
