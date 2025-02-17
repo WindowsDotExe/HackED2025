@@ -284,33 +284,56 @@
     box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
   }
   
-.interview-button {
-  display: inline-block;
-  padding: 1rem 2.5rem;
-  background-color: #ffeeb2;
-  border: none;
-  border-radius: 50px;
-  font-size: 1.25rem;
-  text-decoration: none;
-  color: #1a1a1a;
-  transition: all 0.3s ease;
-  animation: fadeIn 0.5s ease forwards;
-  animation-delay: 3.8s;
-  opacity: 0;
-  margin-bottom: 2rem;
-  margin-top: 2rem;
-}
-
-.interview-button:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 0 20px rgba(255, 238, 178, 0.8);
-}
-
-@keyframes fadeIn {
-  to {
-    opacity: 1;
+  .interview-button {
+    display: inline-flex; /* Match button-30's display */
+    align-items: center;
+    justify-content: center;
+    padding: 1rem 2.5rem;
+    background-color: #ffeeb2; /* Match button-30 */
+    border: none;
+    border-radius: 4px; /* Match button-30 */
+    box-shadow: rgba(45, 35, 66, 0.4) 0 2px 4px, rgba(45, 35, 66, 0.3) 0 7px 13px -3px, #D6D6E7 0 -3px 0 inset;
+    font-size: 1.25rem; /* Match button-30 */
+    text-decoration: none;
+    color: #36395A; /* Match button-30 */
+    cursor: pointer;
+    font-family: "JetBrains Mono", monospace;
+    height: 50px; /* Slightly larger for balance */
+    text-align: center;
+    transition: all 0.3s ease, box-shadow 0.15s, transform 0.15s;
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: manipulation;
+    white-space: nowrap;
+    will-change: box-shadow, transform;
+    opacity: 0; /* Start hidden */
+    animation: fadeIn 0.5s ease forwards;
+    animation-delay: 3.8s;
+    margin-bottom: 2rem;
+    margin-top: 2rem;
   }
+  
+  /* Hover effect like button-30 */
+  .interview-button:hover {
+    
+    background-color: #ffdb70; /* Slightly darker yellow */
+  box-shadow: 0 0 12px rgba(255, 223, 70, 0.8); /* Glow effect */
+  transform: translateY(-2px);
 }
+  
+  /* Active (click) effect like button-30 */
+  .interview-button:active {
+    box-shadow: #ffeeb2 0 3px 7px inset;
+    transform: translateY(2px);
+  }
+  
+  /* Fade-in animation */
+  @keyframes fadeIn {
+    to {
+      opacity: 1;
+    }
+  }
+  
 
 @media (max-width: 768px) {
   .typewriter-text {

@@ -223,13 +223,6 @@ body {
   box-shadow: 0 0 12px rgba(255, 223, 70, 0.8); /* Glow effect */
   transform: translateY(-2px);
 }
-
-.submit-button:disabled {
-  background: #d4c48b;
-  cursor: not-allowed;
-  box-shadow: none;
-}
-
 /* Recording Button */
 .record-button {
   background-color: #b5efb5; /* Light green initially */
