@@ -2,7 +2,7 @@
 import "../Styles/Prompt.css"
 import { useState } from "react"
 
-const BACKEND_URL = "http://localhost:8000"
+const BACKEND_URL = "https://hacked2025-backend.onrender.com"
 
 const Prompt = () => {
   const [prompt, setPrompt] = useState("")
