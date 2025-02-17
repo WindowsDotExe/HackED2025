@@ -6,8 +6,8 @@ import React, { useState, useEffect, useRef } from "react"
 const ChatBot = () => {
   const [userInput, setUserInput] = useState("")
   const [aiQuestion, setAiQuestion] = useState("")
-  const [displayedQuestion, setDisplayedQuestion] = useState("") // For typewriter effect
-  const [isTyping, setIsTyping] = useState(true) // Track if typing is still in progress
+  const [displayedQuestion, setDisplayedQuestion] = useState("")
+  const [isTyping, setIsTyping] = useState(true)
   const [isSubmitted, setIsSubmitted] = useState(false)
   const [isRecording, setIsRecording] = useState(false)
   const [hasRecordedOnce, setHasRecordedOnce] = useState(false)
@@ -21,29 +21,27 @@ const ChatBot = () => {
     const newQuestion = "Tell me about a time when you solved a difficult problem."
     setAiQuestion(newQuestion)
     setDisplayedQuestion("")
-    setIsTyping(true) // Start typing animation
+    setIsTyping(true)
     setUserInput("")
     setIsSubmitted(false)
     setHasRecordedOnce(false)
 
-    // Reset textarea height
     if (textareaRef.current) {
       textareaRef.current.style.height = "80px"
     }
 
-    // Run the typewriter effect
     let index = 0
     const typeWriter = setInterval(() => {
       setDisplayedQuestion((prev) => {
         if (index >= newQuestion.length) {
           clearInterval(typeWriter)
-          setIsTyping(false) // Stop cursor blinking after typing is done
+          setIsTyping(false)
           return newQuestion
         }
         return newQuestion.substring(0, index + 1)
       })
       index++
-    }, 25)
+    }, 20)
   }
 
   const submitAnswer = () => {
@@ -54,7 +52,6 @@ const ChatBot = () => {
 
     setIsSubmitted(true)
 
-    // Move to the next question automatically
     setTimeout(() => {
       fetchNextQuestion()
     }, 500)
@@ -87,7 +84,7 @@ const ChatBot = () => {
       <div className="ai-box">
         <div className="text-content">
           {displayedQuestion}
-          {isTyping && <span className="cursor">|</span>} {/* Cursor appears while typing */}
+          {isTyping && <span className="cursor">|</span>}
         </div>
       </div>
 
@@ -104,10 +101,13 @@ const ChatBot = () => {
       {/* Buttons */}
       {!isSubmitted && (
         <div className="button-container">
-          <button className="submit-button" onClick={submitAnswer}>
+          <button className="button-30 submit-button" onClick={submitAnswer}>
             Submit
           </button>
-          <button className="record-button" onClick={toggleRecording}>
+          <button
+            className={`button-30 record-button ${isRecording ? "recording" : ""}`}
+            onClick={toggleRecording}
+          >
             {isRecording 
               ? "Stop Recording" 
               : hasRecordedOnce 
