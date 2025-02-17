@@ -43,7 +43,7 @@
   background: rgba(255, 255, 255, 0.2);
   border-radius: 20px;
   padding: 2rem;
-  text-align: center;
+  text-align: left; /* ✅ Align text to the left */
   backdrop-filter: blur(15px) saturate(150%);
   border: 1px solid rgba(255, 255, 255, 0.3);
   box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
@@ -52,41 +52,26 @@
   transition: transform 0.6s ease-in-out, opacity 0.4s ease-in-out, box-shadow 0.4s ease-in-out;
 }
 
-/* ✅ GRAINY OVERLAY */
-.carousel-card::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='grain' x='0' y='0'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23grain)' opacity='0.1'/%3E%3C/svg%3E");
-  mix-blend-mode: overlay;
-  border-radius: inherit;
-  pointer-events: none;
-}
-
-/* ✅ CENTER CARD (Frosted Glass, Non-Clickable, No Blockage) */
+/* ✅ CENTER CARD */
 .center-card {
   transform: translateX(0) scale(1.05);
-  z-index: 5; /* ✅ Always on top */
+  z-index: 5;
   opacity: 1;
   font-weight: bold;
   box-shadow: 0 25px 50px rgba(0, 0, 0, 0.2);
   transition: transform 0.5s ease-in-out, opacity 0.1s linear;
-  
-  /* ✅ More frost effect */
   background: rgba(255, 255, 255, 0.5);
   backdrop-filter: blur(30px) saturate(200%);
   border: 1px solid rgba(255, 255, 255, 0.5);
-  
-  /* ✅ Prevent blocking interactions */
   pointer-events: none;
 }
 
-/* ✅ LEFT & RIGHT CARDS (Fix Visibility & Clickability) */
+/* ✅ LEFT & RIGHT CARDS */
 .left-card {
   transform: translateX(-350px) scale(0.65);
-  z-index: 4; /* ✅ Lower than center but higher than hidden */
+  z-index: 4;
   opacity: 0.8;
-  pointer-events: auto; /* ✅ Clickable */
+  pointer-events: auto;
 }
 
 .right-card {
@@ -96,7 +81,7 @@
   pointer-events: auto;
 }
 
-/* ✅ HIDDEN CARDS (Prevent Interference) */
+/* ✅ HIDDEN CARDS */
 .hidden-card {
   transform: scale(0.4);
   opacity: 0;
@@ -104,7 +89,7 @@
   z-index: 1;
 }
 
-/* ✅ Remove Hover Effects That Moved the Cards */
+/* ✅ Remove Hover Effects */
 .left-card:hover,
 .right-card:hover {
   transform: translateX(-350px) scale(0.65);
@@ -117,4 +102,40 @@
 /* ✅ Click Feedback */
 .carousel-card:active {
   transform: scale(0.98);
+}
+
+/* ✅ RESPONSE & FEEDBACK CONTAINERS */
+.response-container, .feedback-container {
+  background: rgba(255, 255, 255, 0.3);
+  padding: 10px;
+  border-radius: 10px;
+  margin-top: 5px;
+  max-height: 4.5em; /* Limits height to approximately 4 lines */
+  overflow-y: auto; /* Enables scrolling if text exceeds 4 lines */
+  line-height: 1.2em; /* Adjusts line spacing */
+}
+
+/* ✅ Hide scrollbar in Webkit browsers */
+.response-container::-webkit-scrollbar,
+.feedback-container::-webkit-scrollbar {
+  width: 6px;
+}
+
+.response-container::-webkit-scrollbar-thumb,
+.feedback-container::-webkit-scrollbar-thumb {
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: 10px;
+}
+
+.response-container::-webkit-scrollbar-track,
+.feedback-container::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+/* ✅ Left-align "Your Response" and "Flux Feedback" */
+.left-align {
+  font-weight: bold;
+  text-align: left;
+  display: block;
+  margin-top: 15px;
 }
