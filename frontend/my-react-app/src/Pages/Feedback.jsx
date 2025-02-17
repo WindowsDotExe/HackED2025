@@ -7,9 +7,10 @@ import "../Styles/Feedback.css";
 
 const BACKEND_URL = "http://localhost:8000";
 
-const feedbackData = [];
+
 
 const FeedbackCarousel = () => {
+  const feedbackData = [];
   const [currentIndex, setCurrentIndex] = useState(0);
   const feedback = JSON.parse(localStorage.getItem("interviewFeedback"));
   const questions = JSON.parse(localStorage.getItem("interviewQuestions"))
