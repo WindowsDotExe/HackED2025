@@ -7,11 +7,12 @@ const multer = require("multer");
 const fs = require("fs");
 const FormData = require("form-data");
 const axios = require("axios");
+const nodemailer = require("nodemailer");
 const { createClient } = require("@supabase/supabase-js");
 
 dotenv.config();
 const app = express();
-const port = process.env.PORT ;
+const port = 8000;
 
 app.use(express.json());
 
@@ -160,6 +161,59 @@ async function testDBConnection() {
         console.error("❌ Failed to connect to Supabase:", error.message);
     }
 }
+
+app.post("/api/v1/email-feedback", async (req, res) => {
+    try {
+        const email_address = req.body.email;
+        const questions = req.body.interviewQuestions;
+        const responses = req.body.interviewResponses;
+        const feedbacks = req.body.interviewFeedback;
+        console.log('Email:', email_address);
+        console.log('Questions:', questions);
+        console.log('Responses:', responses);
+        console.log('Feedbacks:', feedbacks);
+
+        if (!email_address || !feedbacks || !questions || !responses) {
+            return res.status(400).json({ error: "Missing fields." });
+        }
+
+        console.log('Creating transporter...');
+        const transporter = nodemailer.createTransport({
+            service: "Gmail",
+            host: "smtp.gmail.com",
+            port: 465,
+            secure: true,
+            auth: {
+                user: process.env.GMAIL_ADDRESS,
+                pass: process.env.GMAIL_PASSWORD,
+            },
+        });
+
+        console.log('Transporter created. Preparing email...');
+        let emailBody = "<h2>Interview Prep Feedback</h2>";
+        for (let i = 0; i < questions.length; i++) {
+            emailBody += `<h3>Question: ${questions[i]}</h3>`;
+            emailBody += `<p>Response: ${responses[i]}</p>`;
+            emailBody += `<h3>Feedback: ${feedbacks[i]}</h3>`;  // ✅ FIXED TYPO
+        }
+        emailBody += "<p>Thank you for using Flux AI!</p>";
+        emailBody += "<p>Best Regards, <br> Flux AI Team</p>";
+
+        console.log('Sending email...');
+        const info = await transporter.sendMail({
+            from: '"Flux AI" <' + process.env.GMAIL_ADDRESS + '>',  // ✅ Use env variable
+            to: email_address,  
+            subject: "Interview Prep Feedback", 
+            html: emailBody,
+        });
+
+        console.log("✅ Email sent: %s", info.messageId);
+        res.json({ success: true, message: "Email sent successfully!" });  // ✅ Send response
+    } catch (error) {
+        console.error("❌ Email sending error:", error);
+        res.status(500).json({ error: "Failed to send email.", details: error.message });
+    }
+});
 
 // API to handle audio upload & transcription
 app.post("/api/v1/transcribe", upload.single("audio"), async (req, res) => {

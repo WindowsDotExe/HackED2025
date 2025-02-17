@@ -5,7 +5,7 @@ import React, { useState, useEffect, useRef } from "react"
 import { supabase } from "../supabaseClient";
 import { v4 as uuidv4 } from 'uuid';
 
-const BACKEND_URL = "https://hacked2025-backend.onrender.com"
+const BACKEND_URL = "http://localhost:8000";
 let mediaRecorder;
 let audioChunks;
 

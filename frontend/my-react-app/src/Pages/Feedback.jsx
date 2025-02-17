@@ -5,6 +5,8 @@ import { useNavigate } from "react-router-dom";
 import { FiMail, FiHome, FiSend } from "react-icons/fi"; 
 import "../Styles/Feedback.css";
 
+const BACKEND_URL = "http://localhost:8000";
+
 const feedbackData = [];
 
 const FeedbackCarousel = () => {
@@ -35,8 +37,20 @@ const FeedbackCarousel = () => {
 
   const openEmailPopup = () => setShowEmailPopup(true);
 
-  const handleSendEmail = () => {
+  const handleSendEmail = async () => {
     setSending(true);
+
+    const interviewQuestions = JSON.parse(localStorage.getItem("interviewQuestions"));
+    const interviewResponses = JSON.parse(localStorage.getItem("interviewResponses"));
+    const interviewFeedback = JSON.parse(localStorage.getItem("interviewFeedback"));
+    
+
+    await fetch(`${BACKEND_URL}/api/v1/email-feedback`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ email, interviewQuestions, interviewResponses, interviewFeedback }),
+    });
+
 
     setTimeout(() => {
       setSending(false);
@@ -46,7 +60,7 @@ const FeedbackCarousel = () => {
         setShowEmailPopup(false);
         setEmailSent(false);
         setEmail("");
-        navigate("/Prompt");
+        // navigate("/Prompt");
       }, 2000);
     }, 1500);
   };
