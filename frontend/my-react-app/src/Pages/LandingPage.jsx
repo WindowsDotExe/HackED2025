@@ -86,19 +86,19 @@ const LandingPage = () => {
             <>
               <div className="info-card square-card">
                 <FaLightbulb className="card-icon" />
-                <span>Building amazing experiences</span>
+                <span>Master your interview with AI-driven coaching</span>
               </div>
               <div className="info-card square-card">
                 <FaCogs className="card-icon" />
-                <span>Creating innovative solutions</span>
+                <span>Personalized feedback to sharpen your answers</span>
               </div>
               <div className="info-card square-card">
                 <FaRocket className="card-icon" />
-                <span>Driving digital transformation</span>
+                <span>Boost your confidence with mock interviews</span>
               </div>
               <div className="info-card square-card">
                 <FaTrophy className="card-icon" />
-                <span>Delivering exceptional results</span>
+                <span>Land your dream job with expert AI guidance</span>
               </div>
             </>
           )}

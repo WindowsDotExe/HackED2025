@@ -1,6 +1,5 @@
 @import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Fraunces:wght@400;500;600&display=swap");
-@import url("https://fonts.googleapis.com/css2?family=Fraunces:wght@400;500;600&display=swap");
 
 .carousel-background {
   min-height: 100vh;
@@ -35,52 +34,67 @@
   margin-top: 20px;
 }
 
-/* CAROUSEL CARD BASE STYLE */
+/* BASE CARD STYLING (Glass-like but more transparent) */
 .carousel-card {
   position: absolute;
-  width: 650px; /* Increased size */
+  width: 650px;
   max-width: 90%;
-  min-height: 450px; /* Increased height */
-  background: white;
+  min-height: 480px;
+  /* Use a very subtle background for transparency */
+  background: rgba(255, 255, 255, 0.05); 
   border-radius: 20px;
   padding: 2rem;
-  text-align: center;
-  transition: transform 0.6s ease-in-out, opacity 0.4s ease-in-out, box-shadow 0.4s ease-in-out;
+  text-align: left; 
+  /* Keep some blur/saturate for a glassy effect, or adjust as needed */
+  backdrop-filter: blur(15px) saturate(120%);
+  border: 1px solid rgba(255, 255, 255, 0.1); 
   box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
   cursor: pointer;
   user-select: none;
+  transition: transform 0.6s ease-in-out, 
+              opacity 0.4s ease-in-out, 
+              box-shadow 0.4s ease-in-out;
 }
 
-/* CENTER CARD (Still bigger, but slightly reduced) */
+/* CENTER CARD (slightly more pronounced, but still transparent) */
 .center-card {
   transform: translateX(0) scale(1.05);
-  z-index: 3;
+  z-index: 5;
   opacity: 1;
   box-shadow: 0 25px 50px rgba(0, 0, 0, 0.2);
   transition: transform 0.5s ease-in-out, opacity 0.1s linear;
+  /* Subtly more visible background than .carousel-card */
+  background: rgba(255, 255, 255, 0.1); 
+  backdrop-filter: blur(30px) saturate(150%);
+  border: 1px solid rgba(255, 255, 255, 0.2); 
+  pointer-events: none;
 }
 
-/* LEFT & RIGHT CARDS (Moved Inward Even More) */
+
+/* ✅ LEFT & RIGHT CARDS */
 .left-card {
-  transform: translateX(-400px) scale(0.75); /* Adjusted for wider cards */
-  z-index: 2;
-  opacity: 0.7;
+  transform: translateX(-350px) scale(0.65);
+  z-index: 4;
+  opacity: 0.8;
+  pointer-events: auto;
 }
 
 .right-card {
-  transform: translateX(400px) scale(0.75); /* Adjusted for wider cards */
-  z-index: 2;
-  opacity: 0.7;
+  transform: translateX(350px) scale(0.65);
+  z-index: 4;
+  opacity: 0.8;
+  pointer-events: auto;
 }
 
-/* HIDDEN CARDS (Prevent Transparency Overlap) */
+/* ✅ HIDDEN CARDS */
 .hidden-card {
   transform: scale(0.4);
   opacity: 0;
   pointer-events: none;
+  z-index: 1;
 }
 
-/* Remove Hover Effects That Moved the Cards */
+/* ✅ Remove Hover Effects */
 .left-card:hover,
 .right-card:hover {
   transform: translateX(-350px) scale(0.65);
