@@ -1,8 +1,10 @@
 @import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=GoodDog&display=swap");
+
 
 /* -------------------------------- */
 /* 1) PROPERTIES + KEYFRAMES for BG */
-/* (copied from LandingPage.css)    */
+/* (same as before, unchanged)      */
 /* -------------------------------- */
 
 @property --s-start-0 {
@@ -182,32 +184,14 @@ body {
   font-family: "Inter", sans-serif;
 }
 
-/* The container for our ChatBot page, 
-   with the animated radial background 
-   and grain overlay. */
 .chat-container {
   min-height: 100vh;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-
   position: relative;
-  overflow: hidden; /* static page, no scrolling */
-
-  /* radial background from LandingPage */
-  --c-0: hsla(267, 52%, 83%, 1);
-  --y-0: 80%;
-  --x-0: 85%;
-  --c-1: hsla(336, 100%, 82%, 1);
-  --y-1: 24%;
-  --x-1: 60%;
-  --y-2: 82%;
-  --c-2: hsla(54, 100%, 65%, 0.49);
-  --x-2: 13%;
-  --c-3: hsla(299, 72%, 68%, 1);
-  --y-3: 7%;
-  --x-3: 24%;
+  overflow: hidden;
 
   background-color: hsla(115, 0%, 100%, 1);
   background-image:
@@ -223,7 +207,6 @@ body {
   animation: hero-gradient-animation 10s linear infinite alternate;
 }
 
-/* Grain overlay */
 .chat-container::after {
   content: "";
   position: absolute;
@@ -239,7 +222,7 @@ body {
 /* 3) BOXES & ELEMENTS STYLES       */
 /* -------------------------------- */
 
-/* General chat-box styling */
+/* Common chat-box styling */
 .chat-box {
   border-radius: 24px;
   box-shadow: 0 6px 18px rgba(0, 0, 0, 0.1);
@@ -247,54 +230,60 @@ body {
   position: relative;
 }
 
-/* Smaller top box (AI box):
-   translucent like the Landing Page "info-cards" */
+/* AI box => frosted glass effect */
 .ai-box {
   width: 80%;
   max-width: 1200px;
   min-height: 120px;
-  padding: 1.5rem;
-  text-align: left;
-
-  background: rgba(255, 255, 255, 0.1);
+  
+  /* Switch to a more frosted effect */
+  background: rgba(255, 255, 255, 0.25);
   backdrop-filter: blur(10px);
-  border: 1px solid rgba(255, 255, 255, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.3);
 
-  color: #1a1a1a; /* matches Landing page text color */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  
   transition: transform 0.2s ease-in-out;
+  padding: 1.5rem;
+  color: #1a1a1a;
 }
 
 .ai-box:hover {
   transform: scale(1.02);
 }
 
+/* Use GoodDog font for question and center text */
 .ai-box .text-content {
-  font-size: 1rem;
+  font-family: "GoodDog", cursive;
+  font-size: 1.2rem;
+  text-align: center;
   line-height: 1.5;
   color: #1a1a1a;
 }
 
-/* Larger user box:
-   translucent but less than the AI box (lower opacity) */
+/* User box => also frosted glass, slightly different alpha if you want */
 .user-box {
   width: 80%;
   max-width: 1200px;
   min-height: 250px;
-  padding: 1.5rem;
-
-  background: rgba(255, 255, 255, 0.05);
+  
+  background: rgba(255, 255, 255, 0.2);
   backdrop-filter: blur(10px);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.25);
 
   color: #1a1a1a;
+  padding: 1.5rem;
 }
 
-/* Textarea / answer-bubble */
+/* Answer bubble => remove the black/dark border */
 .answer-bubble {
   width: 100%;
   min-height: 80px;
   max-height: 200px;
-  border: 2px solid #2c5282;
+  /* Remove the 2px border and just keep a nice background color if desired */
+  border: none;
   border-radius: 16px;
   padding: 16px;
   font-size: 1rem;
@@ -307,13 +296,14 @@ body {
   box-shadow: inset 0 2px 6px rgba(0, 0, 0, 0.08);
   resize: none;
 }
+
 .answer-bubble.locked {
   background-color: #cbd5e0;
   opacity: 0.7;
-  pointer-events: auto; /* allow scrolling even if "locked" */
+  pointer-events: auto; /* allow scrolling even if locked */
 }
 
-/* Buttons container */
+/* Button container */
 .button-container {
   display: flex;
   justify-content: space-between;
@@ -321,66 +311,69 @@ body {
   margin-top: 1rem;
 }
 
-/* Submit & Record button: now partly translucent */
+/* Submit & Record buttons => 
+   1) Only the first letter capitalized 
+   2) Color fade: background-size: 200% and shift on hover */
 .submit-button,
 .record-button {
   padding: 0.75rem 1.5rem;
   font-size: 1rem;
   font-weight: 600;
-  text-transform: uppercase;
+  /* only first letter capital: */
+  text-transform: capitalize;
+  
   border: none;
   border-radius: 8px;
   cursor: pointer;
-  transition: all 0.3s ease;
+  
+  /* For a nice color fade, use a wider gradient + move background-position */
+  background-size: 200% auto;
+  transition: background-position 0.4s ease, transform 0.3s ease;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
   margin-right: 1rem;
 }
 
-/* Blue gradient with partial alpha for the Submit button */
+/* Blue gradient for submit */
 .submit-button {
-  background: linear-gradient(
-    135deg,
+  background-image: linear-gradient(
+    to right,
     rgba(44, 82, 130, 0.8),
     rgba(66, 153, 225, 0.8)
   );
   color: #ffffff;
 }
+
 .submit-button:hover {
-  background: linear-gradient(
-    135deg,
-    rgba(44, 82, 130, 0.9),
-    rgba(66, 153, 225, 0.9)
-  );
+  background-position: right center; /* triggers the “fade” effect */
   transform: scale(1.05);
 }
+
 .submit-button:disabled {
   background: #718096;
   cursor: not-allowed;
 }
 
-/* Red gradient with partial alpha for Record button */
+/* Red gradient for record */
 .record-button {
-  background: linear-gradient(
-    135deg,
+  background-image: linear-gradient(
+    to right,
     rgba(229, 62, 62, 0.8),
     rgba(245, 101, 101, 0.8)
   );
   color: #ffffff;
 }
+
 .record-button:hover {
-  background: linear-gradient(
-    135deg,
-    rgba(229, 62, 62, 0.9),
-    rgba(245, 101, 101, 0.9)
-  );
+  background-position: right center;
   transform: scale(1.05);
 }
+
 .record-button:disabled {
   background: #718096;
   cursor: not-allowed;
 }
 
-/* Quit button: opposite color of #ffeeb2 (pastel yellow) -> #b2ecff (pastel blue) */
+/* Quit button (unchanged) */
 .quit-button {
   padding: 0.75rem 1.5rem;
   font-size: 1rem;
@@ -404,12 +397,14 @@ body {
 .feedback-container {
   margin-top: 1.5rem;
 }
+
 .feedback-heading {
   font-size: 1.2rem;
   font-weight: 700;
   color: #2c5282;
   margin-bottom: 8px;
 }
+
 .feedback-box {
   padding: 1rem;
   background: #edf2f7;
@@ -422,15 +417,17 @@ body {
   box-shadow: inset 0 2px 6px rgba(0, 0, 0, 0.08);
 }
 
-/* Next Question button */
+/* Next Question button (keeps uppercase) */
 .next-question-container {
   margin-top: 1rem;
   text-align: right;
 }
+
 .next-question-button {
   padding: 0.75rem 1.5rem;
   font-size: 1rem;
   font-weight: 600;
+  text-transform: uppercase;
   background: linear-gradient(
     135deg,
     rgba(44, 82, 130, 0.8),
@@ -443,6 +440,7 @@ body {
   transition: all 0.3s ease;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
+
 .next-question-button:hover {
   background: linear-gradient(
     135deg,
