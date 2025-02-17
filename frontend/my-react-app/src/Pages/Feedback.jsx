@@ -114,15 +114,15 @@ const FeedbackCarousel = () => {
         </button>
       </div>
 
-      {/* ✅ Blurred Background (Only When Popup is Open) */}
+      {/* Blurred Background (Only When Popup is Open) */}
       {showEmailPopup && <div className="background-blur"></div>}
 
-      {/* ✅ Email Popup */}
+      {/* Email Popup */}
       {showEmailPopup && (
         <div className="email-popup">
           <h2>Send Feedback via Email</h2>
           {!emailSent ? (
-            <>
+            <div className="email-form">
               <input
                 type="email"
                 placeholder="Enter your email"
@@ -132,7 +132,7 @@ const FeedbackCarousel = () => {
               <button onClick={handleSendEmail} disabled={sending}>
                 {sending ? "Sending..." : <FiSend />}
               </button>
-            </>
+            </div>
           ) : (
             <p className="email-sent-text">✅ Email sent successfully!</p>
           )}
