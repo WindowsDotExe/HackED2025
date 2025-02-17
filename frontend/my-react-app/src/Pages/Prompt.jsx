@@ -4,7 +4,7 @@ import { useState } from "react"
 import { FiCheck } from "react-icons/fi"
 import { useEffect } from "react";
 
-const BACKEND_URL = "https://hacked2025-backend.onrender.com/";
+const BACKEND_URL = "https://hacked2025-backend.onrender.com";
 
 const Prompt = () => {
   const [prompt, setPrompt] = useState("")
@@ -12,12 +12,12 @@ const Prompt = () => {
   const [questions, setQuestions] = useState([]);
   const [currentIndex, setCurrentIndex] = useState(0);
 
-    useEffect(() => {
-      localStorage.setItem("interviewResponses", JSON.stringify([]));
-      localStorage.setItem("interviewFeedback", JSON.stringify([]))
-      localStorage.setItem("interviewQuestions", JSON.stringify([]))
-      localStorage.setItem("role", JSON.stringify([]))
-    }, [])
+  useEffect(() => {
+    localStorage.setItem("interviewResponses", JSON.stringify([]));
+    localStorage.setItem("interviewFeedback", JSON.stringify([]))
+    localStorage.setItem("interviewQuestions", JSON.stringify([]))
+    localStorage.setItem("role", JSON.stringify([]))
+  }, [])
 
   const handleSubmit = async () => {
     const role = prompt.trim();

@@ -5,9 +5,7 @@ import { useNavigate } from "react-router-dom";
 import { FiMail, FiHome, FiSend, FiRotateCcw } from "react-icons/fi"; 
 import "../Styles/Feedback.css";
 
-const BACKEND_URL = "https://hacked2025-backend.onrender.com/";
-
-
+const BACKEND_URL = "https://hacked2025-backend.onrender.com";
 
 const FeedbackCarousel = () => {
   const feedbackData = [];

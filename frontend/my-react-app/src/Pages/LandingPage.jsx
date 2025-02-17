@@ -7,7 +7,7 @@ import "../Styles/LandingPage.css";
 
 // import { use } from "react";
 
-const BACKEND_URL = "https://hacked2025-backend.onrender.com/";
+const BACKEND_URL = "https://hacked2025-backend.onrender.com";
 
 const highlightFlux = (typedText, fluxGlowing) => {
   // Find the first occurrence of "Flux"

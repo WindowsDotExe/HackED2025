@@ -6,7 +6,7 @@ import { v4 as uuidv4 } from 'uuid';
 import { FiCircle, FiSquare, FiRotateCcw, FiCheck } from "react-icons/fi";
 import "../Styles/ChatBot.css"
 
-const BACKEND_URL = "https://hacked2025-backend.onrender.com/";
+const BACKEND_URL = "https://hacked2025-backend.onrender.com";
 let mediaRecorder;
 let audioChunks;
 
