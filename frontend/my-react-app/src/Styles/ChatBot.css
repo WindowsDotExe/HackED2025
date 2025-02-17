@@ -1,227 +1,283 @@
 @import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap");
 
+/* -------------------------------- */
+/* 1) MAIN LAYOUT & BACKGROUND */
+/* -------------------------------- */
+
 body {
   margin: 0;
   padding: 0;
   font-family: "Inter", sans-serif;
-  background: linear-gradient(135deg, #d9e2ec, #bcccdc); /* Smooth modern gradient */
-  color: #2C2F33;
-  overflow: hidden;
 }
 
-/* === MAIN LAYOUT === */
 .chat-container {
+  min-height: 100vh;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  height: 100vh;
-  padding: 2rem;
   position: relative;
+  overflow: hidden;
+  background-color: hsla(132, 0%, 100%, 1);
+  background-image: radial-gradient(circle at 91% 11%, hsla(13, 100%, 88%, 0.66) 4.038772213247173%, transparent 37.2265767974114%), 
+                    radial-gradient(circle at 66% 37%, hsla(323, 100%, 88%, 1) 0%, transparent 63.33640956108327%), 
+                    radial-gradient(circle at 36% 87%, hsla(268, 100%, 88%, 1) 12.107536057085522%, transparent 63.33640956108327%);
+  background-blend-mode: normal, normal, normal;
 }
 
-/* === AI QUESTION BOX === */
+.chat-container::after {
+  content: "";
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='grain' x='0' y='0'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='1.5' numOctaves='5' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23grain)' opacity='0.3'/%3E%3C/svg%3E");
+  mix-blend-mode: multiply;
+  opacity: 0.3;
+  pointer-events: none;
+}
+
+/* -------------------------------- */
+/* 2) TEXT INPUT & BUTTONS (NO BOX) */
+/* -------------------------------- */
+
+/* AI question text */
 .ai-box {
-  width: 100%;
-  max-width: 800px;
-  background: linear-gradient(135deg, #f7fafc, #e2e8f0); /* Soft gradient */
-  border-radius: 24px;
-  padding: 1.5rem;
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12); /* Subtle depth */
-  text-align: center;
-  transition: transform 0.2s ease-in-out;
-}
-
-.ai-box:hover {
-  transform: scale(1.02);
-}
-
-.ai-box h2 {
-  font-size: 1.5rem;
-  font-weight: 700;
-  color: #2c5282;
-  margin-bottom: 1rem;
-}
-
-/* === ANSWER SECTION (USER RESPONSE) === */
-.user-box {
-  width: 100%;
-  max-width: 800px;
-  background: #f7fafc;
-  border-radius: 24px;
-  padding: 1.5rem;
-  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.1);
-  margin-top: 1rem;
-  position: relative;
-}
-
-.user-box h2 {
-  font-size: 1.5rem;
-  font-weight: 700;
-  color: #2c5282;
-  margin-bottom: 1rem;
-}
-
-/* === ANSWER BUBBLE (Locks after submission) === */
-
-
-/* Add this to ChatBot.css */
-.answer-bubble.placeholder::before {
-    content: attr(data-placeholder);
-    color: #aaa;
-    pointer-events: none;
-    display: block;
-  }
-
-.answer-bubble {
-width: 100%;
-min-height: 80px;
-max-height: 200px;
-border: 2px solid #2c5282;
-border-radius: 16px;
-padding: 16px;
-font-size: 1rem;
-line-height: 1.6;
-background-color: #ebf4ff;
-color: #2C2F33;
-overflow-y: auto;
-box-sizing: border-box;
-transition: all 0.3s ease-in-out;
-box-shadow: inset 0 2px 6px rgba(0, 0, 0, 0.08);
-resize: none; /* Prevent resizing */
-}
-  
-.answer-bubble.locked {
-background-color: #cbd5e0;
-pointer-events: none;
-opacity: 0.7;
-}
-/* === SUBMIT BUTTON === */
-.submit-button {
-  margin-top: 1rem;
-  padding: 0.75rem 1.5rem;
-  font-size: 1rem;
-  font-weight: 600;
-  text-transform: uppercase;
-  background: linear-gradient(135deg, #2c5282, #4299e1);
-  color: #ffffff;
+  width: auto;
+  max-width: 90%;
+  min-height: auto;
+  background: none;
   border: none;
-  border-radius: 8px;
+  box-shadow: none;
+  padding: 0;
+  margin: 0 auto 1rem;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.ai-box .text-content {
+  font-family: "Inter", sans-serif;
+  font-size: 1.5rem;
+  font-weight: bold;
+  text-align: center;
+  line-height: 1.5;
+  color: #1a1a1a;
+}
+
+/* Sunk-in effect for the text area */
+.answer-bubble {
+    width: 100%;
+    max-width: 800px;
+    min-height: 200px; /* Further increased minimum height */
+    max-height: 200px; /* Further increased maximum height */
+    border: none;
+    border-radius: 16px;
+    padding: 12px;
+    font-size: 1rem;
+    line-height: 1.6;
+    background: #f8f9fa;
+    color: #2C2F33;
+    overflow-y: auto;
+    box-sizing: border-box;
+    transition: all 0.3s ease-in-out;
+    resize: none;
+
+    /* Inner shadow effect to create a "sunk-in" look */
+    box-shadow: inset -4px -4px 8px rgba(0, 0, 0, 0.3),
+                            inset 4px 4px 8px rgba(255, 255, 255, 0.7);
+
+    /* Remove default focus outline */
+    outline: none;
+}
+
+/* Increase size when text is entered */
+.answer-bubble:focus {
+    transform: scale(1.03); /* Slightly increase size */
+    box-shadow: inset -2px -2px 4px rgba(0, 0, 0, 0.3),
+                inset 2px 2px 4px rgba(255, 255, 255, 0.7);
+}
+
+/* Return to normal size when focus is lost */
+.answer-bubble:not(:focus) {
+    transform: scale(1); /* Return to original size */
+    box-shadow: inset -4px -4px 8px rgba(0, 0, 0, 0.3),
+                            inset 4px 4px 8px rgba(255, 255, 255, 0.7);
+}
+
+/* Locked/disabled state */
+.answer-bubble.locked {
+    background-color: #e0e0e0;
+    color: #888;
+    opacity: 0.7;
+    pointer-events: none;
+}
+
+/* Base button styles */
+
+/* Button Container Transition */
+.button-container {
+    display: flex;
+    justify-content: center;
+    gap: 20px; /* Space between buttons */
+    margin-top: 20px; /* Moves buttons further down from text box */
+    transition: transform 0.5s ease-out, opacity 0.5s ease-out;
+}
+
+.button-container.loading {
+    transform: scale(0.8) translateY(20px);
+    opacity: 0;
+    pointer-events: none;
+}
+
+/* Loading Animation */
+.loading-animation {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.dot {
+    width: 12px;
+    height: 12px;
+    background-color: #1a1a1a;
+    border-radius: 50%;
+    animation: bounce 1.5s infinite ease-in-out;
+}
+
+.dot:nth-child(1) {
+    animation-delay: 0s;
+}
+.dot:nth-child(2) {
+    animation-delay: 0.2s;
+}
+.dot:nth-child(3) {
+    animation-delay: 0.4s;
+}
+
+@keyframes bounce {
+    0%, 80%, 100% {
+        transform: scale(0);
+        opacity: 0.3;
+    }
+    40% {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+.button-30 {
+  align-items: center;
+  appearance: none;
+  background-color: #FCFCFD;
+  border-radius: 4px;
+  border-width: 0;
+  box-shadow: rgba(45, 35, 66, 0.4) 0 2px 4px, rgba(45, 35, 66, 0.3) 0 7px 13px -3px, #D6D6E7 0 -3px 0 inset;
+  box-sizing: border-box;
+  color: #36395A;
   cursor: pointer;
-  transition: all 0.3s ease;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  display: inline-flex;
+  font-family: "JetBrains Mono", monospace;
+  height: 48px;
+  justify-content: center;
+  line-height: 1;
+  list-style: none;
+  overflow: hidden;
+  padding-left: 16px;
+  padding-right: 16px;
+  position: relative;
+  text-align: left;
+  text-decoration: none;
+  transition: box-shadow 0.15s, transform 0.15s;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+  white-space: nowrap;
+  will-change: box-shadow, transform;
+  font-size: 18px;
+}
+
+.button-30:focus {
+  box-shadow: #D6D6E7 0 0 0 1.5px inset, rgba(45, 35, 66, 0.4) 0 2px 4px, rgba(45, 35, 66, 0.3) 0 7px 13px -3px, #D6D6E7 0 -3px 0 inset;
+}
+
+.button-30:hover {
+  box-shadow: rgba(45, 35, 66, 0.4) 0 4px 8px, rgba(45, 35, 66, 0.3) 0 7px 13px -3px, #D6D6E7 0 -3px 0 inset;
+  transform: translateY(-2px);
+}
+
+.button-30:active {
+  box-shadow: #D6D6E7 0 3px 7px inset;
+  transform: translateY(2px);
+}
+
+/* Submit Button */
+.submit-button {
+  background-color: #ffeeb2; /* Light yellow */
 }
 
 .submit-button:hover {
-  background: linear-gradient(135deg, #1e3a5f, #3182ce);
-  transform: scale(1.05);
+  background-color: #ffdb70; /* Slightly darker yellow */
+  box-shadow: 0 0 12px rgba(255, 223, 70, 0.8); /* Glow effect */
+  transform: translateY(-2px);
+}
+/* Recording Button */
+.record-button {
+  background-color: #b5efb5; /* Light green initially */
 }
 
-.submit-button:disabled {
-  background: #718096;
-  cursor: not-allowed;
+.record-button.recording {
+  background-color: #ffadad; /* Light red when recording */
 }
 
-/* === FEEDBACK SECTION (SCROLLABLE) === */
-.feedback-container {
-  margin-top: 1.5rem;
+.record-button:hover {
+  box-shadow: 0 0 12px rgba(181, 239, 181, 0.8); /* Green glow */
+  transform: translateY(-2px);
 }
 
-.feedback-heading {
-  font-size: 1.2rem;
-  font-weight: 700;
-  color: #2c5282;
-  margin-bottom: 8px;
+.record-button.recording:hover {
+  box-shadow: 0 0 12px rgba(255, 173, 173, 0.8); /* Red glow */
+  transform: translateY(-2px);
 }
 
-.feedback-box {
-  padding: 1rem;
-  background: #edf2f7;
-  border-radius: 12px;
-  border: 1px solid #2c5282;
-  color: #2C2F33;
-  height: 100px;
-  max-height: 200px;
-  overflow-y: auto;
-  box-shadow: inset 0 2px 6px rgba(0, 0, 0, 0.08);
+/* Ensure both buttons have the same size */
+.submit-button,
+.record-button {
+  width: 180px; /* Fixed width for equal sizing */
+  height: 50px; /* Ensures uniform button height */
+  text-align: center;
 }
-
-/* === NEXT QUESTION BUTTON (FLOATS ON RIGHT) === */
-.next-question-button {
-  position: absolute;
-  right: 2rem;
-  top: 50%;
-  transform: translateY(-50%);
-  padding: 0.75rem 1.5rem;
-  font-size: 1rem;
-  font-weight: 600;
-  background: linear-gradient(135deg, #2c5282, #4299e1);
-  color: #ffffff;
-  border: none;
-  border-radius: 8px;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-  display: none;
-}
-
-.next-question-button.show {
-  display: block;
-}
-
-.next-question-button:hover {
-  background: linear-gradient(135deg, #1e3a5f, #3182ce);
-}
+/* -------------------------------- */
+/* 3) RESPONSIVE DESIGN */
+/* -------------------------------- */
 
 @media (max-width: 768px) {
-  .chat-container {
-    padding: 1rem;
-    height: auto;
+  .answer-bubble {
+    width: 90%;
   }
-
-  .ai-box, .user-box {
+  .button-container {
+    flex-direction: column;
+    align-items: center;
+  }
+  .submit-button,
+  .record-button {
     width: 100%;
-    max-width: none;
-  }
-
-  .next-question-button {
-    position: static;
-    margin-top: 1rem;
-    transform: none;
-    text-align: center;
-    display: block;
+    margin: 0.5rem 0;
   }
 }
 
-.button-container {
-    display: flex;
-    justify-content: space-between;
-    width: 100%;
-    max-width: 800px;
-    margin-top: 1rem;
+/* Blinking effect for manually inserted cursor */
+.cursor {
+    display: inline-block;
+    margin-left: 5px;
+    opacity: 1;
+    animation: blink 1s infinite;
   }
   
-  /* Record button styles */
-.record-button {
-    padding: 0.75rem 1.5rem;
-    font-size: 1rem;
-    font-weight: 600;
-    text-transform: uppercase;
-    background: linear-gradient(135deg, #e53e3e, #f56565);
-    color: #ffffff;
-    border: none;
-    border-radius: 8px;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-}
-  
-.record-button:hover {
-background: linear-gradient(135deg, #c53030, #e53e3e);
-transform: scale(1.05);
-}
-
-.record-button:disabled {
-background: #718096;
-cursor: not-allowed;
-}
+  @keyframes blink {
+    0% { opacity: 1; }
+    50% { opacity: 0; }
+    100% { opacity: 1; }
+  }

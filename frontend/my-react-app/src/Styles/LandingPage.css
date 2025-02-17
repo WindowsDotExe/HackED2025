@@ -1,99 +1,388 @@
-@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap");
+@import url('https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght,SOFT,WONK@9..144,100..900,19.3,1&display=swap');
 
-.landing-page {
+@keyframes hero-gradient-animation {
+  0% {
+    --s-start-0: 9%;
+    --s-end-0: 55%;
+    --c-0: hsla(267, 52%, 83%, 1);
+    --y-0: 80%;
+    --x-0: 85%;
+    --s-start-1: 5%;
+    --s-end-1: 72%;
+    --c-1: hsla(336, 100%, 82%, 1);
+    --y-1: 24%;
+    --x-1: 60%;
+    --s-start-2: 5%;
+    --s-end-2: 52%;
+    --y-2: 82%;
+    --c-2: hsla(54, 100%, 65%, 0.49);
+    --x-2: 13%;
+    --s-start-3: 13%;
+    --s-end-3: 68%;
+    --c-3: hsla(299, 72%, 68%, 1);
+    --y-3: 7%;
+    --x-3: 24%;
+  }
+  100% {
+    --s-start-0: 9%;
+    --s-end-0: 55%;
+    --c-0: hsla(267, 52%, 83%, 1);
+    --y-0: 94%;
+    --x-0: 31%;
+    --s-start-1: 5%;
+    --s-end-1: 72%;
+    --c-1: hsla(337, 82%, 95%, 1);
+    --y-1: 25%;
+    --x-1: 2%;
+    --s-start-2: 5%;
+    --s-end-2: 52%;
+    --y-2: 20%;
+    --c-2: hsla(54, 100%, 65%, 0.49);
+    --x-2: 98%;
+    --s-start-3: 13%;
+    --s-end-3: 68%;
+    --c-3: hsla(299, 72%, 68%, 1);
+    --y-3: 92%;
+    --x-3: 95%;
+  }
+}
+
+@property --s-start-0 {
+  syntax: '<percentage>';
+  inherits: false;
+  initial-value: 9%;
+}
+
+@property --s-end-0 {
+  syntax: '<percentage>';
+  inherits: false;
+  initial-value: 55%;
+}
+
+@property --c-0 {
+  syntax: '<color>';
+  inherits: false;
+  initial-value: hsla(267, 52%, 83%, 1);
+}
+
+@property --y-0 {
+  syntax: '<percentage>';
+  inherits: false;
+  initial-value: 80%;
+}
+
+@property --x-0 {
+  syntax: '<percentage>';
+  inherits: false;
+  initial-value: 85%;
+}
+
+@property --s-start-1 {
+  syntax: '<percentage>';
+  inherits: false;
+  initial-value: 5%;
+}
+
+@property --s-end-1 {
+  syntax: '<percentage>';
+  inherits: false;
+  initial-value: 72%;
+}
+
+@property --c-1 {
+  syntax: '<color>';
+  inherits: false;
+  initial-value: hsla(336, 100%, 82%, 1);
+}
+
+@property --y-1 {
+  syntax: '<percentage>';
+  inherits: false;
+  initial-value: 24%;
+}
+
+@property --x-1 {
+  syntax: '<percentage>';
+  inherits: false;
+  initial-value: 60%;
+}
+
+@property --s-start-2 {
+  syntax: '<percentage>';
+  inherits: false;
+  initial-value: 5%;
+}
+
+@property --s-end-2 {
+  syntax: '<percentage>';
+  inherits: false;
+  initial-value: 52%;
+}
+
+@property --y-2 {
+  syntax: '<percentage>';
+  inherits: false;
+  initial-value: 82%;
+}
+
+@property --c-2 {
+  syntax: '<color>';
+  inherits: false;
+  initial-value: hsla(54, 100%, 65%, 0.49);
+}
+
+@property --x-2 {
+  syntax: '<percentage>';
+  inherits: false;
+  initial-value: 13%;
+}
+
+@property --s-start-3 {
+  syntax: '<percentage>';
+  inherits: false;
+  initial-value: 13%;
+}
+
+@property --s-end-3 {
+  syntax: '<percentage>';
+  inherits: false;
+  initial-value: 68%;
+}
+
+@property --c-3 {
+  syntax: '<color>';
+  inherits: false;
+  initial-value: hsla(299, 72%, 68%, 1);
+}
+
+@property --y-3 {
+  syntax: '<percentage>';
+  inherits: false;
+  initial-value: 7%;
+}
+
+@property --x-3 {
+  syntax: '<percentage>';
+  inherits: false;
+  initial-value: 24%;
+}
+
+.landing-container {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+  --c-0: hsla(267, 52%, 83%, 1);
+  --y-0: 80%;
+  --x-0: 85%;
+  --c-1: hsla(336, 100%, 82%, 1);
+  --y-1: 24%;
+  --x-1: 60%;
+  --y-2: 82%;
+  --c-2: hsla(54, 100%, 65%, 0.49);
+  --x-2: 13%;
+  --c-3: hsla(299, 72%, 68%, 1);
+  --y-3: 7%;
+  --x-3: 24%;
+  background-color: hsla(115, 0%, 100%, 1);
+  background-image: radial-gradient(circle at var(--x-0) var(--y-0), var(--c-0) var(--s-start-0), transparent var(--s-end-0)), radial-gradient(circle at var(--x-1) var(--y-1), var(--c-1) var(--s-start-1), transparent var(--s-end-1)), radial-gradient(circle at var(--x-2) var(--y-2), var(--c-2) var(--s-start-2), transparent var(--s-end-2)), radial-gradient(circle at var(--x-3) var(--y-3), var(--c-3) var(--s-start-3), transparent var(--s-end-3));
+  animation: hero-gradient-animation 10s linear infinite alternate;
+  background-blend-mode: normal, normal, normal, normal;
+}
+
+.landing-container::after {
+  content: "";
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='grain' x='0' y='0'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='1.5' numOctaves='5' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23grain)' opacity='0.3'/%3E%3C/svg%3E");
+  mix-blend-mode: multiply;
+  opacity: 0.3;
+  pointer-events: none;
+}
+
+.content-wrapper {
+  width: 100%;
+  max-width: 1200px;
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  z-index: 2;
+  min-height: 90vh;
+}
+
+.typewriter-text {
+  font-size: 8rem;
+  font-weight: 400;
+  line-height: 1.2;
+  margin: 2rem 0;
+  font-family: "Fraunces", sans-serif;
+  color: #1a1a1a;
+  text-align: center;
+}
+
+.cards-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1.5rem;
+  width: 100%;
+  max-width: 800px;
+  padding: 0 1rem;
+}
+.info-card {
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 12px;
+    padding: 1.5rem;
+    font-size: 1.1rem;
+    color: #1a1a1a;
+    opacity: 0;
+    animation: cardSlideIn 0.5s ease forwards;
+    animation-fill-mode: forwards;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    will-change: transform;
+  }
+  
+  /* Delay animation for each card */
+  .info-card:nth-child(1) { animation-delay: 0.2s; }
+  .info-card:nth-child(2) { animation-delay: 0.4s; }
+  .info-card:nth-child(3) { animation-delay: 0.6s; }
+  .info-card:nth-child(4) { animation-delay: 0.8s; }
+  
+  /* Fix the slide-in animation */
+  @keyframes cardSlideIn {
+    from {
+      opacity: 0;
+      transform: translateY(20px) scale(0.95);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+    }
+  }
+  
+  /* Ensure the hover effect applies after the animation */
+  .info-card:hover {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+  
+  /* Tilt left for odd-numbered cards */
+  .info-card:nth-child(odd):hover {
+    transform: translateY(0) rotate(-5deg) scale(1.05) !important;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+  }
+  
+  /* Tilt right for even-numbered cards */
+  .info-card:nth-child(even):hover {
+    transform: translateY(0) rotate(5deg) scale(1.05) !important;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+  }
+  
+  .interview-button {
+    display: inline-flex; /* Match button-30's display */
+    align-items: center;
+    justify-content: center;
+    padding: 1rem 2.5rem;
+    background-color: #ffeeb2; /* Match button-30 */
+    border: none;
+    border-radius: 4px; /* Match button-30 */
+    box-shadow: rgba(45, 35, 66, 0.4) 0 2px 4px, rgba(45, 35, 66, 0.3) 0 7px 13px -3px, #D6D6E7 0 -3px 0 inset;
+    font-size: 1.25rem; /* Match button-30 */
+    text-decoration: none;
+    color: #36395A; /* Match button-30 */
+    cursor: pointer;
+    font-family: "JetBrains Mono", monospace;
+    height: 50px; /* Slightly larger for balance */
+    text-align: center;
+    transition: all 0.3s ease, box-shadow 0.15s, transform 0.15s;
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: manipulation;
+    white-space: nowrap;
+    will-change: box-shadow, transform;
+    opacity: 0; /* Start hidden */
+    animation: fadeIn 0.5s ease forwards;
+    animation-delay: 3.8s;
+    margin-bottom: 2rem;
+    margin-top: 2rem;
+  }
+  
+  /* Hover effect like button-30 */
+  .interview-button:hover {
+    
+    background-color: #ffdb70; /* Slightly darker yellow */
+  box-shadow: 0 0 12px rgba(255, 223, 70, 0.8); /* Glow effect */
+  transform: translateY(-2px);
+}
+  
+  /* Active (click) effect like button-30 */
+  .interview-button:active {
+    box-shadow: #ffeeb2 0 3px 7px inset;
+    transform: translateY(2px);
+  }
+  
+  /* Fade-in animation */
+  @keyframes fadeIn {
+    to {
+      opacity: 1;
+    }
+  }
+  
+
+@media (max-width: 768px) {
+  .typewriter-text {
+    font-size: 3rem;
+    margin: 1rem 0;
+  }
+
+  .cards-grid {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+
+  .info-card {
+    padding: 1.25rem;
+    font-size: 1rem;
+  }
+}
+
+.heading-spacing {
+  margin-top: 3rem;
+  padding: 1rem;
+}
+
+.row-grid {
+  display: flex;
+  justify-content: center;
+  gap: 1.5rem;
+  flex-wrap: nowrap;
+  max-width: 800px;
+}
+
+.square-card {
+  width: 150px;
+  height: 150px;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  height: 100vh;
-  background-color: #f8f9fa;
-  font-family: "Inter", sans-serif;
-  padding: 2rem;
   text-align: center;
-}
-
-h1 {
-  font-size: 3rem;
-  font-weight: 700;
-  color: #2c3e50;
-  margin-bottom: 1.5rem;
-  opacity: 0;
-  transform: translateY(-20px);
-  animation: fadeInDown 0.8s ease-out forwards;
-}
-
-p {
-  font-style: italic;
-  font-size: 1.2rem;
-  color: #34495e;
-  margin-bottom: 1rem;
-  opacity: 0;
-  transform: translateY(20px);
-  animation: fadeInUp 0.8s ease-out forwards;
-}
-
-p:nth-child(2) {
-  animation-delay: 0.2s;
-}
-
-p:nth-child(3) {
-  animation-delay: 0.4s;
-}
-
-.chat-link {
-  display: inline-block;
-  background-color: #3498db;
-  color: white;
-  text-decoration: none;
-  padding: 0.8rem 1.5rem;
-  border-radius: 5px;
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 12px;
+  padding: 1rem;
   font-size: 1.1rem;
-  font-weight: 600;
-  transition: all 0.3s ease;
-  opacity: 0;
-  transform: scale(0.9);
-  animation: fadeInScale 0.8s ease-out 0.6s forwards;
+  color: #1a1a1a;
 }
 
-.chat-link:hover {
-  background-color: #2980b9;
-  transform: translateY(-2px);
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+.card-icon {
+  font-size: 2rem;
+  margin-bottom: 0.5rem;
 }
-
-@keyframes fadeInDown {
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-@keyframes fadeInUp {
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-@keyframes fadeInScale {
-  to {
-    opacity: 1;
-    transform: scale(1);
-  }
-}
-
-@media (max-width: 768px) {
-  h1 {
-    font-size: 2.5rem;
-  }
-
-  p {
-    font-size: 1rem;
-  }
-
-  .chat-link {
-    font-size: 1rem;
-    padding: 0.7rem 1.3rem;
-  }
-}
-

@@ -217,7 +217,7 @@ app.post("/api/v1/generate-questions", async (req, res) => {
 
     const response = await getAIQuestions(role);
     console.log(response);
-    res.json({ feedback: response });
+    res.json({ response });
 });
 
 app.post("/api/v1/answer", async (req, res) => {
