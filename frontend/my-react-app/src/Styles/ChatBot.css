@@ -48,7 +48,7 @@ body {
 /* AI question text */
 .ai-box {
   width: auto;
-  max-width: 90%;
+  max-width: 65%;
   min-height: auto;
   background: none;
   border: none;
@@ -94,6 +94,7 @@ body {
 
     /* Remove default focus outline */
     outline: none;
+    font-size: 1.2rem;
 }
 
 /* Increase size when text is entered */
