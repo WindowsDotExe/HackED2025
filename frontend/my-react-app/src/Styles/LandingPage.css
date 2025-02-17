@@ -204,36 +204,72 @@
 }
 
 .content-wrapper {
-  width: 100%;
-  max-width: 1200px;
-  padding: 2rem;
   display: flex;
   flex-direction: column;
-  justify-content: center;
   align-items: center;
-  position: relative;
-  z-index: 2;
+  justify-content: flex-start; /* Keeps content towards top */
   min-height: 90vh;
+  padding-top: 6rem; /* Adjust padding to position heading better */
 }
 
 .typewriter-text {
   font-size: 8rem;
   font-weight: 400;
   line-height: 1.2;
-  margin: 2rem 0;
   font-family: "Fraunces", sans-serif;
   color: #1a1a1a;
   text-align: center;
+  margin-bottom: 2rem; /* Added space below the heading */
 }
+
+.heading-container {
+  height: 160px; /* Keeps heading at a good position */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  margin-top: 2rem; /* Adjusted to ensure it's not too high */
+}
+
+
+.flux-text {
+  display: inline-block;
+  color: #1a1a1a; /* or #000, whichever you prefer for normal text */
+  transition: color 0.5s ease, text-shadow 0.5s ease;
+}
+
+/* When fluxGlowing is true (i.e. .glowing is applied), 
+   we change the text color to neon pink & add a glow animation. */
+.flux-text.glowing {
+  color: #ff0080; /* Neon pink text color */
+  animation: neonFlux 3s infinite alternate ease-in-out; /* Slowed down the animation */
+}
+
+/* Keyframes for the neon glow pulse */
+@keyframes neonFlux {
+  0% {
+    text-shadow: 0 0 4px rgba(255, 0, 128, 0.2);
+  }
+  50% {
+    text-shadow: 0 0 12px rgba(255, 0, 128, 0.8);
+  }
+  100% {
+    text-shadow: 0 0 4px rgba(255, 0, 128, 0.2);
+  }
+}
+
+
 
 .cards-grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  gap: 1.5rem;
+  gap: 2.5rem; /* Increased spacing between cards */
   width: 100%;
   max-width: 800px;
-  padding: 0 1rem;
+  padding: 2rem 1rem; /* Added padding to push cards down */
+  margin-top: 3rem; /* Added margin to separate from heading */
 }
+
 .info-card {
     background: rgba(255, 255, 255, 0.1);
     backdrop-filter: blur(10px);
@@ -291,7 +327,7 @@
     padding: 1rem 2.5rem;
     background-color: #ffeeb2; /* Match button-30 */
     border: none;
-    border-radius: 4px; /* Match button-30 */
+    border-radius: 30px; 
     box-shadow: rgba(45, 35, 66, 0.4) 0 2px 4px, rgba(45, 35, 66, 0.3) 0 7px 13px -3px, #D6D6E7 0 -3px 0 inset;
     font-size: 1.25rem; /* Match button-30 */
     text-decoration: none;
@@ -385,4 +421,38 @@
 .card-icon {
   font-size: 2rem;
   margin-bottom: 0.5rem;
+}
+
+.custom-footer {
+  width: 100%;
+  text-align: center;
+  padding: 1rem 0;
+  font-family: "Fraunces", sans-serif;
+  font-size: 1.1rem;
+  color: rgba(0, 0, 0, 0.7); /* Subtle text color */
+  position: absolute;
+  bottom: 1.5rem; /* Keeps it slightly above the bottom */
+  left: 50%;
+  transform: translateX(-50%);
+  opacity: 0; /* Start hidden */
+  transition: opacity 0.5s ease-in-out, transform 0.5s ease-in-out;
+  transition-delay: 0.5s; /* Delay to match the button animation */
+}
+
+.custom-footer.show {
+  opacity: 0.8; /* Slight fade for subtle effect */
+  transform: translateX(-50%) translateY(0);
+}
+
+@keyframes fadeIn {
+  to {
+    opacity: 1;
+  }
+}
+
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  overflow: hidden; /* This removes the scrollbar */
 }

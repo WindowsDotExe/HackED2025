@@ -168,6 +168,13 @@ const ChatBot = () => {
         const result = await response.json()
         setUserInput(result.text);
     }
+
+    setIsSubmitted(true)
+    setIsLoading(true) // Start loading animation
+
+    setTimeout(() => {
+      fetchNextQuestion()
+    }, 1500) // Simulate loading time before next question
   }
   }
 
