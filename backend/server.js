@@ -291,7 +291,7 @@ app.post("/api/v1/answer", async (req, res) => {
     res.json({ feedback: response });
 });
 
-app.get("/", (req, res) => res.send("Express on Vercel"));
+app.get("/", (req, res) => res.send("Access the app at: https://hacked2025.onrender.com/"));
 
 
 app.get('/testing', (req, res) => {
