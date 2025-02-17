@@ -1,131 +1,133 @@
 "use client";
 
-import React, { useState, useEffect, useRef } from "react"
+import React, { useState, useEffect, useRef } from "react";
 import { supabase } from "../supabaseClient";
-import { v4 as uuidv4 } from 'uuid';
+import { v4 as uuidv4 } from "uuid";
 import { FiCircle, FiSquare, FiRotateCcw, FiCheck } from "react-icons/fi";
-import "../Styles/ChatBot.css"
+import ProgressBar from "./ProgressBar"; // Adjust the path if needed
+import "../Styles/ChatBot.css";
 
 const BACKEND_URL = "http://localhost:8000";
 let mediaRecorder;
 let audioChunks;
 
 const ChatBot = () => {
-  const [userInput, setUserInput] = useState("")
-  const [displayedQuestion, setDisplayedQuestion] = useState("")
-  const [isTyping, setIsTyping] = useState(true)
-  const [isSubmitted, setIsSubmitted] = useState(false)
-  const [isRecording, setIsRecording] = useState(false)
-  const [questions, setQuestions] = useState([]);
+  // Total number of questions is 5 (adjust if needed)
+  const totalQuestions = 5;
+  // currentIndex represents the index (starting at 0) of the current question
   const [currentIndex, setCurrentIndex] = useState(0);
-  const [hasRecordedOnce, setHasRecordedOnce] = useState(false)
-  const [isLoading, setIsLoading] = useState(false) // New loading state
-  const textareaRef = useRef(null)
+  
+  const [userInput, setUserInput] = useState("");
+  const [displayedQuestion, setDisplayedQuestion] = useState("");
+  const [isTyping, setIsTyping] = useState(true);
+  const [isSubmitted, setIsSubmitted] = useState(false);
+  const [isRecording, setIsRecording] = useState(false);
+  const [hasRecordedOnce, setHasRecordedOnce] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  const textareaRef = useRef(null);
 
+  // When the component mounts, initialize local storage and load the first question.
   useEffect(() => {
-    // fetchQuestions();
     localStorage.setItem("interviewResponses", JSON.stringify([]));
-    localStorage.setItem("interviewFeedback", JSON.stringify([]))
-    fetchNextQuestion();
-  }, [])
+    localStorage.setItem("interviewFeedback", JSON.stringify([]));
+    fetchQuestionForIndex(0);
+  }, []);
 
-//   async function fetchQuestions(role) {
-//     // Check if questions already exist in localStorage
-//     const storedQuestions = localStorage.getItem("interviewQuestions");
-//     if (storedQuestions) {
-//         setQuestions(JSON.parse(storedQuestions));
-//         setCurrentIndex(0); // Start from the first question
-//         return;
-//     }
-
-//     try {
-//         const response = await fetch(`${BACKEND_URL}/v1/generate-questions`, {
-//             method: "POST",
-//             headers: { "Content-Type": "application/json" },
-//             body: JSON.stringify({ role })
-//         });
-
-//         const data = await response.json();
-//         setQuestions(data.questions);
-//         localStorage.setItem("interviewQuestions", JSON.stringify(data.questions)); // ✅ Store in localStorage
-//         setCurrentIndex(0);
-//     } catch (error) {
-//         console.error("Error fetching questions:", error);
-//         setQuestions(["Error loading questions. Try again."]);
-//     }
-// }
-
-  const fetchNextQuestion = async () => {
+  // Function to fetch and display a question given its index.
+  const fetchQuestionForIndex = (index) => {
     const interviewQuestions = JSON.parse(localStorage.getItem("interviewQuestions"));
 
-    const newQuestion = interviewQuestions[currentIndex];
-    if (currentIndex > 4) {
-      window.location.href = "/feedback" 
+    if (!interviewQuestions || interviewQuestions.length === 0) {
+      console.error("No interview questions found.");
       return;
     }
-    setCurrentIndex(currentIndex+1);
-    setIsLoading(false) // Stop loading animation
-    setDisplayedQuestion("")
-    setIsTyping(true)
-    setUserInput("")
-    setIsSubmitted(false)
-    setHasRecordedOnce(false)
+
+    // If we've answered all questions, redirect to feedback.
+    if (index >= totalQuestions) {
+      window.location.href = "/feedback";
+      return;
+    }
+
+    const newQuestion = interviewQuestions[index];
+    // Reset states for the new question
+    setDisplayedQuestion("");
+    setIsTyping(true);
+    setUserInput("");
+    setIsSubmitted(false);
+    setHasRecordedOnce(false);
 
     if (textareaRef.current) {
       textareaRef.current.style.height = "80px";
     }
 
-    let index = 0;
+    // Typewriter effect: gradually display the question text
+    let i = 0;
     const typeWriter = setInterval(() => {
-      setDisplayedQuestion((prev) => {
-        if (index >= newQuestion.length) {
-          clearInterval(typeWriter);
-          setIsTyping(false);
-          return newQuestion;
-        }
-        return newQuestion.substring(0, index + 1);
-      });
-      index++;
+      if (i >= newQuestion.length) {
+        clearInterval(typeWriter);
+        setIsTyping(false);
+        return;
+      }
+      setDisplayedQuestion(newQuestion.substring(0, i + 1));
+      i++;
     }, 20);
   };
 
   const submitAnswer = async () => {
-    setIsLoading(true) // Start loading animation
+    setIsLoading(true);
+
     const interviewQuestions = JSON.parse(localStorage.getItem("interviewQuestions"));
     if (!userInput.trim()) {
       alert("Please type your answer first!");
+      setIsLoading(false);
       return;
     }
-    console.log(localStorage.getItem("interviewResponses"));
+
+    // Store the answer in local storage.
     const interviewResponses = JSON.parse(localStorage.getItem("interviewResponses"));
-    localStorage.setItem("interviewResponses", JSON.stringify([...interviewResponses, userInput.trim()]));
+    localStorage.setItem(
+      "interviewResponses",
+      JSON.stringify([...interviewResponses, userInput.trim()])
+    );
+
     const role = localStorage.getItem("role");
-    console.log(localStorage.getItem("interviewResponses"));
+
+    // Send the answer to your backend
     const responseFeedback = await fetch(`${BACKEND_URL}/api/v1/answer`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({answer: userInput.trim(), interview_qn: interviewQuestions[currentIndex-1], interview_type: role})
-    })
+      body: JSON.stringify({
+        answer: userInput.trim(),
+        interview_qn: interviewQuestions[currentIndex],
+        interview_type: role,
+      }),
+    });
 
     const data = await responseFeedback.json();
-    
-    const interviewFeedback = JSON.parse(localStorage.getItem("interviewFeedback"));
-    localStorage.setItem("interviewFeedback", JSON.stringify([...interviewFeedback, data.feedback]));
-    setIsSubmitted(true)
-    
 
+    const interviewFeedback = JSON.parse(localStorage.getItem("interviewFeedback"));
+    localStorage.setItem(
+      "interviewFeedback",
+      JSON.stringify([...interviewFeedback, data.feedback])
+    );
+    setIsSubmitted(true);
+
+    // After a short delay, move to the next question.
     setTimeout(() => {
-      fetchNextQuestion();
+      const nextIndex = currentIndex + 1;
+      setCurrentIndex(nextIndex);
+      fetchQuestionForIndex(nextIndex);
+      setIsLoading(false);
     }, 1500);
   };
 
   const toggleRecording = async () => {
-    setIsRecording(!isRecording)
+    setIsRecording(!isRecording);
 
     if (!isRecording) {
-      setIsRecording(true)
+      setIsRecording(true);
       audioChunks = [];
       const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
       mediaRecorder = new MediaRecorder(stream);
@@ -134,44 +136,39 @@ const ChatBot = () => {
         audioChunks.push(event.data);
       };
       mediaRecorder.start();
-      setHasRecordedOnce(true)
+      setHasRecordedOnce(true);
     } else {
-      setIsRecording(false)
-      mediaRecorder.stop()
-      // console.log('AFTER RECORDING')
+      setIsRecording(false);
+      mediaRecorder.stop();
       mediaRecorder.onstop = async () => {
         const audioBlob = new Blob(audioChunks, { type: "audio/wav" });
-        // const formData = new FormData();
-        // generate a random filename
+        // Generate a random filename
         let filename = uuidv4() + ".wav";
-        console.log(filename)
-        var FilePath = "uploads/" + filename
-        // formData.append("audio", audioBlob, filename);
+        const FilePath = "uploads/" + filename;
 
-        const {data, error} = await supabase
-        .storage
-        .from('user_audio_recordings')
-        .upload(FilePath, audioBlob)
+        const { data, error } = await supabase.storage
+          .from("user_audio_recordings")
+          .upload(FilePath, audioBlob);
 
-        if (error != null){
-          console.log("BRUHH")
+        if (error != null) {
+          console.error("Error uploading file:", error);
         }
-        // console.log('BEFORE API CALL')
+
         const response = await fetch(`${BACKEND_URL}/api/v1/transcribe`, {
           method: "POST",
           headers: {
-            "Content-Type": "application/json"
+            "Content-Type": "application/json",
           },
           body: JSON.stringify({
-            filePath: FilePath
+            filePath: FilePath,
           }),
-        });        
-        // console.log('AFTER API CALL')
-        const result = await response.json()
+        });
+
+        const result = await response.json();
         setUserInput(result.text);
+      };
     }
-  }
-  }
+  };
 
   const handleTextareaChange = (e) => {
     if (!isSubmitted) {
@@ -185,15 +182,18 @@ const ChatBot = () => {
 
   return (
     <div className="chat-container">
+      {/* Pass currentIndex + 1 so the progress bar is 1-indexed */}
+      <ProgressBar total={totalQuestions} current={currentIndex + 1} />
+
       <div className="moving-background"></div>
-      
+
       <div className="ai-box">
         <div className="text-content">
           {displayedQuestion}
           {isTyping && <span className="cursor">|</span>}
         </div>
       </div>
-      
+
       <textarea
         className={`answer-bubble ${isSubmitted ? "locked" : ""}`}
         ref={textareaRef}
@@ -202,7 +202,7 @@ const ChatBot = () => {
         placeholder="Type or speak to answer."
         disabled={isSubmitted}
       />
-      
+
       {!isSubmitted && !isLoading && (
         <div className="button-container">
           <button className="submit-button" onClick={submitAnswer}>
@@ -212,15 +212,23 @@ const ChatBot = () => {
             className={`record-button ${isRecording ? "recording" : ""}`}
             onClick={toggleRecording}
           >
-            {isRecording 
-              ? <><FiSquare /> Stop Recording</>
-              : hasRecordedOnce 
-                ? <><FiRotateCcw /> Record Again</>
-                : <><FiCircle /> Start Recording</>}
+            {isRecording ? (
+              <>
+                <FiSquare /> Stop Recording
+              </>
+            ) : hasRecordedOnce ? (
+              <>
+                <FiRotateCcw /> Record Again
+              </>
+            ) : (
+              <>
+                <FiCircle /> Start Recording
+              </>
+            )}
           </button>
         </div>
       )}
-      
+
       {isLoading && (
         <div className="loading-animation">
           <span className="dot"></span>
@@ -232,4 +240,4 @@ const ChatBot = () => {
   );
 };
 
-export default ChatBot
+export default ChatBot;
