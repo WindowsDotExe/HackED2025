@@ -31,10 +31,10 @@ const ChatBot = () => {
     localStorage.setItem("interviewResponses", JSON.stringify([]));
     localStorage.setItem("interviewFeedback", JSON.stringify([]));
     fetchQuestionForIndex(0);
-    fetchNextQuestion();
+    // fetchNextQuestion();
   }, []);
 
-  const fetchNextQuestion = async () => {
+  const fetchQuestionForIndex = async (index) => {
     const interviewQuestions = JSON.parse(localStorage.getItem("interviewQuestions"));
 
     if (!interviewQuestions || interviewQuestions.length === 0) {
