@@ -1,104 +1,82 @@
 @import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap");
 
-/* -------------------------------- */
-/* MAIN LAYOUT & BACKGROUND */
-/* -------------------------------- */
-
-.feedback-container {
+.carousel-background {
   min-height: 100vh;
   display: flex;
-  flex-direction: column;
   align-items: center;
   justify-content: center;
-  position: relative;
-  overflow: hidden;
-  background-color: hsla(132, 0%, 100%, 1);
-  background-image: radial-gradient(
-      circle at 91% 11%,
-      hsla(13, 100%, 88%, 0.66) 4%,
-      transparent 37%
-    ),
-    radial-gradient(circle at 66% 37%, hsla(323, 100%, 88%, 1) 0%, transparent 63%),
-    radial-gradient(circle at 36% 87%, hsla(268, 100%, 88%, 1) 12%, transparent 63%);
-  background-blend-mode: normal, normal, normal;
+  background: linear-gradient(135deg, #fdd5fc 0%, #d1e8ff 100%);
+  font-family: "Inter", sans-serif;
 }
 
-.feedback-container::after {
-  content: "";
+/* CAROUSEL WRAPPER */
+.carousel-wrapper {
+  position: relative;
+  width: 90%;
+  max-width: 1200px; /* Increased max-width for larger cards */
+  height: 500px; /* Increased height for larger cards */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  perspective: 1200px;
+}
+
+/* CAROUSEL CARD BASE STYLE */
+.carousel-card {
   position: absolute;
-  width: 100%;
-  height: 100%;
-  background: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='grain' x='0' y='0'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='1.5' numOctaves='5' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23grain)' opacity='0.3'/%3E%3C/svg%3E");
-  mix-blend-mode: multiply;
-  opacity: 0.3;
+  width: 400px; /* Increased width for larger cards */
+  max-width: 90%;
+  min-height: 400px; /* Increased min-height for larger cards */
+  background: white;
+  border-radius: 16px;
+  padding: 2rem; /* Increased padding for larger cards */
+  text-align: center;
+  transition: transform 0.6s ease-in-out, opacity 0.4s ease-in-out, box-shadow 0.4s ease-in-out;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+  user-select: none;
+}
+
+/* CENTER CARD (FOCUSED) */
+.center-card {
+  transform: translateX(0) scale(1);
+  z-index: 3;
+  opacity: 1;
+  font-weight: bold;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+}
+
+/* LEFT AND RIGHT CARDS */
+.left-card {
+  transform: translateX(-350px) scale(0.9); /* Increased spacing */
+  z-index: 2;
+  opacity: 0.6;
+}
+
+.right-card {
+  transform: translateX(350px) scale(0.9); /* Increased spacing */
+  z-index: 2;
+  opacity: 0.6;
+}
+
+/* HIDDEN CARDS (BEYOND LEFT/RIGHT) */
+.hidden-card {
+  transform: scale(0.8);
+  opacity: 0;
   pointer-events: none;
 }
 
-/* -------------------------------- */
-/* CLICKABLE SENTENCES */
-/* -------------------------------- */
-.feedback-sentence {
-  font-family: "Inter", sans-serif;
-  font-size: 1.5rem;       /* Matches chatbox text size */
-  font-weight: bold;
-  color: #1a1a1a;
-  text-align: center;
-  line-height: 1.5;
-  margin: 2.5rem 0;        /* Extra spacing between sentences */
-  padding: 1rem 2rem;      /* Invisible "box": extra padding, no border/background */
-  cursor: pointer;
-  transition: transform 0.2s ease;
+/* Remove hover effect */
+.left-card:hover,
+.right-card:hover {
+  transform: translateX(-350px) scale(0.9);
 }
 
-.feedback-sentence:hover {
-  transform: scale(1.03);
+.right-card:hover {
+  transform: translateX(350px) scale(0.9);
 }
 
-/* -------------------------------- */
-/* MODAL STYLES */
-/* -------------------------------- */
-.feedback-modal {
-  position: fixed;     /* Covers the entire screen */
-  z-index: 1000;
-  left: 0;
-  top: 0;
-  width: 100%;
-  height: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background-color: rgba(0, 0, 0, 0.4);  /* Semi-transparent overlay */
-  backdrop-filter: blur(5px);
-}
-
-.modal-content {
-  position: relative;
-  background: rgba(255, 255, 255, 0.9);
-  backdrop-filter: blur(10px);
-  padding: 2rem;
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  width: 80%;
-  max-width: 600px;
-  border-radius: 12px;
-  text-align: center;
-  font-family: "Inter", sans-serif;
-  color: #1a1a1a;
-  /* Larger text for details to be easily readable */
-  font-size: 1.2rem;
-}
-
-.close-button {
-  position: absolute;
-  top: 1rem;
-  right: 1rem;
-  color: #444;
-  font-size: 2rem;
-  font-weight: bold;
-  cursor: pointer;
-  transition: color 0.2s ease;
-}
-
-.close-button:hover,
-.close-button:focus {
-  color: #000;
+/* Ensure only clicking moves a card */
+.carousel-card:active {
+  transform: scale(0.95);
 }

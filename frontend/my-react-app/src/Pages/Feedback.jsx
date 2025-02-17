@@ -1,78 +1,53 @@
-"use client"
+"use client";
 
 import React, { useState } from "react";
 import "../Styles/Feedback.css";
 
 const feedbackData = [
-  {
-    id: 1,
-    summary: "Sentence 1",
-    details: "Detailed feedback for sentence 1.",
-  },
-  {
-    id: 2,
-    summary: "Sentence 2",
-    details: "Detailed feedback for sentence 2.",
-  },
-  {
-    id: 3,
-    summary: "Sentence 3",
-    details: "Detailed feedback for sentence 3.",
-  },
-  {
-    id: 4,
-    summary: "Sentence 4",
-    details: "Detailed feedback for sentence 4.",
-  },
-  {
-    id: 5,
-    summary: "Sentence 5",
-    details: "Detailed feedback for sentence 5.",
-  },
+  { id: 1, question: "What is React?", response: "A JS library for building UIs.", feedback: "Detailed feedback for question 1." },
+  { id: 2, question: "What is State in React?", response: "State allows React components to change over time.", feedback: "Detailed feedback for question 2." },
+  { id: 3, question: "What are Props?", response: "Props are inputs passed from parent to child.", feedback: "Detailed feedback for question 3." },
+  { id: 4, question: "What is JSX?", response: "A syntax extension that looks like HTML in JS.", feedback: "Detailed feedback for question 4." },
+  { id: 5, question: "What is a Component?", response: "Reusable pieces of UI in a React app.", feedback: "Detailed feedback for question 5." },
 ];
 
-const Feedback = () => {
-  const [activeId, setActiveId] = useState(null);
+const FeedbackCarousel = () => {
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const length = feedbackData.length;
 
-  // Open modal with details of the clicked sentence
-  const openModal = (id) => {
-    setActiveId(id);
+  const handleCardClick = (newIndex) => {
+    setCurrentIndex(newIndex);
   };
-
-  // Close modal
-  const closeModal = () => {
-    setActiveId(null);
-  };
-
-  // We get the data object corresponding to the active sentence
-  const activeItem = feedbackData.find((item) => item.id === activeId);
 
   return (
-    <div className="feedback-container">
-      {/* 1) List of Sentences */}
-      {feedbackData.map((item) => (
-        <div
-          key={item.id}
-          className="feedback-sentence"
-          onClick={() => openModal(item.id)}
-        >
-          {item.summary}
-        </div>
-      ))}
+    <div className="carousel-background">
+      <div className="carousel-wrapper">
+        {feedbackData.map((item, index) => {
+          let position = (index - currentIndex + length) % length;
 
-      {/* 2) Modal for showing details (only when a sentence is clicked) */}
-      {activeId !== null && (
-        <div className="feedback-modal" onClick={closeModal}>
-          <div className="modal-content" onClick={(e) => e.stopPropagation()}>
-            <span className="close-button" onClick={closeModal}>
-              &times;
-            </span>
-            <p>{activeItem?.details}</p>
-          </div>
-        </div>
-      )}
+          return (
+            <div
+              key={item.id}
+              className={`carousel-card ${
+                position === 0
+                  ? "center-card"
+                  : position === 1
+                  ? "right-card"
+                  : position === length - 1
+                  ? "left-card"
+                  : "hidden-card"
+              }`}
+              onClick={() => handleCardClick(index)}
+            >
+              <h2>{item.question}</h2>
+              <p className="carousel-response">{item.response}</p>
+              <p className="carousel-feedback">{item.feedback}</p>
+            </div>
+          );
+        })}
+      </div>
     </div>
   );
 };
 
-export default Feedback;
+export default FeedbackCarousel;
