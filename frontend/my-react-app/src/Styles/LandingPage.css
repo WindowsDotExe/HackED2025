@@ -291,7 +291,7 @@
     padding: 1rem 2.5rem;
     background-color: #ffeeb2; /* Match button-30 */
     border: none;
-    border-radius: 4px; /* Match button-30 */
+    border-radius: 30px; 
     box-shadow: rgba(45, 35, 66, 0.4) 0 2px 4px, rgba(45, 35, 66, 0.3) 0 7px 13px -3px, #D6D6E7 0 -3px 0 inset;
     font-size: 1.25rem; /* Match button-30 */
     text-decoration: none;
