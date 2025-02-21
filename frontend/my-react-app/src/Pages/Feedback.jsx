@@ -1,8 +1,8 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { FiMail, FiHome, FiSend, FiRotateCcw, FiX } from "react-icons/fi"; 
+import { FiMail, FiHome, FiSend, FiRotateCcw, FiX, FiMessageCircle } from "react-icons/fi"; 
 import "../Styles/Feedback.css";
 
 const BACKEND_URL = "https://hacked2025-backend.onrender.com";
@@ -10,9 +10,19 @@ const BACKEND_URL = "https://hacked2025-backend.onrender.com";
 const FeedbackCarousel = () => {
   const feedbackData = [];
   const [currentIndex, setCurrentIndex] = useState(0);
+  const [showFeedbackPopup, setShowFeedbackPopup] = useState(false);
   const feedback = JSON.parse(localStorage.getItem("interviewFeedback"));
   const questions = JSON.parse(localStorage.getItem("interviewQuestions"))
   const responses = JSON.parse(localStorage.getItem("interviewResponses"))
+
+  useEffect(() => {
+    // delayed popup
+    const timer = setTimeout(() => {
+      setShowFeedbackPopup(true);
+    }, 5000);
+
+    return () => clearTimeout(timer);
+  }, []);
 
   // run a for loop to create the feedbackData array from the questions, responses, and feedback
   for (let i = 0; i < questions.length; i++) {
@@ -72,11 +82,11 @@ const FeedbackCarousel = () => {
   return (
     <div className="carousel-background">
       <h1 className="carousel-heading">So, how did you do?</h1>
-
+  
       <div className="carousel-wrapper">
         {feedbackData.map((item, index) => {
           let position = (index - currentIndex + feedbackData.length) % feedbackData.length;
-
+  
           return (
             <div
               key={item.id}
@@ -92,12 +102,12 @@ const FeedbackCarousel = () => {
               onClick={() => handleCardClick(index)}
             >
               <h2 className="center-align">{item.question}</h2>
-
+  
               <strong className="left-align">Your Response:</strong>
               <div className="response-container">
                 <p>{item.response}</p>
               </div>
-
+  
               <strong className="left-align">Flux Feedback:</strong>
               <div className="feedback-container">
                 <p>{item.feedback}</p>
@@ -106,7 +116,7 @@ const FeedbackCarousel = () => {
           );
         })}
       </div>
-
+  
       {/* Buttons */}
       <div className="button-container">
         <button className="email-button" onClick={openEmailPopup}>
@@ -119,10 +129,10 @@ const FeedbackCarousel = () => {
           <FiRotateCcw /> Another One?
         </button>
       </div>
-
+  
       {/* Blurred Background (Only When Popup is Open) */}
       {showEmailPopup && <div className="background-blur"></div>}
-
+  
       {/* Email Popup */}
       {showEmailPopup && (
         <div className="email-popup">
@@ -145,8 +155,16 @@ const FeedbackCarousel = () => {
           )}
         </div>
       )}
+  
+      {/* Feedback Form Popup Bubble */}
+      {showFeedbackPopup && (
+        <div className="feedback-popup" onClick={() => window.open("https://tally.so/r/npk4LV", "_blank")}>
+          <FiMessageCircle className="feedback-icon" />
+          <span>Give Feedback</span>
+        </div>
+      )}
     </div>
   );
-};
+}
 
 export default FeedbackCarousel;
